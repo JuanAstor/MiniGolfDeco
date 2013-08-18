@@ -7,7 +7,7 @@ import java.util.*;
 public class Block1 {
 	
 	public enum BlockType {
-		CORNER, WALL, HOLE, OPEN
+		CORNER, WALL, HOLE, OPEN, UPHILL, DOWNHILL
 	}
 	
 	public enum FacingDir {
@@ -49,6 +49,9 @@ public class Block1 {
 						float[] coords = {0, SIZE/2, 0, SIZE, SIZE/2, 0,
 								SIZE/2, SIZE/2,	SIZE, 0, SIZE, SIZE};
 						this.bounds = new Polygon(coords);
+						
+					default:
+						break;
 				
 				}
 				break;	

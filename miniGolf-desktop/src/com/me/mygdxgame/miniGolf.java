@@ -2,7 +2,7 @@ package com.me.mygdxgame;
 
 import com.badlogic.gdx.ApplicationListener;
 
-public class miniGolf implements ApplicationListener {
+public class MiniGolf implements ApplicationListener {
 
 	@Override
 	public void create() {
