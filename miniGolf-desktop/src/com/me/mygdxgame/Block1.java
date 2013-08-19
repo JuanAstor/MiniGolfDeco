@@ -22,46 +22,77 @@ public class Block1 {
 	Polygon bounds = new Polygon(null);
 	BlockType type = BlockType.OPEN;
 	FacingDir dir = FacingDir.WEST;
+	float[] coords;
 	
-	float[] coords = {0, 0, 0, SIZE/2, 0, SIZE, SIZE/2, 0, SIZE/2, SIZE/2, SIZE/2, SIZE,
-			SIZE, 0, SIZE, SIZE/2, SIZE, SIZE};
+	// {0, 0, 0, SIZE/2, 0, SIZE, SIZE/2, 0, SIZE/2, SIZE/2, SIZE/2, SIZE,
+	//		SIZE, 0, SIZE, SIZE/2, SIZE, SIZE};
 	
 	
 	public Block1(Vector2 pos, BlockType blockType, FacingDir dir){
 		switch(blockType){
 			case OPEN:
-				
 				this.bounds = new Polygon(null);
 				break;
 			case HOLE:
-				float[] coords = {0, 0, SIZE/5, 0, 0, SIZE/5, SIZE/5, SIZE/5};
+				coords = new float[] {0, 0, SIZE/5, 0, 0, SIZE/5, SIZE/5, 
+						SIZE/5};
 				this.bounds = new Polygon(coords);
 				this.bounds.setPosition((2*SIZE)/5, (2*SIZE)/5);
 				break;	
 			case CORNER:
 				switch(dir){
 					case NORTH:
-						float[] coords = {0, 0, 0, SIZE, SIZE, 0, SIZE/2, 
+						coords = new float[] {0, 0, 0, SIZE, SIZE, 0, SIZE/2, 
 								SIZE, SIZE, SIZE/2, SIZE/2, SIZE/2};
-						this.bounds = new Polygon(coords);
+						
 						break;
 					case SOUTH:
-						float[] coords = {0, SIZE/2, 0, SIZE, SIZE/2, 0,
+						coords = new float[] {0, SIZE/2, 0, SIZE, SIZE/2, 0,
 								SIZE/2, SIZE/2,	SIZE, 0, SIZE, SIZE};
-						this.bounds = new Polygon(coords);
 						
+						break;
+					case EAST:
+						coords = new float[] {0, 0,  0, SIZE, SIZE/2, 0, 
+								SIZE/2, SIZE/2, SIZE, SIZE/2, SIZE, SIZE};
+						
+					case WEST:
+						coords = new float[] {0, 0, 0, SIZE/2, SIZE/2, SIZE/2,
+								SIZE/2, SIZE, SIZE, 0, SIZE, SIZE};
 					default:
 						break;
 				
 				}
+				this.bounds = new Polygon(coords);
 				break;	
 			case WALL:
-				
+				switch(dir){
+				case NORTH:
+					coords = new float[] {0,0, SIZE, 0, SIZE, 
+							SIZE/2, 0, SIZE/2};					
+					break;
+				case SOUTH:
+					coords = new float[] {0, SIZE, SIZE, SIZE, SIZE,
+							SIZE/2, 0, SIZE/2};					
+					break;
+				case EAST:
+					coords = new float[] {0, 0, 0, SIZE, SIZE/2, 
+							SIZE, SIZE/2, 0};
+					break;					
+				case WEST:
+					coords = new float[] {SIZE, 0, SIZE/2, 0, SIZE/2,
+							SIZE, SIZE, SIZE};
+					break;
+				default:
+					break;
+				}
+				this.bounds = new Polygon(coords);
 				break;	
-		
+			case UPHILL:
+				break;
+			case DOWNHILL:
+				break;
 		}
-		this.position = pos;
-		
+		this.position = pos;		
 		
 	}
 	
