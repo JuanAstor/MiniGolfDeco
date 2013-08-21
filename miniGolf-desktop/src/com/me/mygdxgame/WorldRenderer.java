@@ -28,6 +28,7 @@ public class WorldRenderer {
 	ShapeRenderer debugRend = new ShapeRenderer();
 	private Texture ballTexture; 
 	private Texture wallTexture;
+	private Texture backgroundTexture; 
 	private SpriteBatch sprite; 
 	private int width; 
 	private int height; 
@@ -54,7 +55,8 @@ public class WorldRenderer {
 	}
 	
 	public void render() {
-		sprite.begin(); 
+		sprite.begin();
+		    sprite.draw(backgroundTexture, 0, 0);
 			drawBall(); 
 			drawWall();
 		sprite.end(); 
@@ -67,6 +69,7 @@ public class WorldRenderer {
 	private void loadTextures() {
 		ballTexture = new Texture (Gdx.files.internal("images/ball.png"));
 		wallTexture = new Texture (Gdx.files.internal("images/wall.png"));
+		backgroundTexture = new Texture(Gdx.files.internal("images/background.png"));
 	}
 	private void drawBall() {
 		Ball ball = world.getBall(); 

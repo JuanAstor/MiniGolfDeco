@@ -11,8 +11,8 @@ public class Main {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "miniGolf";
 		cfg.useGL20 = false;
-		cfg.width = 720;
-		cfg.height = 720;
+		cfg.width = 512;
+		cfg.height = 512;
 		
 		new LwjglApplication(new GolfGame(), cfg);
 	}
