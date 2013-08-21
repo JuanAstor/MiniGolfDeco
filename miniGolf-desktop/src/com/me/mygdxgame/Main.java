@@ -14,6 +14,6 @@ public class Main {
 		cfg.width = 720;
 		cfg.height = 720;
 		
-		new LwjglApplication(new MiniGolf(), cfg);
+		new LwjglApplication(new GolfGame(), cfg);
 	}
 }

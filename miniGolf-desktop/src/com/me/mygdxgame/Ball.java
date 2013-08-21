@@ -5,18 +5,12 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Ball {
 	
-	public enum State { 
-		IDLE, MOVING
-	}
-	 
 	static final float SIZE = 0.5f;
 	float SPEED; 
+	float ACCELERATION; 
 	
-	Vector2 position = new Vector2(); 
-	Vector2 acceleration = new Vector2(); 
-	Vector2 velocity = new Vector2(); 
-	Rectangle bounds = new Rectangle(); 
-	State state = State.IDLE; 
+	Vector2 position = new Vector2();  
+	Rectangle bounds = new Rectangle();  
 	
 	public Ball(Vector2 position) { 
 		this.position = position; 
@@ -27,10 +21,22 @@ public class Ball {
 	public void setSpeed(float speed) { 
 		this.SPEED = speed; 
 	}
-	
 	public Float getBallSpeed() {
-		return SPEED; 
+		return this.SPEED; 
 	}
 	
+	public void setAccel(float accel){
+		this.ACCELERATION = accel; 
+	}
+	public Float getAccel(){
+		return this.ACCELERATION;
+	}
+	
+	public Rectangle getBounds(){ 
+		return this.bounds; 
+	}	
+	public Vector2 getPosition(){
+		return this.position; 
+	}	
 
 }

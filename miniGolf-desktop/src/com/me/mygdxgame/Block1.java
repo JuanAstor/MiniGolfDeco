@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.*;
 import java.util.*;
 
+@SuppressWarnings("unused")
 public class Block1 {
 	
 	public enum BlockType {
@@ -14,9 +15,7 @@ public class Block1 {
 		WEST, NORTH, SOUTH, EAST
 	}
 	
-	static final float SIZE = 1f;
-	
-	
+	static final float SIZE = 1f;	
 	
 	Vector2 position = new Vector2();
 	Polygon bounds = new Polygon(null);
@@ -32,12 +31,14 @@ public class Block1 {
 		switch(blockType){
 			case OPEN:
 				this.bounds = new Polygon(null);
+				this.position = pos;
 				break;
 			case HOLE:
 				coords = new float[] {0, 0, SIZE/5, 0, 0, SIZE/5, SIZE/5, 
 						SIZE/5};
 				this.bounds = new Polygon(coords);
 				this.bounds.setPosition((2*SIZE)/5, (2*SIZE)/5);
+				this.position = pos;
 				break;	
 			case CORNER:
 				switch(dir){
@@ -60,7 +61,6 @@ public class Block1 {
 								SIZE/2, SIZE, SIZE, 0, SIZE, SIZE};
 					default:
 						break;
-				
 				}
 				this.bounds = new Polygon(coords);
 				break;	
@@ -94,6 +94,14 @@ public class Block1 {
 		}
 		this.position = pos;		
 		
+	} 
+	
+	public Vector2 getPosition(){ 
+		return this.position; 
+	}
+	
+	public Polygon getBounds(){
+		return this.bounds; 
 	}
 	
 }

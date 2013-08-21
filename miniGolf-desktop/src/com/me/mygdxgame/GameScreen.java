@@ -1,14 +1,25 @@
 package com.me.mygdxgame;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL10;
 
 public class GameScreen implements Screen {
 	
-	private World world; 
+	private World world;
+	private WorldRenderer renderer; 
+	
+	@Override 
+	public void show() { 
+		world = new World(); 
+		renderer = new WorldRenderer(world); 
+	}
 	
 	@Override 
 	public void render(float delta) { 
-		
+		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		renderer.render();
 	}
 	
 	@Override 
@@ -16,10 +27,6 @@ public class GameScreen implements Screen {
 		
 	}
 	
-	@Override 
-	public void show() { 
-		
-	}
 	
 	@Override 
 	public void hide() { 
