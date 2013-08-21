@@ -18,7 +18,7 @@ public class Block1 {
 	static final float SIZE = 1f;	
 	
 	Vector2 position = new Vector2();
-	Polygon bounds = new Polygon(null);
+	Polygon bounds;
 	BlockType type = BlockType.OPEN;
 	FacingDir dir = FacingDir.WEST;
 	float[] coords;
@@ -30,7 +30,6 @@ public class Block1 {
 	public Block1(Vector2 pos, BlockType blockType, FacingDir dir){
 		switch(blockType){
 			case OPEN:
-				this.bounds = new Polygon(null);
 				this.position = pos;
 				break;
 			case HOLE:
@@ -63,6 +62,7 @@ public class Block1 {
 						break;
 				}
 				this.bounds = new Polygon(coords);
+				this.position = pos;
 				break;	
 			case WALL:
 				switch(dir){
@@ -86,6 +86,7 @@ public class Block1 {
 					break;
 				}
 				this.bounds = new Polygon(coords);
+				this.position = pos;
 				break;	
 			case UPHILL:
 				break;

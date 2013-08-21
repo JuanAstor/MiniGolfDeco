@@ -31,7 +31,7 @@ public class WorldRenderer {
 	public void render() { 
 		//render the blocks
 		debugRend.setProjectionMatrix(cam.combined); 
-		debugRend.begin(ShapeType.Box); 
+		debugRend.begin(ShapeType.Rectangle); 
 		for(Block1 block : world.getBlocks()) {
 			Polygon poly = block.getBounds(); 
 			float x1 = block.getPosition().x + poly.getX();
