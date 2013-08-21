@@ -31,8 +31,17 @@ public class World {
 
 			//block.add(new Block1(new Vector2(i, 0), BlockType.OPEN, FacingDir.NORTH));                       
 		//}
-		block.add(new Block1(new Vector2(5,0), BlockType.WALL, FacingDir.WEST)); 
-		block.add(new Block1(new Vector2(5,5), BlockType.CORNER, FacingDir.WEST));
+		block.add(new Block1(new Vector2(0,1), BlockType.WALL, FacingDir.EAST));
+		block.add(new Block1(new Vector2(0,2), BlockType.CORNER, FacingDir.EAST));
+		block.add(new Block1(new Vector2(0,0), BlockType.CORNER, FacingDir.NORTH));
+		
+		block.add(new Block1(new Vector2(1,2), BlockType.WALL, FacingDir.SOUTH));
+		block.add(new Block1(new Vector2(1,1), BlockType.OPEN, FacingDir.SOUTH));
+		block.add(new Block1(new Vector2(1,0), BlockType.WALL, FacingDir.NORTH));
+		
+		block.add(new Block1(new Vector2(2,2), BlockType.CORNER, FacingDir.SOUTH));
+		block.add(new Block1(new Vector2(2,1), BlockType.WALL, FacingDir.WEST));
+		block.add(new Block1(new Vector2(2,0), BlockType.CORNER, FacingDir.WEST));
 	}
 	
 }

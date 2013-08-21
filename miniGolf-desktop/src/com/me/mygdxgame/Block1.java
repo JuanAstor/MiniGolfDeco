@@ -30,6 +30,8 @@ public class Block1 {
 	public Block1(Vector2 pos, BlockType blockType, FacingDir dir){
 		switch(blockType){
 			case OPEN:
+				coords = new float[] {0, 0, SIZE, SIZE, SIZE, 0};
+				this.bounds = new Polygon(coords);
 				this.position = pos;
 				break;
 			case HOLE:
