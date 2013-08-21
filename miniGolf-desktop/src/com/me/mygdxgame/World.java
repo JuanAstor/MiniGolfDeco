@@ -11,12 +11,25 @@ import com.me.mygdxgame.Block1.FacingDir;
 public class World {
 
 	Array<Block1> block = new Array<Block1>(); 
-	
+	Array<Block1> wallArray = new Array<Block1>(); 
+	Array<Block1> groundArray = new Array<Block1>(); 
+	Array<Block1> cornerArray = new Array<Block1>(); 
 	Ball ball; 
 	
 	public Array<Block1> getBlocks() { 
 		return block; 
 	}
+	
+	public Array<Block1> getWallBlocks() {
+		return wallArray;
+	}
+	public Array<Block1> getGroundBlocks() {
+		return groundArray; 
+	}
+	public Array<Block1> getCornerBlocks() {
+		return cornerArray;
+	}
+	
 	public Ball getBall() { 
 		return ball; 
 	}
@@ -27,20 +40,17 @@ public class World {
 	
 	private void createWorld() { 
 		ball = new Ball(new Vector2(7,2)); 
-		//for (int i = 0; i < 10; i++) { 
-
-			//block.add(new Block1(new Vector2(i, 0), BlockType.OPEN, FacingDir.NORTH));                       
-		//}
-		block.add(new Block1(new Vector2(0,1), BlockType.WALL, FacingDir.EAST));
+		
+		wallArray.add(new Block1(new Vector2(0,1), BlockType.WALL, FacingDir.EAST));
 		block.add(new Block1(new Vector2(0,2), BlockType.CORNER, FacingDir.EAST));
 		block.add(new Block1(new Vector2(0,0), BlockType.CORNER, FacingDir.NORTH));
 		
-		block.add(new Block1(new Vector2(1,2), BlockType.WALL, FacingDir.SOUTH));
+		wallArray.add(new Block1(new Vector2(1,2), BlockType.WALL, FacingDir.SOUTH));
 		block.add(new Block1(new Vector2(1,1), BlockType.OPEN, FacingDir.SOUTH));
-		block.add(new Block1(new Vector2(1,0), BlockType.WALL, FacingDir.NORTH));
+		wallArray.add(new Block1(new Vector2(1,0), BlockType.WALL, FacingDir.NORTH));
 		
 		block.add(new Block1(new Vector2(2,2), BlockType.CORNER, FacingDir.SOUTH));
-		block.add(new Block1(new Vector2(2,1), BlockType.WALL, FacingDir.WEST));
+		wallArray.add(new Block1(new Vector2(2,1), BlockType.WALL, FacingDir.WEST));
 		block.add(new Block1(new Vector2(2,0), BlockType.CORNER, FacingDir.WEST));
 	}
 	
