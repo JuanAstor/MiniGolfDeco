@@ -14,6 +14,7 @@ public class World {
 	Array<Block1> wallArray = new Array<Block1>(); 
 	Array<Block1> groundArray = new Array<Block1>(); 
 	Array<Block1> cornerArray = new Array<Block1>(); 
+	Array<Block1> holeArray = new Array<Block1>(); 
 	Ball ball; 
 	
 	public Array<Block1> getBlocks() { 
@@ -28,6 +29,9 @@ public class World {
 	}
 	public Array<Block1> getCornerBlocks() {
 		return cornerArray;
+	}
+	public Array<Block1> getHoleBlock() {
+		return holeArray;
 	}
 	
 	public Ball getBall() { 
@@ -52,6 +56,8 @@ public class World {
 		block.add(new Block1(new Vector2(2,2), BlockType.CORNER, FacingDir.SOUTH));
 		wallArray.add(new Block1(new Vector2(2,1), BlockType.WALL, FacingDir.WEST));
 		block.add(new Block1(new Vector2(2,0), BlockType.CORNER, FacingDir.WEST));
+		
+		holeArray.add(new Block1(new Vector2(5,5), BlockType.HOLE, FacingDir.NORTH));
 	}
 	
 }

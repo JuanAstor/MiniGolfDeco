@@ -19,8 +19,8 @@ import com.badlogic.gdx.math.Rectangle;
 @SuppressWarnings("unused")
 public class WorldRenderer { 
 	
-	private static final float CAM_WIDTH = 10f; 
-	private static final float CAM_HEIGHT = 7f; 
+	private static final float CAM_WIDTH = 20f; 
+	private static final float CAM_HEIGHT = 14f; 
 	
 	private World world; 
 	private OrthographicCamera cam; 
@@ -28,6 +28,9 @@ public class WorldRenderer {
 	ShapeRenderer debugRend = new ShapeRenderer();
 	private Texture ballTexture; 
 	private Texture wallTexture;
+	private Texture wallNorthTexture; 
+	private Texture wallEastTexture;
+	private Texture holeTexture;
 	private Texture backgroundTexture; 
 	private SpriteBatch sprite; 
 	private int width; 
@@ -46,8 +49,8 @@ public class WorldRenderer {
 	
 	public WorldRenderer (World world, boolean debug) { 
 		this.world = world; 
-		this.cam = new OrthographicCamera(10,7); 
-		this.cam.position.set(5, 3.5f, 0); 
+		this.cam = new OrthographicCamera(20,14); 
+		this.cam.position.set(10, 7f, 0); 
 		this.cam.update(); 
 		this.debug = debug;
 		sprite = new SpriteBatch(); 
@@ -59,27 +62,36 @@ public class WorldRenderer {
 		    sprite.draw(backgroundTexture, 0, 0);
 			drawBall(); 
 			drawWall();
+			drawHole();
 		sprite.end(); 
 		if(debug) {
 			debug(); 
-		}
-		
+		}		
 	}
 	
 	private void loadTextures() {
 		ballTexture = new Texture (Gdx.files.internal("images/ball.png"));
-		wallTexture = new Texture (Gdx.files.internal("images/wall.png"));
+		wallNorthTexture = new Texture (Gdx.files.internal("images/wall_north.png"));
+		wallEastTexture = new Texture (Gdx.files.internal("images/wall_east.png"));
+		holeTexture = new Texture (Gdx.files.internal("images/hole.png"));
 		backgroundTexture = new Texture(Gdx.files.internal("images/background.png"));
 	}
 	private void drawBall() {
 		Ball ball = world.getBall(); 
 		sprite.draw(ballTexture, ball.getPosition().x * ppuX, ball.getPosition().y * ppuY,
 				Ball.SIZE * ppuX, Ball.SIZE * ppuY);
+		
 	}
 	
 	private void drawWall() {
 		for(Block1 block : world.getWallBlocks()){
-			sprite.draw(wallTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+			sprite.draw(wallNorthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+					Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false);
+		}
+	}
+	private void drawHole() {
+		for(Block1 block : world.getHoleBlock()) {
+			sprite.draw(holeTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
 					Block1.SIZE * ppuX, Block1.SIZE * ppuY);
 		}
 	}
