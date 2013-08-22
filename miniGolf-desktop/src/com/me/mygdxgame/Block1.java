@@ -33,6 +33,7 @@ public class Block1 {
 				coords = new float[] {0, 0, SIZE, SIZE, SIZE, 0};
 				this.bounds = new Polygon(coords);
 				this.position = pos;
+				this.dir = dir; 
 				break;
 			case HOLE:
 				coords = new float[] {0, 0, SIZE/5, 0, 0, SIZE/5, SIZE/5, 
@@ -40,6 +41,7 @@ public class Block1 {
 				this.bounds = new Polygon(coords);
 				this.bounds.setPosition((2*SIZE)/5, (2*SIZE)/5);
 				this.position = pos;
+				this.dir = dir; 
 				break;	
 			case CORNER:
 				switch(dir){
@@ -65,6 +67,7 @@ public class Block1 {
 				}
 				this.bounds = new Polygon(coords);
 				this.position = pos;
+				this.dir = dir; 
 				break;	
 			case WALL:
 				switch(dir){
@@ -89,6 +92,7 @@ public class Block1 {
 				}
 				this.bounds = new Polygon(coords);
 				this.position = pos;
+				this.dir = dir; 
 				break;	
 			case UPHILL:
 				break;

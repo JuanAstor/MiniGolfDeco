@@ -2,6 +2,7 @@ package com.me.mygdxgame;
 
 import com.me.mygdxgame.Ball; 
 import com.me.mygdxgame.Block1; 
+import com.me.mygdxgame.Block1.FacingDir;
 import com.me.mygdxgame.World; 
 import com.badlogic.gdx.Gdx; 
 import com.badlogic.gdx.graphics.Color;
@@ -23,16 +24,19 @@ public class WorldRenderer {
 	private static final float CAM_HEIGHT = 14f; 
 	
 	private World world; 
-	private OrthographicCamera cam; 
-	
+	private OrthographicCamera cam;	
 	ShapeRenderer debugRend = new ShapeRenderer();
+	
 	private Texture ballTexture; 
+	private Texture groundTexture; 
 	private Texture wallTexture;
 	private Texture wallNorthTexture; 
 	private Texture wallEastTexture;
+	private Texture cornerTexture;
 	private Texture holeTexture;
 	private Texture backgroundTexture; 
 	private SpriteBatch sprite; 
+	
 	private int width; 
 	private int height; 
 	private float ppuX; //pixels/unit on width
@@ -60,8 +64,10 @@ public class WorldRenderer {
 	public void render() {
 		sprite.begin();
 		    sprite.draw(backgroundTexture, 0, 0);
-			drawBall(); 
+			drawBall();
+			drawGround();
 			drawWall();
+			drawCorners();
 			drawHole();
 		sprite.end(); 
 		if(debug) {
@@ -71,8 +77,10 @@ public class WorldRenderer {
 	
 	private void loadTextures() {
 		ballTexture = new Texture (Gdx.files.internal("images/ball.png"));
+		groundTexture = new Texture (Gdx.files.internal("images/open.png"));
 		wallNorthTexture = new Texture (Gdx.files.internal("images/wall_north.png"));
 		wallEastTexture = new Texture (Gdx.files.internal("images/wall_east.png"));
+		cornerTexture = new Texture (Gdx.files.internal("images/corner.png"));
 		holeTexture = new Texture (Gdx.files.internal("images/hole.png"));
 		backgroundTexture = new Texture(Gdx.files.internal("images/background.png"));
 	}
@@ -83,12 +91,55 @@ public class WorldRenderer {
 		
 	}
 	
-	private void drawWall() {
-		for(Block1 block : world.getWallBlocks()){
-			sprite.draw(wallNorthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
-					Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false);
+	private void drawGround(){
+		for(Block1 block : world.getGroundBlocks()){
+			sprite.draw(groundTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+					Block1.SIZE * ppuX, Block1.SIZE * ppuY);
 		}
 	}
+	
+	private void drawWall() {
+		for(Block1 block : world.getWallBlocks()){
+			if(block.dir == FacingDir.NORTH){ //draw blocks from getWallBlocks() that face north
+			sprite.draw(wallNorthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+					Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false); 
+			}
+			if(block.dir == FacingDir.SOUTH){
+				sprite.draw(wallNorthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, true);	
+			}
+			if(block.dir == FacingDir.EAST){
+				sprite.draw(wallEastTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, true);
+			}
+			if(block.dir == FacingDir.WEST){
+				sprite.draw(wallEastTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, true, false);
+			}
+		}
+	}
+	
+	private void drawCorners() {
+		for(Block1 block : world.getCornerBlocks()){
+			if(block.dir == FacingDir.NORTH){ //draw blocks from getCornerBlocks() that face north
+				sprite.draw(cornerTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false); 
+			}
+			if(block.dir == FacingDir.SOUTH){
+				sprite.draw(cornerTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, true, true);	
+			}
+			if(block.dir == FacingDir.EAST){
+				sprite.draw(cornerTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, true);	
+			} 
+			if(block.dir == FacingDir.WEST){
+				sprite.draw(cornerTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, true, false);	
+			}
+		}
+	}
+	
 	private void drawHole() {
 		for(Block1 block : world.getHoleBlock()) {
 			sprite.draw(holeTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
