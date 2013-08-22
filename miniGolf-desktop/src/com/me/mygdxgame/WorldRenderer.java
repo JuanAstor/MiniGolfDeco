@@ -2,6 +2,7 @@ package com.me.mygdxgame;
 
 import com.me.mygdxgame.Ball; 
 import com.me.mygdxgame.Block1; 
+import com.me.mygdxgame.Block1.BlockType;
 import com.me.mygdxgame.Block1.FacingDir;
 import com.me.mygdxgame.World; 
 import com.badlogic.gdx.Gdx; 
@@ -100,6 +101,8 @@ public class WorldRenderer {
 	
 	private void drawWall() {
 		for(Block1 block : world.getWallBlocks()){
+			//if(block.type == BlockType.Wall)
+			//change texture position based on it's FacingDir
 			if(block.dir == FacingDir.NORTH){ //draw blocks from getWallBlocks() that face north
 			sprite.draw(wallNorthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
 					Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false); 
@@ -121,6 +124,7 @@ public class WorldRenderer {
 	
 	private void drawCorners() {
 		for(Block1 block : world.getCornerBlocks()){
+			//change texture position based on FacingDir
 			if(block.dir == FacingDir.NORTH){ //draw blocks from getCornerBlocks() 
 				sprite.draw(cornerTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
 						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false); 

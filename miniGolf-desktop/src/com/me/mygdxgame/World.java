@@ -46,18 +46,27 @@ public class World {
 		ball = new Ball(new Vector2(7,2)); 
 		
 		wallArray.add(new Block1(new Vector2(0,1), BlockType.WALL, FacingDir.WEST));
-		cornerArray.add(new Block1(new Vector2(0,2), BlockType.CORNER, FacingDir.NORTH));
+		wallArray.add(new Block1(new Vector2(0,2), BlockType.WALL, FacingDir.WEST));
+		cornerArray.add(new Block1(new Vector2(0,3), BlockType.CORNER, FacingDir.NORTH));
 		cornerArray.add(new Block1(new Vector2(0,0), BlockType.CORNER, FacingDir.EAST));
 		
-		wallArray.add(new Block1(new Vector2(1,2), BlockType.WALL, FacingDir.NORTH));
+		wallArray.add(new Block1(new Vector2(1,3), BlockType.WALL, FacingDir.NORTH));
+		wallArray.add(new Block1(new Vector2(2,3), BlockType.WALL, FacingDir.NORTH));
+		
 		groundArray.add(new Block1(new Vector2(1,1), BlockType.OPEN, FacingDir.SOUTH));
+		groundArray.add(new Block1(new Vector2(1,2), BlockType.OPEN, FacingDir.NORTH));
+		holeArray.add(new Block1(new Vector2(2,2), BlockType.HOLE, FacingDir.NORTH));
+		groundArray.add(new Block1(new Vector2(2,1), BlockType.OPEN, FacingDir.NORTH));
+		
 		wallArray.add(new Block1(new Vector2(1,0), BlockType.WALL, FacingDir.SOUTH));
+		wallArray.add(new Block1(new Vector2(2,0), BlockType.WALL, FacingDir.SOUTH));
 		
-		cornerArray.add(new Block1(new Vector2(2,2), BlockType.CORNER, FacingDir.WEST));
-		wallArray.add(new Block1(new Vector2(2,1), BlockType.WALL, FacingDir.EAST));
-		cornerArray.add(new Block1(new Vector2(2,0), BlockType.CORNER, FacingDir.SOUTH));
+		cornerArray.add(new Block1(new Vector2(3,3), BlockType.CORNER, FacingDir.WEST));
+		wallArray.add(new Block1(new Vector2(3,1), BlockType.WALL, FacingDir.EAST));
+		wallArray.add(new Block1(new Vector2(3,2), BlockType.WALL, FacingDir.EAST));
+		cornerArray.add(new Block1(new Vector2(3,0), BlockType.CORNER, FacingDir.SOUTH));
 		
-		holeArray.add(new Block1(new Vector2(5,5), BlockType.HOLE, FacingDir.NORTH));
+		
 	}
 	
 }

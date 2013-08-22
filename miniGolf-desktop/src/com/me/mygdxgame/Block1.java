@@ -8,7 +8,7 @@ import java.util.*;
 public class Block1 {
 	
 	public enum BlockType {
-		CORNER, WALL, HOLE, OPEN, UPHILL, DOWNHILL
+		CORNER, WALL, HOLE, OPEN, UPHILL, DOWNHILL, START
 	}
 	
 	public enum FacingDir {
@@ -29,12 +29,15 @@ public class Block1 {
 	
 	public Block1(Vector2 pos, BlockType blockType, FacingDir dir){
 		switch(blockType){
+		
 			case OPEN:
 				coords = new float[] {0, 0, SIZE, SIZE, SIZE, 0};
 				this.bounds = new Polygon(coords);
 				this.position = pos;
 				this.dir = dir; 
+				this.type = blockType;
 				break;
+				
 			case HOLE:
 				coords = new float[] {0, 0, SIZE/5, 0, 0, SIZE/5, SIZE/5, 
 						SIZE/5};
@@ -42,7 +45,9 @@ public class Block1 {
 				this.bounds.setPosition((2*SIZE)/5, (2*SIZE)/5);
 				this.position = pos;
 				this.dir = dir; 
+				this.type = blockType;
 				break;	
+				
 			case CORNER:
 				switch(dir){
 					case NORTH:
@@ -68,7 +73,9 @@ public class Block1 {
 				this.bounds = new Polygon(coords);
 				this.position = pos;
 				this.dir = dir; 
+				this.type = blockType;
 				break;	
+				
 			case WALL:
 				switch(dir){
 				case NORTH:
@@ -93,11 +100,22 @@ public class Block1 {
 				this.bounds = new Polygon(coords);
 				this.position = pos;
 				this.dir = dir; 
+				this.type = blockType;
 				break;	
+				
 			case UPHILL:
+				this.type = blockType; 
+				this.dir = dir; 
+				this.position = pos;
 				break;
+				
 			case DOWNHILL:
+				this.type = blockType; 
+				this.dir = dir; 
+				this.position = pos;
 				break;
+		default:
+			break;
 		}
 		this.position = pos;		
 		
