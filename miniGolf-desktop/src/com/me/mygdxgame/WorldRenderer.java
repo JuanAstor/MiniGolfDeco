@@ -121,7 +121,7 @@ public class WorldRenderer {
 	
 	private void drawCorners() {
 		for(Block1 block : world.getCornerBlocks()){
-			if(block.dir == FacingDir.NORTH){ //draw blocks from getCornerBlocks() that face north
+			if(block.dir == FacingDir.NORTH){ //draw blocks from getCornerBlocks() 
 				sprite.draw(cornerTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
 						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false); 
 			}
@@ -146,6 +146,8 @@ public class WorldRenderer {
 					Block1.SIZE * ppuX, Block1.SIZE * ppuY);
 		}
 	}
+	//if the for loop is changed to world.getCornerBlocks or getWallBlocks, it 
+	//will render the outline of where they are rendered
 	public void debug() { 
 		//render the outline of the blocks
 		debugRend.setProjectionMatrix(cam.combined); 
