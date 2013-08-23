@@ -1,7 +1,7 @@
 package com.me.mygdxgame;
 
-import com.badlogic.gdx.math.Rectangle; 
-import com.badlogic.gdx.math.Vector2; 
+import com.badlogic.gdx.math.*;
+
 
 public class Ball {
 	
@@ -10,12 +10,11 @@ public class Ball {
 	float ACCELERATION; 
 	
 	Vector2 position = new Vector2();  
-	Rectangle bounds = new Rectangle();  
+	Polygon bounds;  
 	
 	public Ball(Vector2 position) { 
 		this.position = position; 
-		this.bounds.width = SIZE; 
-		this.bounds.height = SIZE; 
+		this.bounds = new Polygon(new float[]{0,0,0,SIZE,SIZE,0,SIZE,SIZE});
 	}
 	
 	public void setSpeed(float speed) { 
@@ -32,7 +31,7 @@ public class Ball {
 		return this.ACCELERATION;
 	}
 	
-	public Rectangle getBounds(){ 
+	public Polygon getBounds(){ 
 		return this.bounds; 
 	}	
 	public Vector2 getPosition(){

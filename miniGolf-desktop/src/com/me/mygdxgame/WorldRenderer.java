@@ -165,11 +165,11 @@ public class WorldRenderer {
 		}
 		//render the outline of the ball
 		Ball ball = world.getBall(); 
-		Rectangle rect = ball.getBounds(); 
-		float x1 = ball.getPosition().x + rect.x; 
-		float y1 = ball.getPosition().y + rect.y; 
+		Polygon rect = ball.getBounds(); 
+		float x1 = ball.getPosition().x + rect.getX(); 
+		float y1 = ball.getPosition().y + rect.getY(); 
 		debugRend.setColor(new Color(0,1,0,1)); //green
-		debugRend.rect(x1, y1, rect.width, rect.height);
+		debugRend.rect(x1, y1, rect.getScaleX(), rect.getScaleY());
 		debugRend.end();
 	}
 	
