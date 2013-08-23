@@ -65,11 +65,11 @@ public class WorldRenderer {
 	public void render() {
 		sprite.begin();
 		    sprite.draw(backgroundTexture, 0, 0);
-			drawBall();
 			drawGround();
 			drawWall();
 			drawCorners();
 			drawHole();
+			drawBall();
 		sprite.end(); 
 		if(debug) {
 			debug(); 
@@ -85,7 +85,7 @@ public class WorldRenderer {
 		holeTexture = new Texture (Gdx.files.internal("images/hole.png"));
 		backgroundTexture = new Texture(Gdx.files.internal("images/background.png"));
 	}
-	private void drawBall() {
+	public void drawBall() {
 		Ball ball = world.getBall(); 
 		sprite.draw(ballTexture, ball.getPosition().x * ppuX, ball.getPosition().y * ppuY,
 				Ball.SIZE * ppuX, Ball.SIZE * ppuY);
@@ -165,11 +165,11 @@ public class WorldRenderer {
 		}
 		//render the outline of the ball
 		Ball ball = world.getBall(); 
-		Polygon rect = ball.getBounds(); 
-		float x1 = ball.getPosition().x + rect.getX(); 
-		float y1 = ball.getPosition().y + rect.getY(); 
+		Polygon poly = ball.getBounds(); 
+		float x1 = ball.getPosition().x + poly.getX(); 
+		float y1 = ball.getPosition().y + poly.getY(); 
 		debugRend.setColor(new Color(0,1,0,1)); //green
-		debugRend.rect(x1, y1, rect.getScaleX(), rect.getScaleY());
+		debugRend.rect(x1, y1, poly.getScaleX(), poly.getScaleY());
 		debugRend.end();
 	}
 	

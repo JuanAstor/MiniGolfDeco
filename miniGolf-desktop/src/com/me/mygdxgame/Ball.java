@@ -1,34 +1,32 @@
 package com.me.mygdxgame;
 
-import com.badlogic.gdx.math.*;
-
+import com.badlogic.gdx.math.Polygon; 
+import com.badlogic.gdx.math.Vector2; 
 
 public class Ball {
 	
-	static final float SIZE = 0.2f;
-	float SPEED; 
-	float ACCELERATION; 
+	static final float SIZE = 0.4f;
+	float SPEED = 30f;  
 	
 	Vector2 position = new Vector2();  
+	Vector2 velocity = new Vector2(); 
 	Polygon bounds;  
 	
 	public Ball(Vector2 position) { 
 		this.position = position; 
 		this.bounds = new Polygon(new float[]{0,0,0,SIZE,SIZE,0,SIZE,SIZE});
 	}
-	
+	public void update(float delta){
+		position.add(velocity.cpy().mul(delta));
+	}
+	public Vector2 getVelocity() {
+		return this.velocity;
+	}
 	public void setSpeed(float speed) { 
 		this.SPEED = speed; 
 	}
 	public Float getBallSpeed() {
 		return this.SPEED; 
-	}
-	
-	public void setAccel(float accel){
-		this.ACCELERATION = accel; 
-	}
-	public Float getAccel(){
-		return this.ACCELERATION;
 	}
 	
 	public Polygon getBounds(){ 
@@ -37,5 +35,8 @@ public class Ball {
 	public Vector2 getPosition(){
 		return this.position; 
 	}	
+	public void setPosition(float x, float y){
+		this.position = new Vector2(x,y);
+	}
 
 }

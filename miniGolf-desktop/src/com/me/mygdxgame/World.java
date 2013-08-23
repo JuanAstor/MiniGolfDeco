@@ -43,7 +43,7 @@ public class World {
 	}
 	
 	private void createWorld() { 
-		ball = new Ball(new Vector2(7,2)); 
+		ball = new Ball(new Vector2(1,2)); 
 		
 		wallArray.add(new Block1(new Vector2(0,1), BlockType.WALL, FacingDir.WEST));
 		wallArray.add(new Block1(new Vector2(0,2), BlockType.WALL, FacingDir.WEST));
