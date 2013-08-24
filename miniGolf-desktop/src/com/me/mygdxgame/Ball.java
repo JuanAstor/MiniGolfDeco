@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Ball {
 	
-	static final float SIZE = 0.4f;
+	static final float SIZE = 1f;
 	float SPEED = 30f;  
 	
 	Vector2 position = new Vector2();  

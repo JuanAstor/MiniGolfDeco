@@ -21,8 +21,8 @@ import com.badlogic.gdx.math.Rectangle;
 @SuppressWarnings("unused")
 public class WorldRenderer { 
 	
-	private static final float CAM_WIDTH = 20f; 
-	private static final float CAM_HEIGHT = 14f; 
+	private static final float CAM_WIDTH = 30f; 
+	private static final float CAM_HEIGHT = 21f; 
 	
 	private World world; 
 	private OrthographicCamera cam;	
@@ -54,8 +54,8 @@ public class WorldRenderer {
 	
 	public WorldRenderer (World world, boolean debug) { 
 		this.world = world; 
-		this.cam = new OrthographicCamera(20,14); 
-		this.cam.position.set(10, 7f, 0); 
+		this.cam = new OrthographicCamera(30,21); 
+		this.cam.position.set(15f, 10.5f, 0); 
 		this.cam.update(); 
 		this.debug = debug;
 		sprite = new SpriteBatch(); 
@@ -156,7 +156,7 @@ public class WorldRenderer {
 		//render the outline of the blocks
 		debugRend.setProjectionMatrix(cam.combined); 
 		debugRend.begin(ShapeType.Rectangle); 
-		for(Block1 block : world.getBlocks()) {
+		for(Block1 block : world.getWallBlocks()) {
 			Polygon poly = block.getBounds(); 
 			float x1 = block.getPosition().x + poly.getX();
 			float y1 = block.getPosition().y + poly.getY(); 

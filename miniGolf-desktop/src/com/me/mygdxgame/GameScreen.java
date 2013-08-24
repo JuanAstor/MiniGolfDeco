@@ -13,14 +13,16 @@ public class GameScreen implements Screen, InputProcessor {
 	private World world;
 	private WorldRenderer renderer; 
 	private WorldController control;
+	private BallController ballCont;
 	
 	private int width, height; 
 	
 	@Override 
 	public void show() { 
 		world = new World(); 
-		renderer = new WorldRenderer(world, false); 
+		renderer = new WorldRenderer(world, true); 
 		control = new WorldController(world); 
+		ballCont = new BallController(world); 
 		Gdx.input.setInputProcessor(this); 
 	}
 	
@@ -29,6 +31,7 @@ public class GameScreen implements Screen, InputProcessor {
 		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		control.update(delta);
+		ballCont.update();
 		renderer.render();
 	}
 	
