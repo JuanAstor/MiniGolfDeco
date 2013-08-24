@@ -9,6 +9,7 @@ import com.me.mygdxgame.Ball;
 import com.me.mygdxgame.World;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.input.*;
 
@@ -40,6 +41,16 @@ public class WorldController{
 	public void leftKeyReleased() {
 		buttons.get(buttons.put(Buttons.LEFT, false));
 	}
+	
+	// enable right click
+	public void rightKeyPressed() { 
+		buttons.get(buttons.put(Buttons.RIGHT, true));
+	}
+	//disable
+	public void rightKeyReleased() {
+		buttons.get(buttons.put(Buttons.RIGHT, false));
+	}
+	
 	//get input and update ball 
 	public void update(float delta) {
 		processInput(delta); 
@@ -50,9 +61,12 @@ public class WorldController{
 	private void processInput(float delta) {
 		//if the left click is enabled then change position
 		if(buttons.get(Buttons.LEFT)){
-			//change x and y velocity
-			ball.getVelocity().x = (-ball.SPEED * delta);
-			ball.getVelocity().y = (ball.SPEED * (delta/2));
+			//change x velocity (move left)
+			ball.getVelocity().x = (-ball.SPEED * delta*3);
+		}
+		if(buttons.get(Buttons.RIGHT)){
+			//change x velocity (move right)
+			ball.getVelocity().x = (ball.SPEED * delta*3);
 		}
 		if(!buttons.get(Buttons.LEFT) && (!buttons.get(Buttons.RIGHT))){
 			ball.getVelocity().x = 0;

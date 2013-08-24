@@ -100,6 +100,9 @@ public class GameScreen implements Screen, InputProcessor {
 	public boolean touchDown(int arg0, int arg1, int arg2, int button) {
 		if(button == Buttons.LEFT)
 			control.leftKeyPressed();
+		if (button == Buttons.RIGHT){
+			control.rightKeyPressed();
+		}
 		return true;
 	}
 	
@@ -108,6 +111,9 @@ public class GameScreen implements Screen, InputProcessor {
 	public boolean touchUp(int arg0, int arg1, int arg2, int button) {
 		if(button == Buttons.LEFT)
 			control.leftKeyReleased();
+		if (button == Buttons.RIGHT){
+			control.rightKeyReleased();
+		}
 		return true;
 	}
 

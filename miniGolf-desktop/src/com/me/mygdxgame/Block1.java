@@ -81,19 +81,19 @@ public class Block1 {
 				
 			case WALL:
 				switch(dir){
-				case NORTH:
+				case SOUTH:
 					coords = new float[] {0,0, SIZE, 0, SIZE, 
 							SIZE/2, 0, SIZE/2};					
 					break;
-				case SOUTH:
+				case NORTH:
 					coords = new float[] {0, SIZE, SIZE, SIZE, SIZE,
 							SIZE/2, 0, SIZE/2};					
 					break;
-				case EAST:
+				case WEST:
 					coords = new float[] {0, 0, 0, SIZE, SIZE/2, 
 							SIZE, SIZE/2, 0};
 					break;					
-				case WEST:
+				case EAST:
 					coords = new float[] {SIZE, 0, SIZE/2, 0, SIZE/2,
 							SIZE, SIZE, SIZE};
 					break;

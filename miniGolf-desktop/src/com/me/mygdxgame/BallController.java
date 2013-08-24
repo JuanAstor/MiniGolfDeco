@@ -23,9 +23,9 @@ public class BallController {
 	public void collisionDetect(){
 		Polygon ballBounds = ball.getBounds();
 		for (Block1 block: collisionBlocks){
-			//if(Intersector.overlapConvexPolygons(ballBounds, block.getBounds())){
-			//		System.out.println("COLLISION!!!!!");
-			//	}
+			if(Intersector.overlapConvexPolygons(ballBounds, block.getBounds())){
+					System.out.println("COLLISION!!!!!");
+				}
 			
 		}			
 	}		
