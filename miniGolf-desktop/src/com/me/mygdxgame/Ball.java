@@ -15,9 +15,11 @@ public class Ball {
 	public Ball(Vector2 position) { 
 		this.position = position; 
 		this.bounds = new Polygon(new float[]{0,0,0,SIZE,SIZE,0,SIZE,SIZE});
+		this.bounds.setPosition(position.x, position.y);
 	}
 	public void update(float delta){
 		position.add(velocity.cpy().mul(delta));
+		this.bounds.setPosition(position.x, position.y);
 	}
 	public Vector2 getVelocity() {
 		return this.velocity;
@@ -37,6 +39,7 @@ public class Ball {
 	}	
 	public void setPosition(float x, float y){
 		this.position = new Vector2(x,y);
+		this.bounds.setPosition(x, y);
 	}
 
 }

@@ -33,6 +33,7 @@ public class Block1 {
 			case OPEN:
 				coords = new float[] {0, 0, SIZE, SIZE, SIZE, 0};
 				this.bounds = new Polygon(coords);
+				this.bounds.setPosition(pos.x, pos.y);
 				this.position = pos;
 				this.dir = dir; 
 				this.type = blockType;
@@ -42,7 +43,8 @@ public class Block1 {
 				coords = new float[] {0, 0, SIZE/5, 0, 0, SIZE/5, SIZE/5, 
 						SIZE/5};
 				this.bounds = new Polygon(coords);
-				this.bounds.setPosition((2*SIZE)/5, (2*SIZE)/5);
+				//this.bounds.setPosition((2*SIZE)/5, (2*SIZE)/5);
+				this.bounds.setPosition(pos.x, pos.y);
 				this.position = pos;
 				this.dir = dir; 
 				this.type = blockType;
@@ -71,6 +73,7 @@ public class Block1 {
 						break;
 				}
 				this.bounds = new Polygon(coords);
+				this.bounds.setPosition(pos.x, pos.y);
 				this.position = pos;
 				this.dir = dir; 
 				this.type = blockType;
@@ -98,6 +101,7 @@ public class Block1 {
 					break;
 				}
 				this.bounds = new Polygon(coords);
+				this.bounds.setPosition(pos.x, pos.y);
 				this.position = pos;
 				this.dir = dir; 
 				this.type = blockType;
@@ -117,7 +121,8 @@ public class Block1 {
 		default:
 			break;
 		}
-		this.position = pos;		
+		this.position = pos;
+		this.bounds.setPosition(pos.x, pos.y);
 		
 	} 
 	

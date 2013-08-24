@@ -158,16 +158,16 @@ public class WorldRenderer {
 		debugRend.begin(ShapeType.Rectangle); 
 		for(Block1 block : world.getWallBlocks()) {
 			Polygon poly = block.getBounds(); 
-			float x1 = block.getPosition().x + poly.getX();
-			float y1 = block.getPosition().y + poly.getY(); 
+			float x1 = poly.getX();
+			float y1 = poly.getY(); 
 			debugRend.setColor(new Color(1,0,0,1)); //red
 			debugRend.rect(x1, y1, poly.getScaleX(), poly.getScaleY());
 		}
 		//render the outline of the ball
 		Ball ball = world.getBall(); 
 		Polygon poly = ball.getBounds(); 
-		float x1 = ball.getPosition().x + poly.getX(); 
-		float y1 = ball.getPosition().y + poly.getY(); 
+		float x1 = poly.getX(); 
+		float y1 = poly.getY(); 
 		debugRend.setColor(new Color(0,1,0,1)); //green
 		debugRend.rect(x1, y1, poly.getScaleX(), poly.getScaleY());
 		debugRend.end();
