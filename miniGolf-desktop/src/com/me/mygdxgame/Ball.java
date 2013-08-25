@@ -7,6 +7,7 @@ public class Ball {
 	
 	static final float SIZE = 0.5f;
 	float SPEED = 100f;  
+	public Boolean bounce = false;
 	
 	Vector2 position = new Vector2();  
 	Vector2 velocity = new Vector2(); 

@@ -62,11 +62,13 @@ public class WorldController{
 		//if the left click is enabled then change position
 		if(buttons.get(Buttons.LEFT)){
 			//change x velocity (move left)
-			ball.getVelocity().x = (-ball.SPEED * delta*3);
+			if(!ball.bounce) ball.getVelocity().x = (-ball.SPEED * delta*3);
+			else ball.getVelocity().x = (ball.SPEED * delta*3);
 		}
 		if(buttons.get(Buttons.RIGHT)){
 			//change x velocity (move right)
-			ball.getVelocity().x = (ball.SPEED * delta*3);
+			if(!ball.bounce) ball.getVelocity().y = (ball.SPEED * delta*3);
+			else ball.getVelocity().y = (-ball.SPEED * delta*3);
 		}
 		if(!buttons.get(Buttons.LEFT) && (!buttons.get(Buttons.RIGHT))){
 			ball.getVelocity().x = 0;
