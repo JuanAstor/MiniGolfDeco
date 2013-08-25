@@ -5,8 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Ball {
 	
-	static final float SIZE = 1f;
-	float SPEED = 30f;  
+	static final float SIZE = 0.5f;
+	float SPEED = 100f;  
 	
 	Vector2 position = new Vector2();  
 	Vector2 velocity = new Vector2(); 
@@ -16,6 +16,7 @@ public class Ball {
 		this.position = position; 
 		this.bounds = new Polygon(new float[]{0,0,0,SIZE,SIZE,0,SIZE,SIZE});
 		this.bounds.setPosition(position.x, position.y);
+		this.bounds.setScale(0.5f, 0.5f);
 	}
 	public void update(float delta){
 		position.add(velocity.cpy().mul(delta));
