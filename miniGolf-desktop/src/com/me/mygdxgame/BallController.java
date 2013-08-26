@@ -25,7 +25,12 @@ public class BallController {
 		for (Block1 block: collisionBlocks){
 			if(Intersector.overlapConvexPolygons(ballBounds, block.getBounds())){
 					System.out.println("COLLISION!!!!!");
-					ball.bounce = ball.bounce == true? false:true;
+					if(block.dir == Block1.FacingDir.WEST || block.dir == Block1.FacingDir.EAST){
+						ball.bounceX = ball.bounceX == true? false:true;
+					}
+					else if(block.dir == Block1.FacingDir.NORTH || block.dir == Block1.FacingDir.SOUTH){
+						ball.bounceY = ball.bounceY == true? false:true;
+					}
 				}
 			
 		}			
