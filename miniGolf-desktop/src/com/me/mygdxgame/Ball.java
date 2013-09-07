@@ -6,9 +6,8 @@ import com.badlogic.gdx.math.Vector2;
 public class Ball {
 	
 	static final float SIZE = 0.5f;
-	float SPEED = 100f;  
-	public Boolean bounceX = false;
-	public Boolean bounceY = false;
+	float SPEED = 0f;  
+	public Boolean bounce = false;
 	
 	Vector2 position = new Vector2();  
 	Vector2 velocity = new Vector2(); 
