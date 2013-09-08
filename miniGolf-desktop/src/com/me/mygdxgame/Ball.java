@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Ball {
 	
-	static final float SIZE = 0.5f;
+	static final float SIZE = 10f;
 	float SPEED = 0f;  
 	public Boolean bounceX = false;
 	public Boolean bounceY = false;
@@ -39,6 +39,8 @@ public class Ball {
 		return this.bounds; 
 	}	
 	public Vector2 getPosition(){
+		this.position.x = this.bounds.getX();
+		this.position.y = this.bounds.getY();
 		return this.position; 
 	}	
 	public void setPosition(float x, float y){

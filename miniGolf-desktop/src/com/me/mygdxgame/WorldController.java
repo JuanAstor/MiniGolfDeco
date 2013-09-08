@@ -4,9 +4,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 import org.lwjgl.input.Mouse;
-
-import com.me.mygdxgame.Ball; 
-import com.me.mygdxgame.World;
+ 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
@@ -18,10 +16,12 @@ public class WorldController{
 		
 	private World world; 
 	private Ball ball;
-	
+	private WorldRenderer wRend;
+	private direcLogic directionLogic; 
 	private int leftButtonCount = 0;
 	private int rightButtonCount = 0;
-	private float speedChange = 1000.0f;
+	private float speedChange = 10000.0f;
+	
 	
 	enum Buttons {
 		LEFT, RIGHT
@@ -45,6 +45,7 @@ public class WorldController{
 	public void leftKeyReleased() {
 		buttons.get(buttons.put(Buttons.LEFT, false));
 		leftButtonCount = 1;
+		//this.wRend.setRenderTraject(false);
 	}
 	
 	// enable right click
@@ -69,38 +70,38 @@ public class WorldController{
 	
 	//updates the speed and position of the ball when the mouse is clicked
 	private void processInput(float delta) {
-		
-		
-		
-		
-		
-		//if the left click is enabled then change position
+		//if the left click is enabled then change position 
+		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT) && leftButtonCount != 1){
+			//speedChange += 2f; 
+			//System.out.println(speedChange);
+			
+		}
 		if(leftButtonCount == 1){
 			if(speedChange != 0.0){
-				speedChange -=0.5f;
+				speedChange -=10f;
 				if(speedChange < 0) speedChange = 0;
-				//System.out.println(speedChange);
-			
+				System.out.println(speedChange);
 				if(!ball.bounceX) ball.getVelocity().x = (speedChange * delta);
 				else ball.getVelocity().x = (-speedChange * delta);
 			}
 			else{ 
 				    //reset speed and button count
-					speedChange = 300; 
+					speedChange = 10000; 
 					leftButtonCount = 0;
 				}
 		}
 		if(rightButtonCount == 1){
 			if(speedChange > 0.0){
-				speedChange -=0.75f;
+				speedChange -=10f;
 				if(speedChange < 0) speedChange = 0;
-				//System.out.println(speedChange);
+				System.out.println(speedChange);
 				
+
 				if(!ball.bounceY) ball.getVelocity().y = (speedChange * delta);
 				else ball.getVelocity().y = (-speedChange * delta);
 			}
 			else {
-				speedChange = 100; 
+				speedChange = 10000; 
 				rightButtonCount = 0;
 			}
 		}

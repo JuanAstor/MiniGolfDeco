@@ -16,6 +16,7 @@ public class World {
 	Array<Block1> cornerArray = new Array<Block1>(); 
 	Array<Block1> holeArray = new Array<Block1>(); 
 	Ball ball; 
+//	Arrow arrow; 
 	
 	public Array<Block1> getBlocks() { 
 		return block; 
@@ -36,38 +37,41 @@ public class World {
 	
 	public Ball getBall() { 
 		return ball; 
-	}
+	}	
+//	public Arrow getArrow(){
+//		return arrow; 
+//	}
 	
 	public World() { 
 		createHole1(); 
 	}
 	
 	private void createHole1() {
-		ball = new Ball(new Vector2(2,2));
-		
+		ball = new Ball(new Vector2(35,35));
+		//arrow = new Arrow(new Vector2(30,30));
 		cornerArray.add(new Block1(new Vector2(0,0), BlockType.CORNER, FacingDir.EAST));
-		cornerArray.add(new Block1(new Vector2(0,10), BlockType.CORNER, FacingDir.NORTH));
-		cornerArray.add(new Block1(new Vector2(14,10), BlockType.CORNER, FacingDir.WEST));
-		cornerArray.add(new Block1(new Vector2(14,0), BlockType.CORNER, FacingDir.SOUTH));
+		cornerArray.add(new Block1(new Vector2(0,300), BlockType.CORNER, FacingDir.NORTH));
+		cornerArray.add(new Block1(new Vector2(540,300), BlockType.CORNER, FacingDir.WEST));
+		cornerArray.add(new Block1(new Vector2(540,0), BlockType.CORNER, FacingDir.SOUTH));
 		
-		for (int i = 0; i <= 14; i++) {
-			for(int j = 0; j <= 10; j++){
+		for (int i = 0; i <= 540; i+=30) {
+			for(int j = 0; j <= 300; j+=30){
 				//add walls
-				if(i == 0 && j < 10){
+				if(i == 0 && j < 300){
 					wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.WEST));
 				}
-				if(i < 14 && j == 10){
+				if(i < 540 && j == 300){
 					wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.NORTH));
 				}
-				if(i == 14 && j < 10){
+				if(i == 540 && j < 300){
 					wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.EAST));
 				}
-				if(i < 14 && j == 0){
+				if(i < 540 && j == 0){
 					wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.SOUTH));
 				}
 				//ground + hole
-				if(i > 0 && i < 14 || j < 0 && j < 10){
-					if(i == 12 && j == 8){
+				if(i > 0 && i < 540 || j < 0 && j < 300){
+					if(i == 480 && j == 240){
 						holeArray.add(new Block1(new Vector2(i,j), BlockType.HOLE, FacingDir.NORTH));
 					} else {
 					groundArray.add(new Block1(new Vector2(i,j), BlockType.OPEN, FacingDir.NORTH));
