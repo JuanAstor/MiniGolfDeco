@@ -51,8 +51,11 @@ public class BallController {
 					}
 				
 					else if(blockType == Block1.BlockType.HOLE){
-						System.out.println("YOU WIN!!!! (Not really)");
-						collision = true;
+						if(ball.inHole == false){
+							System.out.println("YOU WIN!!!! (Not really)");
+							ball.inHole = true;
+							collision = true;
+						}
 					}
 					
 				}

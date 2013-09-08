@@ -9,6 +9,7 @@ public class Ball {
 	float SPEED = 0f;  
 	public Boolean bounceX = false;
 	public Boolean bounceY = false;
+	public Boolean inHole = false;
 	
 	Vector2 position = new Vector2();  
 	Vector2 velocity = new Vector2(); 

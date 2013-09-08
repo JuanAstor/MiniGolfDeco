@@ -96,8 +96,10 @@ public class WorldRenderer {
 	}
 	public void drawBall() {
 		Ball ball = world.getBall(); 
-		sprite.draw(ballTexture, ball.getPosition().x * ppuX, ball.getPosition().y * ppuY,
+		if (ball.inHole != true){
+			sprite.draw(ballTexture, ball.getPosition().x * ppuX, ball.getPosition().y * ppuY,
 				Ball.SIZE * ppuX, Ball.SIZE * ppuY);
+		} 
 		
 	}
 	

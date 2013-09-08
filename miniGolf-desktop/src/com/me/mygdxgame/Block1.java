@@ -44,7 +44,7 @@ public class Block1 {
 						SIZE/5};
 				this.bounds = new Polygon(coords);
 				//this.bounds.setPosition((2*SIZE)/5, (2*SIZE)/5);
-				this.bounds.setPosition(pos.x, pos.y);
+				this.bounds.setPosition(pos.x+SIZE/2, pos.y+SIZE/2);
 				this.position = pos;
 				this.dir = dir; 
 				this.type = blockType;

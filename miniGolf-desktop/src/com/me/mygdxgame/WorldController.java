@@ -60,11 +60,20 @@ public class WorldController{
 	//get input and update ball 
 	public void update(float delta) {
 		processInput(delta); 
+		if (ball.inHole == true){
+			ball.getVelocity().x = 0;
+			ball.getVelocity().y = 0;
+		}
 		ball.update(delta);
 	}
 	
 	//updates the speed and position of the ball when the mouse is clicked
 	private void processInput(float delta) {
+		
+		
+		
+		
+		
 		//if the left click is enabled then change position
 		if(leftButtonCount == 1){
 			if(speedChange != 0.0){
