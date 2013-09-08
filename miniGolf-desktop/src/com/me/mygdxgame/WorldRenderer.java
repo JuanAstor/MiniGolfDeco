@@ -94,11 +94,12 @@ public class WorldRenderer {
 			drawHole();
 			drawBall();
 			
-		sprite.end();
+		//sprite.end();
 		if((ball.getVelocity().x == 0 && ball.getVelocity().y == 0)){
 		  stage.act(); 
 		  stage.draw();
 		}
+		sprite.end();
 		if(debug) {
 			debug(); 
 		}		
@@ -127,7 +128,7 @@ public class WorldRenderer {
 		controller = new DirectionController();
 		
 		directLogic = new direcLogic(controller, ball.getPosition());
-		traject = new Trajectory(controller, trajectorySprite);
+		traject = new Trajectory(controller, trajectorySprite, this.world);
 		traject.setX(128f);
 		traject.setY(20 + ballTexture.getHeight() * 0.7f);
 		traject.setWidth(50f); 

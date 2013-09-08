@@ -5,13 +5,13 @@ import com.badlogic.gdx.math.Vector2;
 
 public class direcLogic {
 	
-	private DirectionController direct;
+	private DirectionController directController;
 	final Vector2 ballPos = new Vector2();
 	final Vector2 currentPos = new Vector2();
 	final Vector2 temp = new Vector2(); 
 	
 	public direcLogic(DirectionController control, Vector2 ballPos){
-		this.direct = control; 
+		this.directController = control; 
 		this.ballPos.set(ballPos);
 	}
 	
@@ -23,8 +23,8 @@ public class direcLogic {
 		temp.set(currentPos).sub(ballPos);
 		temp.mul(-1f);
 		
-		direct.angle = temp.angle(); 
-		direct.power = temp.len();
+		directController.angle = temp.angle(); 
+		directController.power = temp.len();
 	}
 	public Vector2 getDirection(){
 		return temp;
