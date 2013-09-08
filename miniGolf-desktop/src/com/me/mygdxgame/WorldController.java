@@ -45,7 +45,6 @@ public class WorldController{
 	public void leftKeyReleased() {
 		buttons.get(buttons.put(Buttons.LEFT, false));
 		leftButtonCount = 1;
-		//this.wRend.setRenderTraject(false);
 	}
 	
 	// enable right click
@@ -83,7 +82,6 @@ public class WorldController{
 			if(speedChange != 0.0){
 				speedChange -=50f;
 				if(speedChange < 0) speedChange = 0;
-				System.out.println(speedChange);
 				if(!ball.bounceX) ball.getVelocity().x = (speedChange * delta);
 				else ball.getVelocity().x = (-speedChange * delta);
 			}
@@ -107,23 +105,4 @@ public class WorldController{
 			}
 		}
 	}
-//		
-////		if(buttons.get(Buttons.LEFT)){
-////			//change x velocity (move left)
-////			if(!ball.bounce) ball.getVelocity().x = (-ball.SPEED * delta*3);
-////			else ball.getVelocity().x = (ball.SPEED * delta*3);
-////		}
-//		if(buttons.get(Buttons.RIGHT)){
-//			//change x velocity (move right)
-//			if(!ball.bounce) ball.getVelocity().y = (ball.SPEED * delta*3);
-//			else ball.getVelocity().y = (-ball.SPEED * delta*3);
-//		}
-	
-//	private void processInput() {
-//		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){ 
-//			float mouseX = Gdx.input.getX(); //get mouse X 
-//			float mouseY = (Gdx.input.getY()); //get mouse Y		
-//		}
-//		
-//	}
 }

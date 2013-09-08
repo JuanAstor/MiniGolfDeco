@@ -19,7 +19,7 @@ public class Ball {
 		this.position = position; 
 		this.bounds = new Polygon(new float[]{0,0,0,SIZE,SIZE,0,SIZE,SIZE});
 		this.bounds.setPosition(position.x, position.y);
-		this.bounds.setScale(0.5f, 0.5f);
+		//this.bounds.setScale(0.5f, 0.5f);
 	}
 	public void update(float delta){
 		position.add(velocity.cpy().mul(delta));

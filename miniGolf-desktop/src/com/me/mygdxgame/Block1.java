@@ -44,7 +44,6 @@ public class Block1 {
 				coords = new float[] { 0, 0, SIZE / 5, 0, 0, SIZE / 5, SIZE / 5,
 						SIZE / 5 };
 				this.bounds = new Polygon(coords);
-				// this.bounds.setPosition((2*SIZE)/5, (2*SIZE)/5);
 				this.bounds.setPosition(pos.x + SIZE / 3, pos.y + SIZE / 3);
 				//this.bounds.setScale(1.5f, 1.5f);
 				this.position = pos;
