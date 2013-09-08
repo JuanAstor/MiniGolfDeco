@@ -21,7 +21,7 @@ public class WorldController{
 	
 	private int leftButtonCount = 0;
 	private int rightButtonCount = 0;
-	private float speedChange = 100.0f;
+	private float speedChange = 1000.0f;
 	
 	enum Buttons {
 		LEFT, RIGHT
@@ -70,14 +70,14 @@ public class WorldController{
 			if(speedChange != 0.0){
 				speedChange -=0.5f;
 				if(speedChange < 0) speedChange = 0;
-				System.out.println(speedChange);
+				//System.out.println(speedChange);
 			
-				if(!ball.bounce) ball.getVelocity().x = (speedChange * delta);
+				if(!ball.bounceX) ball.getVelocity().x = (speedChange * delta);
 				else ball.getVelocity().x = (-speedChange * delta);
 			}
 			else{ 
 				    //reset speed and button count
-					speedChange = 100; 
+					speedChange = 300; 
 					leftButtonCount = 0;
 				}
 		}
@@ -85,9 +85,9 @@ public class WorldController{
 			if(speedChange > 0.0){
 				speedChange -=0.75f;
 				if(speedChange < 0) speedChange = 0;
-				System.out.println(speedChange);
+				//System.out.println(speedChange);
 				
-				if(!ball.bounce) ball.getVelocity().y = (speedChange * delta);
+				if(!ball.bounceY) ball.getVelocity().y = (speedChange * delta);
 				else ball.getVelocity().y = (-speedChange * delta);
 			}
 			else {

@@ -31,7 +31,7 @@ public class Block1 {
 		switch(blockType){
 		
 			case OPEN:
-				coords = new float[] {0, 0, SIZE, SIZE, SIZE, 0};
+				coords = new float[] {0, 0, SIZE, SIZE, SIZE, 0, 0, SIZE};
 				this.bounds = new Polygon(coords);
 				this.bounds.setPosition(pos.x, pos.y);
 				this.position = pos;
@@ -134,4 +134,11 @@ public class Block1 {
 		return this.bounds; 
 	}
 	
+	public BlockType getType(){
+		return this.type;
+	}
+	
+	public FacingDir getDir(){
+		return this.dir;
+	}
 }
