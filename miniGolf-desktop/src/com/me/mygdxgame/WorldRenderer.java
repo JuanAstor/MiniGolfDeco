@@ -30,10 +30,14 @@ public class WorldRenderer {
 	
 	private Texture ballTexture; 
 	private Texture groundTexture; 
-	private Texture wallTexture;
-	private Texture wallNorthTexture; 
+	private Texture wallSouthTexture; 
+	private Texture wallWestTexture;
 	private Texture wallEastTexture;
-	private Texture cornerTexture;
+	private Texture wallNorthTexture;
+	private Texture cornerSouthTexture;
+	private Texture cornerNorthTexture;
+	private Texture cornerEastTexture;
+	private Texture cornerWestTexture;
 	private Texture holeTexture;
 	private Texture backgroundTexture; 
 	private SpriteBatch sprite; 
@@ -78,10 +82,15 @@ public class WorldRenderer {
 	
 	private void loadTextures() {
 		ballTexture = new Texture (Gdx.files.internal("images/ball.png"));
-		groundTexture = new Texture (Gdx.files.internal("images/open.png"));
-		wallNorthTexture = new Texture (Gdx.files.internal("images/wall_north.png"));
-		wallEastTexture = new Texture (Gdx.files.internal("images/wall_east.png"));
-		cornerTexture = new Texture (Gdx.files.internal("images/corner.png"));
+		groundTexture = new Texture (Gdx.files.internal("images/grass.png"));
+		wallSouthTexture = new Texture (Gdx.files.internal("images/wall-north.png"));
+		wallNorthTexture = new Texture (Gdx.files.internal("images/wall-south.png"));
+		wallEastTexture = new Texture (Gdx.files.internal("images/wall-west.png"));
+		wallWestTexture = new Texture (Gdx.files.internal("images/wall-east.png"));
+		cornerWestTexture = new Texture (Gdx.files.internal("images/corner-w.png"));
+		cornerNorthTexture = new Texture (Gdx.files.internal("images/corner-n.png"));
+		cornerEastTexture = new Texture (Gdx.files.internal("images/corner-e.png"));
+		cornerSouthTexture = new Texture (Gdx.files.internal("images/corner-s.png"));
 		holeTexture = new Texture (Gdx.files.internal("images/hole.png"));
 		backgroundTexture = new Texture(Gdx.files.internal("images/background.png"));
 	}
@@ -108,16 +117,16 @@ public class WorldRenderer {
 					Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false); 
 			}
 			if(block.dir == FacingDir.SOUTH){
-				sprite.draw(wallNorthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
-						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, true);	
+				sprite.draw(wallSouthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false);	
 			}
 			if(block.dir == FacingDir.EAST){
 				sprite.draw(wallEastTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
-						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, true);
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false);
 			}
 			if(block.dir == FacingDir.WEST){
-				sprite.draw(wallEastTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
-						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, true, false);
+				sprite.draw(wallWestTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false);
 			}
 		}
 	}
@@ -126,20 +135,20 @@ public class WorldRenderer {
 		for(Block1 block : world.getCornerBlocks()){
 			//change texture position based on FacingDir
 			if(block.dir == FacingDir.NORTH){ //draw blocks from getCornerBlocks() 
-				sprite.draw(cornerTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+				sprite.draw(cornerEastTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
 						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false); 
 			}
 			if(block.dir == FacingDir.SOUTH){
-				sprite.draw(cornerTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
-						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, true, true);	
+				sprite.draw(cornerWestTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false);	
 			}
 			if(block.dir == FacingDir.EAST){
-				sprite.draw(cornerTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
-						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, true);	
+				sprite.draw(cornerNorthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false);	
 			} 
 			if(block.dir == FacingDir.WEST){
-				sprite.draw(cornerTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
-						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, true, false);	
+				sprite.draw(cornerSouthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false);	
 			}
 		}
 	}
