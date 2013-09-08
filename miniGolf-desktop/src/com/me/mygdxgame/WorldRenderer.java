@@ -94,12 +94,13 @@ public class WorldRenderer {
 			drawHole();
 			drawBall();
 			
-		//sprite.end();
-		if((ball.getVelocity().x == 0 && ball.getVelocity().y == 0)){
+		sprite.end();
+		if((ball.getVelocity().x == 0 && ball.getVelocity().y == 0)
+				&& !(ball.inHole)){
 		  stage.act(); 
 		  stage.draw();
 		}
-		sprite.end();
+		//sprite.end();
 		if(debug) {
 			debug(); 
 		}		
