@@ -78,10 +78,14 @@ public class WorldRenderer {
 	}
 	
 	public void render() {
-		//if(renderTrajectory){
+		Ball ball = world.getBall();
+		
+		if((ball.getVelocity().x == 0 && ball.getVelocity().y == 0)){
 			drawBallTrajectory();
 			directLogic.update();
-		//}				
+		}
+			
+					
 		sprite.begin();
 		    sprite.draw(backgroundTexture, 0, 0);
 			drawGround();
@@ -91,8 +95,10 @@ public class WorldRenderer {
 			drawBall();
 			
 		sprite.end();
-		stage.act(); 
-		stage.draw();
+		if((ball.getVelocity().x == 0 && ball.getVelocity().y == 0)){
+		  stage.act(); 
+		  stage.draw();
+		}
 		if(debug) {
 			debug(); 
 		}		
@@ -115,9 +121,11 @@ public class WorldRenderer {
 		arrowTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 	}
 	private void drawBallTrajectory() {
+		Ball ball = world.getBall();
+				
 		trajectorySprite = new Sprite(arrowTexture);
 		controller = new DirectionController();
-		Ball ball = world.getBall();
+		
 		directLogic = new direcLogic(controller, ball.getPosition());
 		traject = new Trajectory(controller, trajectorySprite);
 		traject.setX(128f);
@@ -126,9 +134,11 @@ public class WorldRenderer {
 		traject.setHeight(50f);
 		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 		stage.addActor(traject);
+		directLogic.update();
 	}
-	private void drawBall() {	
+	private void drawBall() {			
 		Ball ball = world.getBall();
+		if (ball.inHole) return;
 		sprite.draw(ballTexture, ball.getPosition().x * ppuX, ball.getPosition().y * ppuY,
 				Ball.SIZE * ppuX, Ball.SIZE * ppuY);		
 	}
