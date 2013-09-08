@@ -84,7 +84,10 @@ public class WorldRenderer {
 			drawBallTrajectory();
 			directLogic.update();
 		}
-			
+		if((ball.getVelocity().x == 0 && ball.getVelocity().y == 0 && !(ball.inHole))){
+			  stage.act(); 
+			  stage.draw();
+			}	
 					
 		sprite.begin();
 		    sprite.draw(backgroundTexture, 0, 0);
@@ -95,12 +98,10 @@ public class WorldRenderer {
 			drawBall();
 			
 		sprite.end();
-		if((ball.getVelocity().x == 0 && ball.getVelocity().y == 0)
-				&& !(ball.inHole)){
+		if((ball.getVelocity().x == 0 && ball.getVelocity().y == 0 && !(ball.inHole))){
 		  stage.act(); 
 		  stage.draw();
 		}
-		//sprite.end();
 		if(debug) {
 			debug(); 
 		}		
@@ -123,8 +124,7 @@ public class WorldRenderer {
 		arrowTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 	}
 	private void drawBallTrajectory() {
-		Ball ball = world.getBall();
-				
+		Ball ball = world.getBall();		
 		trajectorySprite = new Sprite(arrowTexture);
 		controller = new DirectionController();
 		

@@ -15,8 +15,7 @@ public class Trajectory extends Actor {
 	private DirectionController controller; 
 	private Sprite trajectorySprite;
 	
-	public Vector2 startVelocity = new Vector2(); 
-	public Vector2 startPoint = new Vector2(); 
+	public Vector2 startVelocity = new Vector2();  
 	
 	public int trajectoryPoints = 5; //number of images
 	public float timeSeparation = 2f;
@@ -45,9 +44,10 @@ public class Trajectory extends Actor {
 		for(int i = 0; i < trajectoryPoints; i++){
 			float x = (width) + this.getX(t);
 			float y = (height) + this.getY(t);
-			
-			batch.setColor(new Color(1,1,1,1));
-			batch.draw(trajectorySprite, (x-6), (y-6), width, height);
+			if(i != 0) {
+				batch.setColor(new Color(1,1,1,1));
+				batch.draw(trajectorySprite, (x-6), (y-6), width, height);
+			}
 			
 			t += timeSeparation;
 		}
@@ -55,11 +55,11 @@ public class Trajectory extends Actor {
 	
 	public float getX(float a){
 		ball = world.getBall();
-		return startVelocity.x * a + ball.getPosition().x ;//+ ball.getPosition().x;//+ startPoint.x; 
+		return startVelocity.x * a + ball.getPosition().x ; 
 	}
 	public float getY(float a){
 		ball = world.getBall();
-		return startVelocity.y * a + ball.getPosition().y;// + startPoint.y; 
+		return startVelocity.y * a + ball.getPosition().y; 
 	}
 
 }
