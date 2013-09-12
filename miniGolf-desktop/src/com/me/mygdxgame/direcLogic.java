@@ -8,7 +8,7 @@ public class direcLogic {
 	private DirectionController directController;
 	final Vector2 ballPos = new Vector2();
 	final Vector2 currentPos = new Vector2();
-	final Vector2 temp = new Vector2(); 
+	public final Vector2 temp = new Vector2(); 
 	
 	public direcLogic(DirectionController control, Vector2 ballPos){
 		this.directController = control; 
@@ -28,6 +28,9 @@ public class direcLogic {
 	}
 	public Vector2 getDirection(){
 		return temp;
+	}
+	public float getPower(){
+		return directController.power;
 	}
 
 }

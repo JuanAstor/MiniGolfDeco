@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 //Renders blocks and actors into the world
@@ -28,6 +29,7 @@ public class WorldRenderer {
 	
 	private World world; 
 	private DirectionController controller;
+	private WorldController wControl;
 	private OrthographicCamera cam;	
 	ShapeRenderer debugRend = new ShapeRenderer();
 	
@@ -68,6 +70,7 @@ public class WorldRenderer {
 	
 	public WorldRenderer (World world, boolean debug) { 
 		this.world = world; 
+		this.wControl = new WorldController(this.world);
 		this.cam = new OrthographicCamera(1024,720); 
 		this.cam.position.set(512f, 360f, 0); 
 		this.cam.update(); 
@@ -98,13 +101,23 @@ public class WorldRenderer {
 			drawBall();
 			
 		sprite.end();
+		//getPower();
+		//getDir();
 		if((ball.getVelocity().x == 0 && ball.getVelocity().y == 0 && !(ball.inHole))){
 		  stage.act(); 
 		  stage.draw();
 		}
+		
 		if(debug) {
 			debug(); 
 		}		
+	}
+	
+	public float getPower(){
+		return directLogic.getPower();
+	}
+	public Vector2 getDir(){
+		return directLogic.getDirection();
 	}
 	
 	private void loadTextures() {
@@ -137,6 +150,7 @@ public class WorldRenderer {
 		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 		stage.addActor(traject);
 		directLogic.update();
+		
 	}
 	private void drawBall() {			
 		Ball ball = world.getBall();

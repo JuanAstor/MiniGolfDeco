@@ -12,16 +12,16 @@ public class GameScreen implements Screen, InputProcessor {
 	
 	private World world;
 	private WorldRenderer renderer; 
-	private WorldController control;
+	private WorldController wControl;
 	private BallController ballCont;
 	
-	private int width, height; 
+	private int width, height;
 	
 	@Override 
 	public void show() { 
 		world = new World(); 
 		renderer = new WorldRenderer(world, false); 
-		control = new WorldController(world); 
+		wControl = new WorldController(world); 
 		ballCont = new BallController(world); 
 		Gdx.input.setInputProcessor(this); 
 	}
@@ -30,9 +30,10 @@ public class GameScreen implements Screen, InputProcessor {
 	public void render(float delta) { 
 		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		control.update(delta);
-		ballCont.update();
 		renderer.render();
+		ballCont.update();
+		wControl.update(delta, renderer.getPower(), renderer.getDir());
+		
 	}
 	
 	@Override 
@@ -68,7 +69,7 @@ public class GameScreen implements Screen, InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		if(keycode == Keys.LEFT)
-			control.leftKeyPressed();
+			wControl.leftKeyPressed();
 		return true;
 	}
 
@@ -81,7 +82,7 @@ public class GameScreen implements Screen, InputProcessor {
 	@Override
 	public boolean keyUp(int keycode) {
 		if(keycode == Keys.LEFT)
-			control.leftKeyReleased();
+			wControl.leftKeyReleased();
 		return true;
 	}
 
@@ -99,9 +100,9 @@ public class GameScreen implements Screen, InputProcessor {
 	@Override
 	public boolean touchDown(int arg0, int arg1, int arg2, int button) {
 		if(button == Buttons.LEFT)
-			control.leftKeyPressed();
+			wControl.leftKeyPressed();
 		if (button == Buttons.RIGHT){
-			control.rightKeyPressed();
+			wControl.rightKeyPressed();
 		}
 		return true;
 	}
@@ -110,9 +111,9 @@ public class GameScreen implements Screen, InputProcessor {
 	@Override
 	public boolean touchUp(int arg0, int arg1, int arg2, int button) {
 		if(button == Buttons.LEFT)
-			control.leftKeyReleased();
+			wControl.leftKeyReleased();
 		if (button == Buttons.RIGHT){
-			control.rightKeyReleased();
+			wControl.rightKeyReleased();
 		}
 		return true;
 	}
