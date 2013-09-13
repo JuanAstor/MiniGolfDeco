@@ -64,7 +64,7 @@ public class WorldController{
 		if (ball.inHole == true){
 			ball.getVelocity().x = 0;
 			ball.getVelocity().y = 0;
-		}
+		}		
 		ball.update(delta);
 	}
 	
@@ -81,20 +81,18 @@ public class WorldController{
 			if(speedChange != 0.0){
 				speedChange -=50f;
 				if(speedChange < 0) speedChange = 0;
-				if(!ball.bounceX || !ball.bounceY) {
-					ball.getVelocity().x = (dir.x * (power*5) * delta);
-					ball.getVelocity().y = (dir.y * (power*5)* delta);
-				}
-				else {
-					ball.getVelocity().x = (-(dir.x * (power*5)) * delta);
-					ball.getVelocity().y = (-(dir.y * (power*5)) * delta);
-				}
-			}
-			else{ 
+				if (ball.bounceX) ball.getVelocity().x = (-(dir.x) * (power*5)) * delta;
+				else ball.getVelocity().x = ((dir.x) * (power*5)) * delta;
+				if (ball.bounceY) ball.getVelocity().y = (-(dir.y) * (power*5)) * delta;
+				else ball.getVelocity().y = ((dir.y) * (power*5)) * delta;
+				
+			} else { 
 				    //reset speed and button count
+					ball.bounceX = false;
+					ball.bounceY = false;
 					speedChange = 10000; 
 					leftButtonCount = 0;
-				}
+			}
 		}
 //		if(rightButtonCount == 1){
 //			if(speedChange > 0.0){
