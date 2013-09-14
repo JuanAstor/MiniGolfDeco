@@ -76,13 +76,12 @@ public class WorldRenderer {
 		this.cam.update(); 
 		this.debug = debug;
 		this.renderTrajectory = true;
-		sprite = new SpriteBatch(); 
+		this.sprite = new SpriteBatch(); 
 		loadTextures(); 
 	}
 	
 	public void render() {
-		Ball ball = world.getBall();
-		
+		Ball ball = world.getBall();		
 		if((ball.getVelocity().x == 0 && ball.getVelocity().y == 0)){
 			drawBallTrajectory();
 			directLogic.update();
@@ -90,8 +89,7 @@ public class WorldRenderer {
 		if((ball.getVelocity().x == 0 && ball.getVelocity().y == 0 && !(ball.inHole))){
 			  stage.act(); 
 			  stage.draw();
-			}	
-					
+			}				
 		sprite.begin();
 		    sprite.draw(backgroundTexture, 0, 0);
 			drawGround();
@@ -136,6 +134,7 @@ public class WorldRenderer {
 		arrowTexture = new Texture(Gdx.files.internal("images/circle.png"));
 		arrowTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 	}
+	
 	private void drawBallTrajectory() {
 		Ball ball = world.getBall();		
 		trajectorySprite = new Sprite(arrowTexture);
@@ -224,6 +223,24 @@ public class WorldRenderer {
 	public boolean getRenderTraject(){
 		return this.renderTrajectory;
 	}
+	public void dispose(){
+		ballTexture.dispose(); 
+		groundTexture.dispose(); 
+		wallSouthTexture.dispose();
+		wallNorthTexture.dispose();
+		wallEastTexture.dispose();
+		wallWestTexture.dispose();
+		cornerWestTexture.dispose();
+		cornerNorthTexture.dispose();
+		cornerEastTexture.dispose();
+		cornerSouthTexture.dispose();
+		holeTexture.dispose();
+		backgroundTexture.dispose();		
+		arrowTexture.dispose();
+		arrowTexture.dispose();
+		sprite.dispose();
+	}
+	
 	//if the for loop is changed to world.getCornerBlocks or getWallBlocks, it 
 	//will render the outline of where they are rendered
 	public void debug() { 

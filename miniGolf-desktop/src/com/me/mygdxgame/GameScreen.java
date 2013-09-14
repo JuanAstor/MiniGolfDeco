@@ -16,18 +16,31 @@ public class GameScreen implements Screen, InputProcessor {
 	private BallController ballCont;
 	
 	private int width, height;
+	private int hole = 1;
 	
 	@Override 
 	public void show() { 
-		world = new World(); 
-		renderer = new WorldRenderer(world, false); 
-		wControl = new WorldController(world); 
-		ballCont = new BallController(world); 
-		Gdx.input.setInputProcessor(this); 
+			System.out.println("called 1");
+			world = new World(hole); //create hole 
+			renderer = new WorldRenderer(world, false); 
+			wControl = new WorldController(world);
+			wControl.setState(hole); //set current hole
+			ballCont = new BallController(world);
+			Gdx.input.setInputProcessor(this); 
 	}
 	
 	@Override 
 	public void render(float delta) { 
+		if(this.hole != wControl.getState()){ //if current hole has ended
+			this.hole = wControl.getState(); //change hole to be the new hole
+			renderer.dispose();
+			this.show();
+			//world = new World(this.hole); //change world to next hole
+			//renderer = new WorldRenderer(world, false); 			
+			//wControl = new WorldController(world); 
+			//ballCont = new BallController(world); 
+			
+		}		
 		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		renderer.render();
@@ -102,7 +115,7 @@ public class GameScreen implements Screen, InputProcessor {
 		if(button == Buttons.LEFT)
 			wControl.leftKeyPressed();
 		if (button == Buttons.RIGHT){
-			wControl.rightKeyPressed();
+			//wControl.rightKeyPressed();
 		}
 		return true;
 	}
@@ -113,7 +126,7 @@ public class GameScreen implements Screen, InputProcessor {
 		if(button == Buttons.LEFT)
 			wControl.leftKeyReleased();
 		if (button == Buttons.RIGHT){
-			wControl.rightKeyReleased();
+			//wControl.rightKeyReleased();
 		}
 		return true;
 	}

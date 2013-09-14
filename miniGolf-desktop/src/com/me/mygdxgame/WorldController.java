@@ -22,6 +22,7 @@ public class WorldController{
 	private int leftButtonCount = 0;
 	private int rightButtonCount = 0;
 	private float speedChange = 10000.0f;  
+	private int worldState;
 	
 	enum Buttons {
 		LEFT, RIGHT
@@ -58,12 +59,20 @@ public class WorldController{
 		rightButtonCount = 1;
 	}
 	
+	public int getState(){
+		return worldState;
+	}
+	public void setState(int value){
+		this.worldState = value;
+	}
+	
 	//get input and update ball gets power and dir from direcLogic class
 	public void update(float delta, float power, Vector2 dir) {
 		processInput(delta, power, dir); 
 		if (ball.inHole == true){
 			ball.getVelocity().x = 0;
 			ball.getVelocity().y = 0;
+			this.worldState = 2;
 		}		
 		ball.update(delta);
 	}

@@ -1,12 +1,15 @@
 package com.me.mygdxgame;
 
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.me.mygdxgame.DirectionController;
+
+/*
+ * This class draws the direction trajectory, overrides the stage/actor functions
+ */
 
 public class Trajectory extends Actor {
 	
@@ -18,7 +21,7 @@ public class Trajectory extends Actor {
 	public Vector2 startVelocity = new Vector2();  
 	
 	public int trajectoryPoints = 5; //number of images
-	public float timeSeparation = 2f;
+	public float timeSeparation = 2f; //the separation of images
 	
 	public Trajectory(DirectionController control, Sprite trajectorySprite, World world){
 		this.controller = control; 
@@ -36,23 +39,23 @@ public class Trajectory extends Actor {
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		float t = 0f; 
-		float width = 8; //size of image
-		float height = 8; 
-		
+		//width and height of the trajectory image
+		float width = 8; 
+		float height = 8; 		
 		float timeSeparation = this.timeSeparation;
-		
+		//loop through and draw the trajectory images
 		for(int i = 0; i < trajectoryPoints; i++){
+			//get the x and y positions to draw the trajectory
 			float x = (width) + this.getX(t);
 			float y = (height) + this.getY(t);
+			//don't draw the first image (under ball)
 			if(i != 0) {
-				batch.setColor(new Color(1,1,1,1));
 				batch.draw(trajectorySprite, (x-6), (y-6), width, height);
-			}
-			
+			}			
 			t += timeSeparation;
 		}
 	}
-	
+	//get the ball's position
 	public float getX(float a){
 		ball = world.getBall();
 		return startVelocity.x * a + ball.getPosition().x ; 
