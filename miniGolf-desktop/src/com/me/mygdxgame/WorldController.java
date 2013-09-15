@@ -24,15 +24,6 @@ public class WorldController{
 	private float speedChange = 10000.0f;  
 	private int worldState;
 	
-	enum Buttons {
-		LEFT, RIGHT
-	}
-	//hashmap of buttons
-	static Map<Buttons, Boolean> buttons = new HashMap<WorldController.Buttons, Boolean>(); 
-	static {
-		buttons.put(Buttons.LEFT,  false); 
-		buttons.put(Buttons.RIGHT, false);
-	};
 	
 	public WorldController(World world) {
 		this.world = world; 
@@ -41,21 +32,21 @@ public class WorldController{
 	
 	//enable left click (this is for processInput, left click is always enabled)
 	public void leftKeyPressed() { 
-		buttons.get(buttons.put(Buttons.LEFT, true));
+		//buttons.get(buttons.put(Buttons.LEFT, true));
 	}
 	//disable
 	public void leftKeyReleased() {
-		buttons.get(buttons.put(Buttons.LEFT, false));
+		//buttons.get(buttons.put(Buttons.LEFT, false));
 		leftButtonCount = 1;
 	}
 	
 	// enable right click
 	public void rightKeyPressed() { 
-		buttons.get(buttons.put(Buttons.RIGHT, true));
+		//buttons.get(buttons.put(Buttons.RIGHT, true));
 	}
 	//disable
 	public void rightKeyReleased() {
-		buttons.get(buttons.put(Buttons.RIGHT, false));
+		//buttons.get(buttons.put(Buttons.RIGHT, false));
 		rightButtonCount = 1;
 	}
 	
@@ -80,8 +71,6 @@ public class WorldController{
 	//updates the speed and position of the ball when the mouse is clicked
 	private void processInput(float delta, float power, Vector2 dir) {
 				
-		System.out.println(power);
-		System.out.println(dir);
 		if(leftButtonCount == 0 && rightButtonCount == 0){
 			ball.getVelocity().x = 0; 
 			ball.getVelocity().y = 0;
