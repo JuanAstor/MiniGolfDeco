@@ -6,6 +6,15 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
 @SuppressWarnings("unused")
 public class Hole1Screen implements Screen, InputProcessor {
@@ -19,6 +28,16 @@ public class Hole1Screen implements Screen, InputProcessor {
 	private int width, height;
 	private int hole = 1;
 	
+	//Variables for the button
+	BitmapFont font1;
+	Stage stage;
+	TextureAtlas butAtlas;
+	Skin butSkin;
+	SpriteBatch butBatch;
+	TextButton mainButton;
+	TextButton resetButton;
+	int disposeCount = 0;
+	
 	public Hole1Screen(GolfGame game){
 		this.golf = game; 
 	}
@@ -31,6 +50,14 @@ public class Hole1Screen implements Screen, InputProcessor {
 			wControl = new WorldController(world);
 			wControl.setState(hole); //set current hole
 			ballCont = new BallController(world);
+			
+			// Button code
+			butBatch = new SpriteBatch();
+			butAtlas = new TextureAtlas("images/butttoon.pack");
+			butSkin = new Skin();
+			butSkin.addRegions(butAtlas);
+			font1 = new BitmapFont(Gdx.files.internal("images/font_white.fnt"),false);
+			
 			Gdx.input.setInputProcessor(this); 
 	}
 	
@@ -46,6 +73,12 @@ public class Hole1Screen implements Screen, InputProcessor {
 		ballCont.update();
 		wControl.update(delta, renderer.getPower(), renderer.getDir());
 		
+		//Button code
+		stage.act(delta);		
+		butBatch.begin();
+		stage.draw();
+		butBatch.end();
+		
 	}
 	
 	@Override 
@@ -53,6 +86,61 @@ public class Hole1Screen implements Screen, InputProcessor {
 		renderer.setSize(width, height);
 		this.width = width; 
 		this.height = height; 
+		
+		//button code
+		if(stage == null){
+			stage = new Stage(width,height,true);
+		}
+		stage.clear();
+		
+		
+		Gdx.input.setInputProcessor(stage);
+		
+		TextButtonStyle butStyle = new TextButtonStyle();
+		butStyle.up = butSkin.getDrawable("butdown");
+		butStyle.down = butSkin.getDrawable("butup");
+		butStyle.font = font1;
+		butStyle.font.setScale(0.5f, 0.5f);
+		
+		mainButton = new TextButton("Menu", butStyle);
+		resetButton = new TextButton("Reset", butStyle);
+		
+		mainButton.setWidth(100);
+		mainButton.setHeight(25);
+		mainButton.setX(370);
+		mainButton.setY(150);
+		
+		resetButton.setWidth(100);
+		resetButton.setHeight(25);
+		resetButton.setX(520);
+		resetButton.setY(150);
+		
+		mainButton.addListener(new InputListener(){
+			public boolean touchDown(InputEvent event, float x, float y, int pointer,int button){
+				System.out.println("down");				
+				return true;
+			}			
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+				golf.setScreen(golf.menu);					
+			}			
+			
+		});
+		
+		resetButton.addListener(new InputListener(){
+			public boolean touchDown(InputEvent event, float x, float y, int pointer,int button){
+				System.out.println("down");				
+				return true;
+			}
+			
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+				golf.setScreen(golf.hole1);					
+			}
+			
+			
+		});
+		
+		stage.addActor(mainButton);
+		stage.addActor(resetButton);
 	}
 	
 	
@@ -75,6 +163,15 @@ public class Hole1Screen implements Screen, InputProcessor {
 	@Override 
 	public void dispose() { 
 		Gdx.input.setInputProcessor(null);
+		
+		//button code
+		if (disposeCount == 1) return;
+		butBatch.dispose();
+		butAtlas.dispose();
+		font1.dispose();		
+		butSkin.dispose();
+		stage.dispose();
+		
 	}
 
 	//a key from keyboard is pressed
