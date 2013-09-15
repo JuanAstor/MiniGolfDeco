@@ -92,18 +92,5 @@ public class WorldController{
 					leftButtonCount = 0;
 			}
 		}
-//		if(rightButtonCount == 1){
-//			if(speedChange > 0.0){
-//				speedChange -=50f;
-//				if(speedChange < 0) speedChange = 0;				
-//
-//				if(!ball.bounceY) ball.getVelocity().y = (speedChange * delta);
-//				else ball.getVelocity().y = (-speedChange * delta);
-//			}
-//			else {
-//				speedChange = 10000; 
-//				rightButtonCount = 0;
-//			}
-//		}
 	}
 }

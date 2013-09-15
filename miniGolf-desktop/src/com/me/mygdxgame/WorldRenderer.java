@@ -223,23 +223,6 @@ public class WorldRenderer {
 	public boolean getRenderTraject(){
 		return this.renderTrajectory;
 	}
-	public void dispose(){
-		ballTexture.dispose(); 
-		groundTexture.dispose(); 
-		wallSouthTexture.dispose();
-		wallNorthTexture.dispose();
-		wallEastTexture.dispose();
-		wallWestTexture.dispose();
-		cornerWestTexture.dispose();
-		cornerNorthTexture.dispose();
-		cornerEastTexture.dispose();
-		cornerSouthTexture.dispose();
-		holeTexture.dispose();
-		backgroundTexture.dispose();		
-		arrowTexture.dispose();
-		arrowTexture.dispose();
-		sprite.dispose();
-	}
 	
 	//if the for loop is changed to world.getCornerBlocks or getWallBlocks, it 
 	//will render the outline of where they are rendered

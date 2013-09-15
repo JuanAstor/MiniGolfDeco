@@ -25,7 +25,7 @@ public class Hole2Screen implements Screen, InputProcessor {
 	
 	@Override 
 	public void show() { 
-			System.out.println("called 1");
+			System.out.println("called 2");
 			world = new World(hole); //create hole 
 			renderer = new WorldRenderer(world, false); 
 			wControl = new WorldController(world);
@@ -38,7 +38,6 @@ public class Hole2Screen implements Screen, InputProcessor {
 	public void render(float delta) { 
 		if(this.hole != wControl.getState()){ //if current hole has ended
 			this.hole = wControl.getState(); //change hole to be the new hole
-			renderer.dispose();
 			//golf.setScreen(golf.hole3); //render the new screen
 			
 		}		

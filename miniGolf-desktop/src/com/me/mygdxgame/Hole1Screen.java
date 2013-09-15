@@ -38,7 +38,6 @@ public class Hole1Screen implements Screen, InputProcessor {
 	public void render(float delta) { 
 		if(this.hole != wControl.getState()){ //if current hole has ended
 			this.hole = wControl.getState(); //change hole to be the new hole
-			renderer.dispose();
 			golf.setScreen(golf.hole2);			
 		}		
 		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
