@@ -50,31 +50,34 @@ public class World {
 	}
 	
 	private void createHole1() {		
-		//add corners
-		
 		cornerArray = new Array<Block1>();
 		wallArray = new Array<Block1>();
 		groundArray = new Array<Block1>(); 
 		ball = new Ball(new Vector2(250,220));
 		
-		cornerArray.add(new Block1(new Vector2(210,180), BlockType.CORNER, FacingDir.EAST));
-		cornerArray.add(new Block1(new Vector2(210,510), BlockType.CORNER, FacingDir.NORTH));
-		cornerArray.add(new Block1(new Vector2(750,510), BlockType.CORNER, FacingDir.WEST));
-		cornerArray.add(new Block1(new Vector2(750,180), BlockType.CORNER, FacingDir.SOUTH));
-		
 		for (int i = 210; i <= 750; i+=30) {
 			for(int j = 180; j <= 510; j+=30){
+				//add corners
+				if(i == 210 && j == 180)
+					cornerArray.add(new Block1(new Vector2(i,j), BlockType.CORNER, FacingDir.EAST));
+				if(i == 210 && j == 510)
+					cornerArray.add(new Block1(new Vector2(210,510), BlockType.CORNER, FacingDir.NORTH));
+				if(i == 750 && j == 510)
+					cornerArray.add(new Block1(new Vector2(750,510), BlockType.CORNER, FacingDir.WEST));
+				if(i == 750 && j == 180)
+					cornerArray.add(new Block1(new Vector2(750,180), BlockType.CORNER, FacingDir.SOUTH));
+				
 				//add walls
-				if(i == 210 && j < 510){
+				else if(i == 210 && j < 510){
 					wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.WEST));
 				}
-				if(i < 750 && j == 510){
+				else if(i < 750 && j == 510){
 					wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.NORTH));
 				}
-				if(i == 750 && j < 510){
+				else if(i == 750 && j < 510){
 					wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.EAST));
 				}
-				if(i < 750 && j == 180){
+				else if(i < 750 && j == 180){
 					wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.SOUTH));
 				}
 				//ground + hole

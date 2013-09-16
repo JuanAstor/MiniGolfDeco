@@ -21,6 +21,8 @@ public class WorldController{
 	private direcLogic directionLogic; 
 	private int leftButtonCount = 0;
 	private int rightButtonCount = 0;
+	private float deceleration = 1f;
+	private boolean notZero = true;
 	private float speedChange = 10000.0f;  
 	private int worldState;
 	
@@ -75,22 +77,45 @@ public class WorldController{
 			ball.getVelocity().x = 0; 
 			ball.getVelocity().y = 0;
 		}
+		//if left mouse clicked (and released)
 		if(leftButtonCount == 1){
-			if(speedChange != 0.0){
-				speedChange -=50f;
-				if(speedChange < 0) speedChange = 0;
-				if (ball.bounceX) ball.getVelocity().x = (-(dir.x) * (power*5)) * delta;
-				else ball.getVelocity().x = ((dir.x) * (power*5)) * delta;
-				if (ball.bounceY) ball.getVelocity().y = (-(dir.y) * (power*5)) * delta;
-				else ball.getVelocity().y = ((dir.y) * (power*5)) * delta;
+			if(this.notZero){
+				power -= 5.0f * deceleration;
+				deceleration += 0.25;
+				System.out.println(power);
+				if(power < 0){ 
+					power = 0; 
+					this.notZero = false;
+				}
+				if(power > 250) power = 250; 
+				if(ball.bounceX) ball.getVelocity().x = ((-(dir.x)) * power * delta); 
+				else ball.getVelocity().x = ((dir.x) * power * delta); 
+				if(ball.bounceY) ball.getVelocity().y = ((-(dir.y)) * power * delta); 
+				else ball.getVelocity().y = ((dir.y) * power * delta);
 				
-			} else { 
-				    //reset speed and button count
-					ball.bounceX = false;
-					ball.bounceY = false;
-					speedChange = 10000; 
-					leftButtonCount = 0;
+			} else { //reset everything for next move
+				ball.bounceX = false; 
+				ball.bounceY = false;  
+				this.notZero = true;
+				deceleration = 1;
+				leftButtonCount = 0;
 			}
+//			if(speedChange != 0.0){
+//				speedChange -=50f;
+//				if(speedChange < 0) speedChange = 0;
+//				if(power > 225) power = 225;
+//				if (ball.bounceX) ball.getVelocity().x = (-(dir.x) * (power)) * delta;
+//				else ball.getVelocity().x = ((dir.x) * (power)) * delta;
+//				if (ball.bounceY) ball.getVelocity().y = (-(dir.y) * (power)) * delta;
+//				else ball.getVelocity().y = ((dir.y) * (power)) * delta;
+//				
+//			} else { 
+//				    //reset speed and button count
+//					ball.bounceX = false;
+//					ball.bounceY = false;
+//					speedChange = 10000; 
+//					leftButtonCount = 0;
+//			}
 		}
 	}
 }

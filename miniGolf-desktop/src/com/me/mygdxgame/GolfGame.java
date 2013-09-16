@@ -5,8 +5,8 @@ import com.badlogic.gdx.Game;
 public class GolfGame extends Game {
 	
 	Hole1Screen hole1; 
-	Hole2Screen hole2;
-	MenuScreen menu;
+	Hole2Screen hole2; 
+	MenuScreen menu; 
 
 	@Override
 	public void create() {

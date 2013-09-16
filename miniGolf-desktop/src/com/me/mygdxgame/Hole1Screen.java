@@ -29,6 +29,7 @@ public class Hole1Screen implements Screen, InputProcessor {
 	
 	private int width, height;
 	private int hole = 1;
+	private float power;
 	
 	//Variables for the button
 	BitmapFont font1;
@@ -73,7 +74,8 @@ public class Hole1Screen implements Screen, InputProcessor {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		renderer.render();
 		ballCont.update();
-		wControl.update(delta, renderer.getPower(), renderer.getDir());
+		capPower();
+		wControl.update(delta, this.power, renderer.getDir());
 		
 		//Button code
 		stage.act(delta);		
@@ -81,6 +83,11 @@ public class Hole1Screen implements Screen, InputProcessor {
 		stage.draw();
 		butBatch.end();
 				
+	}
+	private void capPower(){
+		this.power = renderer.getPower(); //get the power
+		if(this.power > 50) this.power = 50.0f; //cap it at 50
+		this.power = this.power * 5;
 	}
 	
 	@Override 
@@ -192,11 +199,8 @@ public class Hole1Screen implements Screen, InputProcessor {
 	public void exit(InputEvent event,	float x, float y,int pointer, Actor toActor){
 		if (stage.getActors().contains(toActor, true)){
 			Gdx.input.setInputProcessor(this);
-		}
-		
-		
-	}
-	
+		}		
+	}	
 
 	//a key from keyboard is pressed
 	@Override
