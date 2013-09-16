@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -71,6 +73,9 @@ public class MenuScreen implements Screen, InputProcessor {
 		butStyle.down = butSkin.getDrawable("butup");
 		butStyle.font = font1;
 		
+		LabelStyle labelStyle = new LabelStyle();
+		labelStyle.font = font1;
+		
 		mainButton = new TextButton("Start Game!", butStyle);
 		closeButton = new TextButton("Do nothing", butStyle);
 		
@@ -84,6 +89,11 @@ public class MenuScreen implements Screen, InputProcessor {
 		closeButton.setX(Gdx.graphics.getWidth()/2 - closeButton.getWidth()/2);
 		closeButton.setY(Gdx.graphics.getHeight()/2 - closeButton.getHeight()/2 - (closeButton.getHeight()+5));
 		
+		Label mainLabel = new Label( "EXTREME BROKEN MINIGOLF", labelStyle);
+        mainLabel.setX((Gdx.graphics.getWidth()/2 - mainButton.getWidth()/2 )+5);
+        mainLabel.setY(Gdx.graphics.getHeight()/2 - closeButton.getHeight()/2 + (closeButton.getHeight()+5) );
+       
+		
 		mainButton.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer,int button){
 				System.out.println("down");
@@ -92,13 +102,15 @@ public class MenuScreen implements Screen, InputProcessor {
 			}
 			
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-				golf.setScreen(golf.hole1);	
+				golf.setScreen(golf.hole1);
+				
 				
 			}
 			
 			
 		});
 		
+		stage.addActor( mainLabel );
 		stage.addActor(mainButton);
 		stage.addActor(closeButton);
 		

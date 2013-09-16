@@ -3,12 +3,14 @@ package com.me.mygdxgame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -58,13 +60,13 @@ public class Hole1Screen implements Screen, InputProcessor {
 			butSkin.addRegions(butAtlas);
 			font1 = new BitmapFont(Gdx.files.internal("images/font_white.fnt"),false);
 			
-			Gdx.input.setInputProcessor(this); 
+			
 	}
 	
 	@Override 
 	public void render(float delta) { 
 		if(this.hole != wControl.getState()){ //if current hole has ended
-			this.hole = wControl.getState(); //change hole to be the new hole
+			//this.hole = wControl.getState(); //change hole to be the new hole
 			golf.setScreen(golf.hole2);			
 		}		
 		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
@@ -78,7 +80,7 @@ public class Hole1Screen implements Screen, InputProcessor {
 		butBatch.begin();
 		stage.draw();
 		butBatch.end();
-		
+				
 	}
 	
 	@Override 
@@ -92,9 +94,10 @@ public class Hole1Screen implements Screen, InputProcessor {
 			stage = new Stage(width,height,true);
 		}
 		stage.clear();
-		
-		
-		Gdx.input.setInputProcessor(stage);
+		InputMultiplexer inpMult = new InputMultiplexer(stage);
+		inpMult.addProcessor(stage);
+		inpMult.addProcessor(this);
+		Gdx.input.setInputProcessor(inpMult);
 		
 		TextButtonStyle butStyle = new TextButtonStyle();
 		butStyle.up = butSkin.getDrawable("butdown");
@@ -115,6 +118,8 @@ public class Hole1Screen implements Screen, InputProcessor {
 		resetButton.setX(520);
 		resetButton.setY(150);
 		
+		
+
 		mainButton.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer,int button){
 				System.out.println("down");				
@@ -139,8 +144,12 @@ public class Hole1Screen implements Screen, InputProcessor {
 			
 		});
 		
+		
 		stage.addActor(mainButton);
 		stage.addActor(resetButton);
+		
+ 
+	
 	}
 	
 	
@@ -173,6 +182,21 @@ public class Hole1Screen implements Screen, InputProcessor {
 		stage.dispose();
 		
 	}
+	
+	public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
+		if (stage.getActors().contains(fromActor, true)){
+			Gdx.input.setInputProcessor(stage);
+		}
+	}	
+	
+	public void exit(InputEvent event,	float x, float y,int pointer, Actor toActor){
+		if (stage.getActors().contains(toActor, true)){
+			Gdx.input.setInputProcessor(this);
+		}
+		
+		
+	}
+	
 
 	//a key from keyboard is pressed
 	@Override
