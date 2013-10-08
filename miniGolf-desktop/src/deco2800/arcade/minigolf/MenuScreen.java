@@ -1,4 +1,4 @@
-package com.me.mygdxgame;
+package deco2800.arcade.minigolf;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
@@ -20,7 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 @SuppressWarnings("unused")
 public class MenuScreen implements Screen, InputProcessor {
 	
-	GolfGame golf; 	
+	MiniGolf golf; 	
 	Stage stage;
 	BitmapFont font1;
 	int disposeCount = 0;
@@ -36,7 +36,7 @@ public class MenuScreen implements Screen, InputProcessor {
 	TextButton closeButton;
 	
 	
-	public MenuScreen(GolfGame game){
+	public MenuScreen(MiniGolf game){
 		this.golf = game; 
 	}
 	
@@ -54,9 +54,7 @@ public class MenuScreen implements Screen, InputProcessor {
 		butAtlas = new TextureAtlas("images/button.pack");
 		butSkin = new Skin();
 		butSkin.addRegions(butAtlas);
-		font1 = new BitmapFont(Gdx.files.internal("images/font_black.fnt"),false);
-		
-		
+		font1 = new BitmapFont(Gdx.files.internal("images/font_black.fnt"),false);		
 	}
 	
 	@Override 
@@ -72,7 +70,6 @@ public class MenuScreen implements Screen, InputProcessor {
 		butBatch.begin();
 		stage.draw();		
 		butBatch.end();
-		
 		
 		
 	}
@@ -117,7 +114,7 @@ public class MenuScreen implements Screen, InputProcessor {
 			}
 			
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-				golf.setScreen(golf.hole1);
+				golf.setScreen(golf.hole, 1);
 				
 				
 			}
@@ -149,6 +146,8 @@ public class MenuScreen implements Screen, InputProcessor {
 	
 	@Override 
 	public void dispose() { 
+		Gdx.input.setInputProcessor(null);
+		
 		if (disposeCount == 1) return;
 		butBatch.dispose();
 		butAtlas.dispose();

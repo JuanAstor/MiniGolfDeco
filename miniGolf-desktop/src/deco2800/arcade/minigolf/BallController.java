@@ -1,4 +1,4 @@
-package com.me.mygdxgame;
+package deco2800.arcade.minigolf;
 
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.*;

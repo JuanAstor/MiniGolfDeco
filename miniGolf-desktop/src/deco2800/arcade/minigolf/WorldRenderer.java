@@ -1,8 +1,8 @@
-package com.me.mygdxgame;
+package deco2800.arcade.minigolf;
 
 
-import com.me.mygdxgame.Block1.BlockType;
-import com.me.mygdxgame.Block1.FacingDir;
+import deco2800.arcade.minigolf.Block1.BlockType;
+import deco2800.arcade.minigolf.Block1.FacingDir;
 
 import com.badlogic.gdx.Gdx; 
 import com.badlogic.gdx.graphics.Color;
@@ -19,7 +19,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-//Renders blocks and actors into the world
+/* Renders blocks and actors of the world onto the screen */
 
 @SuppressWarnings("unused")
 public class WorldRenderer { 
@@ -28,7 +28,7 @@ public class WorldRenderer {
 	private static final float CAM_HEIGHT = 720f; 
 	
 	private World world; 
-	private DirectionController controller;
+	private DirectionValues controller;
 	private WorldController wControl;
 	private OrthographicCamera cam;	
 	ShapeRenderer debugRend = new ShapeRenderer();
@@ -51,7 +51,7 @@ public class WorldRenderer {
 	private SpriteBatch sprite; 
 	private Sprite trajectorySprite;
 	private Stage stage;
-	private direcLogic directLogic; 
+	private DirectionLogic directLogic; 
 	
 	private Trajectory traject;
 	
@@ -69,10 +69,10 @@ public class WorldRenderer {
 		ppuY = (float)height/CAM_HEIGHT;
 	}
 	
-	
-	public WorldRenderer (World world, boolean debug) { 
+	/* constructor */
+	public WorldRenderer (World world, boolean debug, int level) { 
 		this.world = world; 
-		this.wControl = new WorldController(this.world);
+		this.wControl = new WorldController(this.world, level);
 		this.cam = new OrthographicCamera(1024,720); 
 		this.cam.position.set(512f, 360f, 0); 
 		this.cam.update(); 
@@ -81,7 +81,7 @@ public class WorldRenderer {
 		this.sprite = new SpriteBatch(); 
 		loadTextures(); 
 	}
-	
+	/* render sprites and direction trajectory */
 	public void render() {
 		Ball ball = world.getBall();		
 		if((ball.getVelocity().x == 0 && ball.getVelocity().y == 0)){
@@ -97,12 +97,11 @@ public class WorldRenderer {
 			drawGround();
 			drawWall();
 			drawCorners();
+			drawInvCorners();
 			drawHole();
 			drawBall();
 			
 		sprite.end();
-		//getPower();
-		//getDir();
 		if((ball.getVelocity().x == 0 && ball.getVelocity().y == 0 && !(ball.inHole))){
 		  stage.act(); 
 		  stage.draw();
@@ -113,6 +112,7 @@ public class WorldRenderer {
 		}		
 	}
 	
+	/* get the power and direction of the ball trajectory, used in GameScreen */
 	public float getPower(){
 		return directLogic.getPower();
 	}
@@ -120,6 +120,7 @@ public class WorldRenderer {
 		return directLogic.getDirection();
 	}
 	
+	/* load textures from file into specific variables */
 	private void loadTextures() {
 		ballTexture = new Texture (Gdx.files.internal("images/ball.png"));
 		groundTexture = new Texture (Gdx.files.internal("images/grass.png"));
@@ -163,17 +164,14 @@ public class WorldRenderer {
 		arrowTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 	}
 	
+	/* draw all the sprites for the game */
 	private void drawBallTrajectory() {
 		Ball ball = world.getBall();		
 		trajectorySprite = new Sprite(arrowTexture);
-		controller = new DirectionController();
+		controller = new DirectionValues();
 		
-		directLogic = new direcLogic(controller, ball.getPosition());
+		directLogic = new DirectionLogic(controller, ball.getPosition());
 		traject = new Trajectory(controller, trajectorySprite, this.world);
-		traject.setX(128f);
-		traject.setY(20 + ballTexture.getHeight() * 0.7f);
-		traject.setWidth(50f); 
-		traject.setHeight(50f);
 		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 		stage.addActor(traject);
 		directLogic.update();
@@ -238,6 +236,17 @@ public class WorldRenderer {
 		}
 	}
 	
+	private void drawInvCorners() {
+		for(Block1 block : world.getInvCornerBlocks()){
+			if(block.dir == FacingDir.NORTH)
+				sprite.draw(invCornerNorthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
+			if(block.dir == FacingDir.SOUTH)
+				sprite.draw(invCornerSouthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
+		}
+	}
+	
 	private void drawHole() {
 		for(Block1 block : world.getHoleBlock()) {
 			sprite.draw(holeTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
@@ -245,15 +254,16 @@ public class WorldRenderer {
 		}
 	}
 	
-	public void setRenderTraject(boolean value){
-		this.renderTrajectory = value;
-	}
-	public boolean getRenderTraject(){
-		return this.renderTrajectory;
-	}
+//	public void setRenderTraject(boolean value){
+//		this.renderTrajectory = value;
+//	}
+//	public boolean getRenderTraject(){
+//		return this.renderTrajectory;
+//	}
 	
-	//if the for loop is changed to world.getCornerBlocks or getWallBlocks, it 
-	//will render the outline of where they are rendered
+	/* if the constructor is called with a true value, will enable debugging 
+	 * This draws a coloured outline of the specified objects' bounds (Wall, Ball)
+	 */
 	public void debug() { 
 		//render the outline of the blocks
 		debugRend.setProjectionMatrix(cam.combined); 

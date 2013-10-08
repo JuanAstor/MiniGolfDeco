@@ -1,4 +1,4 @@
-package com.me.mygdxgame;
+package deco2800.arcade.minigolf;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
@@ -7,18 +7,18 @@ import com.badlogic.gdx.math.Vector2;
  * This class controls the logic for the direction trajectory
  */
 
-public class direcLogic {
+public class DirectionLogic {
 	
-	private DirectionController directController;
+	private DirectionValues directController;
 	final Vector2 ballPos = new Vector2(); //holds ball position
 	final Vector2 currentPos = new Vector2(); //holds current position
 	public final Vector2 temp = new Vector2(); //holds updated trajectory
 	
-	public direcLogic(DirectionController control, Vector2 ballPos){
+	public DirectionLogic(DirectionValues control, Vector2 ballPos){
 		this.directController = control; 
 		this.ballPos.set(ballPos);
 	}
-	
+	/* update the line position based upon mouse position */
 	public void update(){
 		//get mouse x & y input
 		float mouseX = Gdx.input.getX(); 
@@ -32,6 +32,7 @@ public class direcLogic {
 		directController.angle = temp.angle(); 
 		directController.power = temp.len();
 	}
+	
 	public Vector2 getDirection(){
 		return temp;
 	}

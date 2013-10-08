@@ -1,7 +1,9 @@
-package com.me.mygdxgame;
+package deco2800.arcade.minigolf;
 
 import com.badlogic.gdx.math.Polygon; 
 import com.badlogic.gdx.math.Vector2; 
+
+/* Holds the position, size, speed and bounds of the ball object */
 
 public class Ball {
 	
@@ -19,8 +21,8 @@ public class Ball {
 		this.position = position; 
 		this.bounds = new Polygon(new float[]{0,0,0,SIZE,SIZE,0,SIZE,SIZE});
 		this.bounds.setPosition(position.x, position.y);
-		//this.bounds.setScale(0.5f, 0.5f);
 	}
+	/* update the balls position and new bounds */
 	public void update(float delta){
 		position.add(velocity.cpy().mul(delta));
 		this.bounds.setPosition(position.x, position.y);

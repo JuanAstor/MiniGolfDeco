@@ -1,4 +1,4 @@
-package com.me.mygdxgame;
+package deco2800.arcade.minigolf;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -14,6 +14,6 @@ public class Main {
 		cfg.width = 1024;
 		cfg.height = 720;
 		
-		new LwjglApplication(new GolfGame(), cfg);
+		new LwjglApplication(new MiniGolf(), cfg);
 	}
 }
