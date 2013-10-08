@@ -56,10 +56,10 @@ public class Hole1Screen implements Screen, InputProcessor {
 			
 			// Button code
 			butBatch = new SpriteBatch();
-			butAtlas = new TextureAtlas("images/butttoon.pack");
+			butAtlas = new TextureAtlas("images/button.pack");
 			butSkin = new Skin();
 			butSkin.addRegions(butAtlas);
-			font1 = new BitmapFont(Gdx.files.internal("images/font_white.fnt"),false);
+			font1 = new BitmapFont(Gdx.files.internal("images/font_black.fnt"),false);
 			
 			
 	}

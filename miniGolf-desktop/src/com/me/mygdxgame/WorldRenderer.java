@@ -33,19 +33,21 @@ public class WorldRenderer {
 	private OrthographicCamera cam;	
 	ShapeRenderer debugRend = new ShapeRenderer();
 	
-	private Texture ballTexture; 
-	private Texture groundTexture; 
-	private Texture wallSouthTexture; 
-	private Texture wallWestTexture;
-	private Texture wallEastTexture;
-	private Texture wallNorthTexture;
-	private Texture cornerSouthTexture;
-	private Texture cornerNorthTexture;
-	private Texture cornerEastTexture;
-	private Texture cornerWestTexture;
-	private Texture holeTexture;
-	private Texture backgroundTexture; 
-	private Texture arrowTexture;
+	private Texture ballTexture, groundTexture, closedTexture, holeTexture,
+	waterTexture, teleTexture, hillEastTexture, hillNorthTexture, 
+	hillSouthTexture, hillWestTexture; 
+	
+	private Texture wallSouthTexture, wallWestTexture, 
+	wallEastTexture, wallNorthTexture, invWallNorthTexture,
+	invWallSouthTexture, invWallEastTexture, invWallWestTexture; 
+	
+	private Texture cornerSouthTexture, cornerNorthTexture,
+	cornerEastTexture, cornerWestTexture, invCornerWestTexture,
+	invCornerEastTexture, invCornerNorthTexture, invCornerSouthTexture;
+	
+	private Texture backgroundTexture, arrowTexture, diagNorthTexture,
+	diagSouthTexture, diagEastTexture, diagWestTexture; 
+	
 	private SpriteBatch sprite; 
 	private Sprite trajectorySprite;
 	private Stage stage;
@@ -121,15 +123,41 @@ public class WorldRenderer {
 	private void loadTextures() {
 		ballTexture = new Texture (Gdx.files.internal("images/ball.png"));
 		groundTexture = new Texture (Gdx.files.internal("images/grass.png"));
-		wallSouthTexture = new Texture (Gdx.files.internal("images/wall-north.png"));
-		wallNorthTexture = new Texture (Gdx.files.internal("images/wall-south.png"));
-		wallEastTexture = new Texture (Gdx.files.internal("images/wall-west.png"));
-		wallWestTexture = new Texture (Gdx.files.internal("images/wall-east.png"));
+		closedTexture = new Texture (Gdx.files.internal("images/closed.png"));
+		
+		wallSouthTexture = new Texture (Gdx.files.internal("images/wall-s.png"));
+		wallNorthTexture = new Texture (Gdx.files.internal("images/wall-n.png"));
+		wallEastTexture = new Texture (Gdx.files.internal("images/wall-e.png"));
+		wallWestTexture = new Texture (Gdx.files.internal("images/wall-w.png"));
+		
+		invWallSouthTexture = new Texture (Gdx.files.internal("images/invwall-s.png"));
+		invWallNorthTexture = new Texture (Gdx.files.internal("images/invwall-n.png"));
+		invWallEastTexture = new Texture (Gdx.files.internal("images/invwall-e.png"));
+		invWallWestTexture = new Texture (Gdx.files.internal("images/invwall-w.png"));
+		
 		cornerWestTexture = new Texture (Gdx.files.internal("images/corner-w.png"));
 		cornerNorthTexture = new Texture (Gdx.files.internal("images/corner-n.png"));
 		cornerEastTexture = new Texture (Gdx.files.internal("images/corner-e.png"));
 		cornerSouthTexture = new Texture (Gdx.files.internal("images/corner-s.png"));
+		
+		invCornerWestTexture = new Texture (Gdx.files.internal("images/invcorner-w.png"));
+		invCornerNorthTexture = new Texture (Gdx.files.internal("images/invcorner-n.png"));
+		invCornerEastTexture = new Texture (Gdx.files.internal("images/invcorner-e.png"));
+		invCornerSouthTexture = new Texture (Gdx.files.internal("images/invcorner-s.png"));
+		
+		diagWestTexture = new Texture (Gdx.files.internal("images/diag-w.png"));
+		diagNorthTexture = new Texture (Gdx.files.internal("images/diag-n.png"));
+		diagEastTexture = new Texture (Gdx.files.internal("images/diag-e.png"));
+		diagSouthTexture = new Texture (Gdx.files.internal("images/diag-s.png"));
+		
+		hillWestTexture = new Texture (Gdx.files.internal("images/hill-w.png"));
+		hillNorthTexture = new Texture (Gdx.files.internal("images/hill-n.png"));
+		hillEastTexture = new Texture (Gdx.files.internal("images/hill-e.png"));
+		hillSouthTexture = new Texture (Gdx.files.internal("images/hill-s.png"));
+		
 		holeTexture = new Texture (Gdx.files.internal("images/hole.png"));
+		teleTexture = new Texture (Gdx.files.internal("images/tele.png"));
+		waterTexture = new Texture (Gdx.files.internal("images/water.png"));
 		backgroundTexture = new Texture(Gdx.files.internal("images/background.png"));		
 		arrowTexture = new Texture(Gdx.files.internal("images/circle.png"));
 		arrowTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);

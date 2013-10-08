@@ -11,15 +11,30 @@ import com.me.mygdxgame.Block1.FacingDir;
 public class World {
 
 	Array<Block1> block = new Array<Block1>(); 
-	Array<Block1> wallArray = new Array<Block1>(); 
+	Array<Block1> wallArray = new Array<Block1>();
+	Array<Block1> invWallArray = new Array<Block1>();
 	Array<Block1> groundArray = new Array<Block1>(); 
-	Array<Block1> cornerArray = new Array<Block1>(); 
+	Array<Block1> cornerArray = new Array<Block1>();
+	Array<Block1> invCornerArray = new Array<Block1>();
+	Array<Block1> hillArray = new Array<Block1>();
 	Array<Block1> holeArray = new Array<Block1>(); 
 	Ball ball; 
 //	Arrow arrow; 
 	
 	public Array<Block1> getBlocks() { 
 		return block; 
+	}
+	
+	public Array<Block1> getInvWallBlocks() {
+		return invWallArray;
+	}
+	
+	public Array<Block1> getInvCornerBlocks() {
+		return invCornerArray;
+	}
+	
+	public Array<Block1> getHillBlocks() {
+		return hillArray;
 	}
 	
 	public Array<Block1> getWallBlocks() {
@@ -55,8 +70,8 @@ public class World {
 		groundArray = new Array<Block1>(); 
 		ball = new Ball(new Vector2(250,220));
 		
-		for (int i = 210; i <= 750; i+=30) {
-			for(int j = 180; j <= 510; j+=30){
+		for (int i = 210; i <= 750; i+=15) {
+			for(int j = 180; j <= 510; j+=15){
 				//add corners
 				if(i == 210 && j == 180)
 					cornerArray.add(new Block1(new Vector2(i,j), BlockType.CORNER, FacingDir.EAST));
@@ -103,8 +118,8 @@ public class World {
 		cornerArray.add(new Block1(new Vector2(750,510), BlockType.CORNER, FacingDir.WEST));
 		cornerArray.add(new Block1(new Vector2(750,180), BlockType.CORNER, FacingDir.SOUTH));
 		
-		for (int i = 210; i <= 750; i+=30) {
-			for(int j = 180; j <= 510; j+=30){
+		for (int i = 210; i <= 750; i+=15) {
+			for(int j = 180; j <= 510; j+=15){
 				//add walls
 				if(i == 210 && j < 510){
 					wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.WEST));

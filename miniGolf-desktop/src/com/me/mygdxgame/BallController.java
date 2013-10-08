@@ -9,7 +9,6 @@ public class BallController {
 	private Ball ball;
 	private Array<Block1> collisionBlocks;
 	private Array<Block1> openBlocks;
-	private Array<Block1> cornerBlocks;
 	private Boolean collision = false;
 
 	public BallController(World world) {
@@ -18,7 +17,7 @@ public class BallController {
 		this.collisionBlocks = world.getWallBlocks();
 		this.collisionBlocks.addAll(world.getHoleBlock());
 		this.openBlocks = world.getGroundBlocks();
-		this.cornerBlocks = world.getCornerBlocks();
+		
 	}
 
 	public void update() {
@@ -58,19 +57,7 @@ public class BallController {
 			}
 		}
 		
-		for (Block1 cornerBlock : cornerBlocks){
-			Boolean boundColl = Intersector.overlapConvexPolygons(ballBounds,
-					cornerBlock.getBounds());
-			Boolean boundTooColl = Intersector.overlapConvexPolygons(
-					ballBounds, cornerBlock.getBoundsToo());
-			if(boundColl || boundTooColl){
-				if (!collision){
-					if (boundColl) ball.bounceX = ball.bounceX == true ? false : true;
-					if (boundTooColl) ball.bounceY = ball.bounceY == true ? false : true;
-					collision = true;
-				}
-			}
-		}
+
 		
 		for (Block1 groundBlock : openBlocks) {
 			if (Intersector.overlapConvexPolygons(ballBounds,

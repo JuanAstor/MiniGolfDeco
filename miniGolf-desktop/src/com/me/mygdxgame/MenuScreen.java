@@ -7,6 +7,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.*;
@@ -24,6 +25,10 @@ public class MenuScreen implements Screen, InputProcessor {
 	BitmapFont font1;
 	int disposeCount = 0;
 	
+	Texture logoTexture;
+	Sprite logoSprite;
+	SpriteBatch logoBatch;
+	
 	TextureAtlas butAtlas;
 	Skin butSkin;
 	SpriteBatch butBatch;
@@ -38,10 +43,18 @@ public class MenuScreen implements Screen, InputProcessor {
 	@Override 
 	public void show() { 
 		butBatch = new SpriteBatch();
-		butAtlas = new TextureAtlas("images/butttoon.pack");
+		logoTexture = new Texture("images/logo.png");		
+		logoSprite = new Sprite(logoTexture);
+		
+		logoSprite.setX(Gdx.graphics.getWidth()/2 - logoSprite.getWidth()/2);
+		logoSprite.setY(Gdx.graphics.getHeight()/2 - Gdx.graphics.getHeight()/7);
+		
+		logoBatch = new SpriteBatch();
+		
+		butAtlas = new TextureAtlas("images/button.pack");
 		butSkin = new Skin();
 		butSkin.addRegions(butAtlas);
-		font1 = new BitmapFont(Gdx.files.internal("images/font_white.fnt"),false);
+		font1 = new BitmapFont(Gdx.files.internal("images/font_black.fnt"),false);
 		
 		
 	}
@@ -52,9 +65,14 @@ public class MenuScreen implements Screen, InputProcessor {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		stage.act(delta);
 		
+		logoBatch.begin();
+		logoSprite.draw(logoBatch);
+		logoBatch.end();
+		
 		butBatch.begin();
-		stage.draw();
+		stage.draw();		
 		butBatch.end();
+		
 		
 		
 	}
@@ -76,23 +94,20 @@ public class MenuScreen implements Screen, InputProcessor {
 		LabelStyle labelStyle = new LabelStyle();
 		labelStyle.font = font1;
 		
+		
 		mainButton = new TextButton("Start Game!", butStyle);
 		closeButton = new TextButton("Do nothing", butStyle);
 		
 		mainButton.setWidth(400);
 		mainButton.setHeight(100);
 		mainButton.setX(Gdx.graphics.getWidth()/2 - mainButton.getWidth()/2);
-		mainButton.setY(Gdx.graphics.getHeight()/2 - mainButton.getHeight()/2);
+		mainButton.setY(Gdx.graphics.getHeight()/2 - 2*(mainButton.getHeight()/1.2f));
 		
 		closeButton.setWidth(400);
 		closeButton.setHeight(100);
 		closeButton.setX(Gdx.graphics.getWidth()/2 - closeButton.getWidth()/2);
-		closeButton.setY(Gdx.graphics.getHeight()/2 - closeButton.getHeight()/2 - (closeButton.getHeight()+5));
+		closeButton.setY(Gdx.graphics.getHeight()/2 - 2*(closeButton.getHeight()/1.2f)- (closeButton.getHeight()+5));
 		
-		Label mainLabel = new Label( "EXTREME BROKEN MINIGOLF", labelStyle);
-        mainLabel.setX((Gdx.graphics.getWidth()/2 - mainButton.getWidth()/2 )+5);
-        mainLabel.setY(Gdx.graphics.getHeight()/2 - closeButton.getHeight()/2 + (closeButton.getHeight()+5) );
-       
 		
 		mainButton.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer,int button){
@@ -110,7 +125,6 @@ public class MenuScreen implements Screen, InputProcessor {
 			
 		});
 		
-		stage.addActor( mainLabel );
 		stage.addActor(mainButton);
 		stage.addActor(closeButton);
 		
