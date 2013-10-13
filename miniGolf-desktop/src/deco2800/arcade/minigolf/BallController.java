@@ -125,7 +125,9 @@ public class BallController {
 					 
 					
 					else if (blockType == Block1.BlockType.WATER){
-						ball.position = new Vector2(world.holeStartX, world.holeStartY);
+						System.out.println("called");
+						//ball.position = new Vector2(world.holeStartX, world.holeStartY);
+						ball.setPosition(world.holeStartX, world.holeStartY);
 						ball.inWater = true;
 						
 						specialCol = true;
@@ -183,3 +185,31 @@ public class BallController {
 	
 
 }
+
+//			if(blockType == Block1.BlockType.WALL){
+//				if(blockDir == Block1.FacingDir.NORTH){
+//					if(ball.getPosition().y >= (block.getPosition().y - 2.0f)){
+//						System.out.println("collision"); //detects
+//					}
+//				}
+//				if(blockDir == Block1.FacingDir.SOUTH){
+//					if(ball.getPosition().y <= (block.getPosition().y + 12.0f)){
+//						System.out.println("collides"); //detects
+//					}
+//				}
+//				if(blockDir == Block1.FacingDir.WEST){
+//					if(ball.getPosition().x <= (block.getPosition().x + 12.0f)){
+//						System.out.println("collision"); //detects
+//					}
+//				}
+//				if(blockDir == Block1.FacingDir.EAST){
+//					if(ball.getPosition().x >= (block.getPosition().x - 2.0f)){
+//						System.out.println("collides"); //detects
+//					}
+//				}
+//					//System.out.println("wall x is:"+block.getPosition().y);
+//					//System.out.println("ball x is:"+ball.getPosition().y);
+//				}
+			
+	
+	

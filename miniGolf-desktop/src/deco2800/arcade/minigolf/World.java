@@ -2,42 +2,39 @@ package deco2800.arcade.minigolf;
 
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.Array; 
+
 import deco2800.arcade.minigolf.Block1.BlockType;
 import deco2800.arcade.minigolf.Block1.FacingDir;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
+
 
 /* Holds the object positions to be rendered on screen */
 
 public class World {
 
 	// arrays which hold all blocks of a certain type
-	Array<Block1> block = new Array<Block1>(); 
 	Array<Block1> wallArray = new Array<Block1>();
 	Array<Block1> invWallArray = new Array<Block1>();
 	Array<Block1> groundArray = new Array<Block1>(); 
 	Array<Block1> cornerArray = new Array<Block1>();
-	Array<Block1> invCornerArray = new Array<Block1>();
 	Array<Block1> hillArray = new Array<Block1>();
-	Array<Block1> waterArray = new Array<Block1>();
 	Array<Block1> holeArray = new Array<Block1>();
+	Array<Block1> waterArray = new Array<Block1>();
 	Array<Block1> teleArray = new Array<Block1>();
 	Array<Block1> diagArray = new Array<Block1>();
 	
 	int holeStartX;
 	int holeStartY;
-	
 	Ball ball;  
 	
 	/* arrays which hold different block types */
 	public Array<Block1> getInvWallBlocks() {
 		return invWallArray;
-	}
-	
-	public Array<Block1> getInvCornerBlocks() {
-		return invCornerArray;
-	}
-	
-	public Array<Block1> getDiagBlocks() {
-		return diagArray;
 	}
 	
 	public Array<Block1> getHillBlocks() {
@@ -53,15 +50,17 @@ public class World {
 	public Array<Block1> getCornerBlocks() {
 		return cornerArray;
 	}
+	public Array<Block1> getHoleBlock() {
+		return holeArray;
+	}
+	public Array<Block1> getDiagBlocks(){
+		return diagArray;
+	}
 	public Array<Block1> getWaterBlocks() {
 		return waterArray;
 	}
-	
 	public Array<Block1> getTeleBlocks() {
 		return teleArray;
-	}
-	public Array<Block1> getHoleBlock() {
-		return holeArray;
 	}
 	
 	public Ball getBall() { 
@@ -69,197 +68,136 @@ public class World {
 	}
 	
 	/* construct level/hole based upon @param */
-	public World(int state) { 
+	public World(int state) throws Exception { 
 		if(state == 1) {
 			System.out.println("level 1");
-			createHole2();  
+			createHole("resources/Levels/level4.txt");  
 		}
 		if(state == 2){
 			System.out.println("level 2");
-			createHole2();
+			createHole("resources/Levels/level2.txt");
 		}
 		if(state == 3){
 			System.out.println("level 3");
-			createHole3();
+			createHole("resources/Levels/level3.txt");
 		}
 		if(state == 4){
 			System.out.println("level 4");
+			createHole("resources/Levels/level4.txt");
+		}
+		if(state == 5){
+			System.out.println("level 5");
+			createHole("resources/Levels/level5.txt");
+		}
+		if(state == 6){
+			System.out.println("level 6");
+			createHole("resources/Levels/level6.txt");
+		}
+		if(state == 7){
+			System.out.println("level 7");
+			createHole("resources/Levels/level7.txt");
 		}
 	}
-	/* Level 1 */
-	private void createHole1() {
-		//make sure all arrays are empty upon start
+	/* clear all arrays before they are used */
+	private void clearArrays(){
 		cornerArray = new Array<Block1>();
 		wallArray = new Array<Block1>();
 		groundArray = new Array<Block1>(); 
-		holeStartX = 250;
-		holeStartY = 220;
-		ball = new Ball(new Vector2(250,220));
-		
-		//Allocate positions for each block
-		for (int i = 210; i <= 750; i+=15) { // width or x
-			for(int j = 180; j <= 510; j+=15){// height or y
-				//add corners
-				if(i == 210 && j == 180)
-					cornerArray.add(new Block1(new Vector2(i,j), BlockType.CORNER, FacingDir.EAST, 0));
-				if(i == 210 && j == 510)
-					cornerArray.add(new Block1(new Vector2(210,510), BlockType.CORNER, FacingDir.NORTH, 0));
-				if(i == 750 && j == 510)
-					cornerArray.add(new Block1(new Vector2(750,510), BlockType.CORNER, FacingDir.WEST, 0));
-				if(i == 750 && j == 180)
-					cornerArray.add(new Block1(new Vector2(750,180), BlockType.CORNER, FacingDir.SOUTH, 0));
-				
-				//add walls
-				else if(i == 210 && j < 510){
-					wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.WEST, 0));
-				}
-				else if(i < 750 && j == 510){
-					wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.NORTH, 0));
-				}
-				else if(i == 750 && j < 510){
-					wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.EAST, 0));
-				}
-				else if(i < 750 && j == 180){
-					wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.SOUTH, 0));
-				}
-				//ground + hole
-				if(i > 210 && i < 750 || j < 180 && j < 510){
-					if(i == 690 && j == 450){
-						holeArray.add(new Block1(new Vector2(i,j), BlockType.HOLE, FacingDir.NORTH, 0));
-					} else {
-					groundArray.add(new Block1(new Vector2(i,j), BlockType.OPEN, FacingDir.NORTH, 0));
-					}
-				}
-			}
-		}
-	}	
-	/* level 2 */
-	private void createHole2() {
-		//make sure all arrays are empty upon start
-		cornerArray = new Array<Block1>();
-		wallArray = new Array<Block1>();
-		groundArray = new Array<Block1>();
+		invWallArray = new Array<Block1>();
+		teleArray = new Array<Block1>();
+		diagArray = new Array<Block1>();
 		hillArray = new Array<Block1>();
-		holeStartX = 630;
-		holeStartY = 120;
-		ball = new Ball(new Vector2(630,120)); //set ball start position
-		
-		for (int i = 300; i <= 750; i+=15) { // width or x
-			for(int j = 90; j <= 600; j+=15){// height or y
-				//add corners
-				if(i == 510 && j == 90)
-					cornerArray.add(new Block1(new Vector2(i,j), BlockType.CORNER, FacingDir.EAST, 0));
-				if(i == 300 && j == 270)
-					cornerArray.add(new Block1(new Vector2(i,j), BlockType.CORNER, FacingDir.EAST, 0));
-				if(i == 750 && j == 90)
-					cornerArray.add(new Block1(new Vector2(i,j), BlockType.CORNER, FacingDir.SOUTH, 0));
-				if(i == 750 && j == 420)
-					cornerArray.add(new Block1(new Vector2(i,j), BlockType.CORNER, FacingDir.WEST, 0));
-				if(i == 570 && j == 600)
-					cornerArray.add(new Block1(new Vector2(i,j), BlockType.CORNER, FacingDir.WEST, 0));
-				if(i == 300 && j == 600)
-					cornerArray.add(new Block1(new Vector2(i,j), BlockType.CORNER, FacingDir.NORTH, 0));
-
-				
-				//add walls				
-				else if(i > 510 && i < 750 && j == 90)
-					wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.SOUTH, 0));
-				else if(i > 300 && i < 510 && j == 270)
-					wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.SOUTH, 0));
-				else if(i == 510 && j > 90 && j < 270)
-					wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.WEST, 0));
-				else if(i == 300 && j > 270 && j < 600)
-					wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.WEST, 0));				
-				else if(i == 750 && j > 90 && j < 420)
-					wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.EAST, 0));
-				else if(i == 570 && j > 420 && j < 600)
-					wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.EAST, 0));
-				else if(i > 300 && i < 570 && j == 600)
-					wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.NORTH, 0));
-				else if(i > 570 && i < 750 && j == 420)
-					wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.NORTH, 0));
-				
-				//add obstacles (CHANGED TO WATER FOR TESTING)
-				else if(i == 510 && j == 270)
-					diagArray.add(new Block1(new Vector2(i,j), BlockType.DIAGONAL, FacingDir.NORTH, 1));
-				else if(i == 570 && j == 420)
-					diagArray.add(new Block1(new Vector2(i,j), BlockType.DIAGONAL, FacingDir.SOUTH, 1));	
-			
-				
-				//ground + hole
-				else{
-					if(i == 420 && j == 570)
-						holeArray.add(new Block1(new Vector2(i,j), BlockType.HOLE, FacingDir.NORTH, 0));
-					else{
-						groundArray.add(new Block1(new Vector2(i,j), BlockType.OPEN, FacingDir.NORTH, 0));
-					}
-				}
-			}
-		}		
-	}	
+		holeArray = new Array<Block1>();
+		waterArray = new Array<Block1>();
+	}
 	
-	private void createHole3(){		
-		//make sure all arrays are empty upon start
-		cornerArray = new Array<Block1>();
-		wallArray = new Array<Block1>();
-		groundArray = new Array<Block1>();
-		holeStartX = 780;
-		holeStartY = 510;
-		ball = new Ball(new Vector2(780,510)); //set ball start position
+	private void createHole(String text) throws Exception {
 		
-
-		for (int i = 150; i <= 870; i+=15) { // width or x
-			for(int j = 210; j <= 540; j+=15){// height or y
-			//add corners	
-			if(i == 690 && j == 540)
-				cornerArray.add(new Block1(new Vector2(i,j), BlockType.CORNER, FacingDir.NORTH, 0));
-			if(i == 150 && j == 540)
-				cornerArray.add(new Block1(new Vector2(i,j), BlockType.CORNER, FacingDir.NORTH, 0));
-			if(i == 870 && j == 540)
-				cornerArray.add(new Block1(new Vector2(i,j), BlockType.CORNER, FacingDir.WEST, 0));
-			if(i == 330 && j == 540)
-				cornerArray.add(new Block1(new Vector2(i,j), BlockType.CORNER, FacingDir.WEST, 0));
-			if(i == 870 && j == 210)
-				cornerArray.add(new Block1(new Vector2(i,j), BlockType.CORNER, FacingDir.SOUTH, 0));
-			if(i == 150 && j == 210)
-				cornerArray.add(new Block1(new Vector2(i,j), BlockType.CORNER, FacingDir.EAST, 0));
+		clearArrays();//make sure all arrays are empty
+		File file = new File(text);
+		int widthNum;
+		int heightNum;
+		char currentChar = 0;		
+		try{
+			//store the first 2 integer values found
+			Scanner scan = new Scanner(file);
+			int[] listVar = new int[3]; 
+			int a = 0; 
+			while(a < 2){
+				listVar[a++] = scan.nextInt();
+			}
+			widthNum = listVar[0]; //width
+			heightNum = listVar[1];//height
 			
-			//add walls
-			else if(i > 690 && i < 870 && j == 540)
-				wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.NORTH, 0));
-			else if(i > 150 && i < 330 && j == 540)
-				wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.NORTH, 0));
-			else if(i > 330 && i < 690 && j == 360)
-				wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.NORTH, 0));
-			else if(i == 870 && j > 210 && j < 540)
-				wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.EAST, 0));
-			else if(i == 330 && j > 360 && j < 540)
-				wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.EAST, 0));
-			else if(i > 150 && i < 870 && j == 210)
-				wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.SOUTH, 0));
-			else if(i == 150 && j > 210 && j < 540)
-				wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.WEST, 0));
-			else if(i == 690 && j > 360 && j < 540)
-				wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.WEST, 0));
+			//check width and height values are positive and greater than 0
+			//if from size 1 - 10 have start pos...., if size 11 - 20 have start pos...
 			
-			//add obstacles
-			else if(i == 690 && j > 240 && j < 360)
-				wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.WEST, 0));
-			else if(i == 510 && j > 210 && j < 330)
-				wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.WEST, 0));
-			else if(i == 330 && j > 240 && j < 360)
-				wallArray.add(new Block1(new Vector2(i,j), BlockType.WALL, FacingDir.EAST, 0));
-			
-			else{
-				if(i == 240 && j == 510)
-					holeArray.add(new Block1(new Vector2(i,j), BlockType.HOLE, FacingDir.NORTH, 0));
-				else{
-					groundArray.add(new Block1(new Vector2(i,j), BlockType.OPEN, FacingDir.NORTH, 0));
+			FileReader input = new FileReader(file); 
+			a = 0;
+			while(currentChar != (char)-1){ //while not end of file
+				//ignore first line since we have dimensions
+				while (a < 5){ 
+					currentChar = (char)input.read();
+					a++;
 				}
-			}
-			
-			}
-		}
-		
+				//loop through file incrementing by the block size
+				for(int i = 600; i>=(90); i-=Block1.SIZE){ //height or y
+					for(int j = 120; j <= ((widthNum * Block1.SIZE) + 135); j+=Block1.SIZE){ //width or x
+						currentChar = (char)input.read();//get current character
+						//check if wall
+						if(currentChar == 'N')//north wall
+							wallArray.add(new Block1(new Vector2(j,i), BlockType.WALL, FacingDir.NORTH,0));
+						 else if(currentChar == 'S')//south wall
+							wallArray.add(new Block1(new Vector2(j,i), BlockType.WALL, FacingDir.SOUTH,0));
+						 else if(currentChar == 'E')//east wall
+							wallArray.add(new Block1(new Vector2(j,i), BlockType.WALL, FacingDir.EAST,0));
+						 else if(currentChar == 'W')//west wall
+							wallArray.add(new Block1(new Vector2(j,i), BlockType.WALL, FacingDir.WEST,0));
+						//check if corner
+						 else if(currentChar == 'n')//north corner
+							cornerArray.add(new Block1(new Vector2(j,i), BlockType.CORNER, FacingDir.NORTH,0));
+						 else if(currentChar == 's')//south corner
+							cornerArray.add(new Block1(new Vector2(j,i), BlockType.CORNER, FacingDir.SOUTH,0));
+						 else if(currentChar == 'e')//east corner
+							cornerArray.add(new Block1(new Vector2(j,i), BlockType.CORNER, FacingDir.EAST,0));
+						 else if(currentChar == 'w')//west corner
+							cornerArray.add(new Block1(new Vector2(j,i), BlockType.CORNER, FacingDir.WEST,0));
+						//check if diag corner 
+						 else if(currentChar == 'L')
+							 diagArray.add(new Block1(new Vector2(j,i), BlockType.DIAGONAL, FacingDir.SOUTH,0));
+						 else if(currentChar == 'J')
+							 diagArray.add(new Block1(new Vector2(j,i), BlockType.DIAGONAL, FacingDir.EAST,0));
+						 else if(currentChar == 'r')
+							 diagArray.add(new Block1(new Vector2(j,i), BlockType.DIAGONAL, FacingDir.WEST,0));
+						 else if(currentChar == 'T')
+							 diagArray.add(new Block1(new Vector2(j,i), BlockType.DIAGONAL, FacingDir.NORTH,0));
+						//check if water
+						 else if(currentChar == 'V')
+							 waterArray.add(new Block1(new Vector2(j,i), BlockType.WATER, FacingDir.NORTH,0));
+						 else if(currentChar == '/')//ground
+							groundArray.add(new Block1(new Vector2(j,i), BlockType.OPEN, FacingDir.NORTH,0));
+						 else if(currentChar == 'O')//hole
+							 holeArray.add(new Block1(new Vector2(j,i), BlockType.HOLE, FacingDir.NORTH,0));
+						 else if(currentChar == 'B'){//ball, set ball and add ground
+							 ball = new Ball(new Vector2(j,i));
+							 holeStartX = j;
+							 holeStartY = i;
+							 groundArray.add(new Block1(new Vector2(j,i), BlockType.OPEN, FacingDir.NORTH,0));
+						 }						
+					}
+				}								
+			}	
+			//to-do - check if width and height match given values. check for illegal chars
+			input.close();
+		}catch (FileNotFoundException e) {
+		    e.printStackTrace();
+		} catch (IOException e) {
+		    e.printStackTrace();
+		} catch (NumberFormatException e) {
+	           System.out.println("This is not a number");
+	           System.out.println(e.getMessage());
+	    } catch (Exception e){
+	    	e.printStackTrace();
+	    }
 	}
 }

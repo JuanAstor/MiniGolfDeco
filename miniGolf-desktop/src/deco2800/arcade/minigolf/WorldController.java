@@ -1,12 +1,11 @@
 package deco2800.arcade.minigolf;
 
+import java.util.Map;
 import java.util.ArrayList;
-import java.util.Map; 
 import java.util.HashMap;
 
 import org.lwjgl.input.Mouse;
  
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
@@ -23,11 +22,10 @@ public class WorldController{
 	private WorldRenderer wRend;
 	private DirectionLogic directionLogic; 
 	
-	
 	boolean leftButtonClick = false; //left mouse click
 	private float deceleration = 1f;
 	private boolean notZero = true; //speed 
-	private float newDirX, newDirY;
+	private float newDirX, newDirY; 
 	
 	public int hole;
 	boolean inHole;
@@ -40,9 +38,9 @@ public class WorldController{
 		this.ball = world.getBall();
 		this.hole = level;
 		this.inHole = false;
-		shotNum = 0;
-		holeShots = 0;
-		scoreCardCopy = scoreCard;
+		this.shotNum = 0; //shot counter
+		this.holeShots = 0;
+		this.scoreCardCopy = scoreCard;
 	}
 	
 	//left mouse button clicked
@@ -77,20 +75,19 @@ public class WorldController{
 			shotNum++;
 			holeShots = shotNum;
 			scoreCardCopy.add(holeShots);
-			
 			System.out.println(scoreCardCopy.toString());
+			
 			if(this.inHole == false){
 				this.hole += 1; 
 				this.inHole = true;
 			}
-			//this.worldState = 2;
 		}		
 		ball.update(delta);
 	}
 	
 	//updates the speed and position of the ball when the mouse is clicked
 	private void processInput(float delta, float power, Vector2 dir) {
-				
+		//if(power < 110) power = 110;
 		if(leftButtonClick == false){
 			ball.getVelocity().x = 0; 
 			ball.getVelocity().y = 0;
@@ -100,12 +97,10 @@ public class WorldController{
 		//if left mouse clicked (and released)
 		if(leftButtonClick == true){
 			if(this.notZero){ //if speed doesn't equal zero
-				
-				power -= (6.0f * deceleration); //apply deceleration
+				power -= (5.0f * deceleration); //apply deceleration
 				deceleration += 0.25;
 				if(power <= 0 || ball.inWater){
-					
-					power = 0;
+					power = 0; 
 					ball.hillX = 0f;
 					ball.hillY = 0f;
 					if (ball.inWater) shotNum++;
@@ -113,10 +108,7 @@ public class WorldController{
 					this.notZero = false; //speed is now zero, stop decelerating
 				}
 				
-				if(power > 250) power = 250; //cap speed (if not already)
-				//apply velocity directional changes on wall/object contact
-				
-				
+				//if(power > 150) power = 150; //cap speed (if not already)
 				if(ball.bounceDiag){
 					newDirX = dir.x;
 					newDirY = dir.y;					
@@ -125,11 +117,11 @@ public class WorldController{
 					ball.bounceDiag = false;
 				}
 				
+				//apply velocity directional changes on wall/object contact
 				if(ball.bounceX) ball.getVelocity().x = ((-(dir.x)) * power * delta ) - ball.getHillX(); 
 				else ball.getVelocity().x = ((dir.x) * power * delta) + ball.getHillX(); 
 				if(ball.bounceY) ball.getVelocity().y = ((-(dir.y)) * power * delta ) - ball.getHillY(); 
 				else ball.getVelocity().y = ((dir.y) * power * delta) + ball.getHillY();
-				
 				
 			} else { //ball has stopped and waiting for input
 				//so reset everything for next move
@@ -143,7 +135,5 @@ public class WorldController{
 				shotNum++; //increase shot counter
 			}
 		}
-		
-		
 	}
 }

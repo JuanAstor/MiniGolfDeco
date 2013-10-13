@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 
 /* 
  * This class controls the logic for the direction trajectory
+ * Essentially it provides the speed for the ball and the direction/length
+ * to draw the trajectory
  */
 
 public class DirectionLogic {
@@ -27,10 +29,25 @@ public class DirectionLogic {
 		currentPos.set(mouseX, Gdx.graphics.getHeight() - mouseY);
 		//update the current position based on ball position and mouse
 		temp.set(currentPos).sub(ballPos);
-		temp.mul(-1f);
-		//update the angle and power based on the trajectory
-		directController.angle = temp.angle(); 
-		directController.power = temp.len();
+		//System.out.println("x: "+ temp.x);
+		//System.out.println("y: "+ temp.y);
+		//cap the speed the ball can travel at
+		if(temp.x > 200)  temp.x = 200.0f;
+		if(temp.x < -200) temp.x = -200.0f;
+		if(temp.y > 200)  temp.y = 200.0f;
+		if(temp.y < -200) temp.y = -200.0f;
+		
+		temp.mul(-1f); //set point of origin for trajectory (so it's on ball not mouse)
+		
+		//update the angle and power based on the mouse position
+		directController.angle = temp.angle();
+		
+		//cap trajectory length 
+		if(temp.len() >= 160){
+			directController.power = 160f;
+		} else{
+			directController.power = temp.len();
+		}		
 	}
 	
 	public Vector2 getDirection(){

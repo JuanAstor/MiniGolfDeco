@@ -1,10 +1,10 @@
 package deco2800.arcade.minigolf;
 
 
-import java.util.ArrayList;
-
 import deco2800.arcade.minigolf.Block1.BlockType;
 import deco2800.arcade.minigolf.Block1.FacingDir;
+
+import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx; 
 import com.badlogic.gdx.graphics.Color;
@@ -57,8 +57,7 @@ public class WorldRenderer {
 	
 	private Trajectory traject;
 	
-	private int width; 
-	private int height; 
+	private int width, height; 
 	private float ppuX; //pixels/unit on width
 	private float ppuY; //pixels/unit on height
 	private boolean debug = false; 
@@ -72,7 +71,7 @@ public class WorldRenderer {
 	}
 	
 	/* constructor */
-	public WorldRenderer (World world, boolean debug, int level,
+	public WorldRenderer (World world, boolean debug, int level, 
 			ArrayList<Integer> scoreCard) { 
 		this.world = world; 
 		this.wControl = new WorldController(this.world, level, scoreCard);
@@ -97,18 +96,16 @@ public class WorldRenderer {
 			}				
 		sprite.begin();
 		    sprite.draw(backgroundTexture, 0, 0);
-		   
-			drawGround();			
+			drawGround();
 			drawWall();
 			drawHill();
 			drawDiags();
 			drawCorners();
-			drawInvCorners();
+			drawInvWalls();
 			drawWater();
 			drawTele();
 			drawHole();
 			drawBall();
-			 
 			
 		sprite.end();
 		if((ball.getVelocity().x == 0 && ball.getVelocity().y == 0 && !(ball.inHole))){
@@ -131,45 +128,45 @@ public class WorldRenderer {
 	
 	/* load textures from file into specific variables */
 	private void loadTextures() {
-		ballTexture = new Texture (Gdx.files.internal("images/ball.png"));
-		groundTexture = new Texture (Gdx.files.internal("images/grass.png"));
-		closedTexture = new Texture (Gdx.files.internal("images/closed.png"));
+		ballTexture = new Texture (Gdx.files.internal("resources/ball.png"));
+		groundTexture = new Texture (Gdx.files.internal("resources/grass.png"));
+		closedTexture = new Texture (Gdx.files.internal("resources/closed.png"));
 		
-		wallSouthTexture = new Texture (Gdx.files.internal("images/wall-s.png"));
-		wallNorthTexture = new Texture (Gdx.files.internal("images/wall-n.png"));
-		wallEastTexture = new Texture (Gdx.files.internal("images/wall-e.png"));
-		wallWestTexture = new Texture (Gdx.files.internal("images/wall-w.png"));
+		wallSouthTexture = new Texture (Gdx.files.internal("resources/wall-s.png"));
+		wallNorthTexture = new Texture (Gdx.files.internal("resources/wall-n.png"));
+		wallEastTexture = new Texture (Gdx.files.internal("resources/wall-e.png"));
+		wallWestTexture = new Texture (Gdx.files.internal("resources/wall-w.png"));
 		
-		invWallSouthTexture = new Texture (Gdx.files.internal("images/invwall-s.png"));
-		invWallNorthTexture = new Texture (Gdx.files.internal("images/invwall-n.png"));
-		invWallEastTexture = new Texture (Gdx.files.internal("images/invwall-e.png"));
-		invWallWestTexture = new Texture (Gdx.files.internal("images/invwall-w.png"));
+		invWallSouthTexture = new Texture (Gdx.files.internal("resources/invwall-s.png"));
+		invWallNorthTexture = new Texture (Gdx.files.internal("resources/invwall-n.png"));
+		invWallEastTexture = new Texture (Gdx.files.internal("resources/invwall-e.png"));
+		invWallWestTexture = new Texture (Gdx.files.internal("resources/invwall-w.png"));
 		
-		cornerWestTexture = new Texture (Gdx.files.internal("images/corner-w.png"));
-		cornerNorthTexture = new Texture (Gdx.files.internal("images/corner-n.png"));
-		cornerEastTexture = new Texture (Gdx.files.internal("images/corner-e.png"));
-		cornerSouthTexture = new Texture (Gdx.files.internal("images/corner-s.png"));
+		cornerWestTexture = new Texture (Gdx.files.internal("resources/corner-n.png"));
+		cornerNorthTexture = new Texture (Gdx.files.internal("resources/corner-e.png"));
+		cornerEastTexture = new Texture (Gdx.files.internal("resources/corner-s.png"));
+		cornerSouthTexture = new Texture (Gdx.files.internal("resources/corner-w.png"));
 		
-		invCornerWestTexture = new Texture (Gdx.files.internal("images/invcorner-w.png"));
-		invCornerNorthTexture = new Texture (Gdx.files.internal("images/invcorner-n.png"));
-		invCornerEastTexture = new Texture (Gdx.files.internal("images/invcorner-e.png"));
-		invCornerSouthTexture = new Texture (Gdx.files.internal("images/invcorner-s.png"));
+		invCornerWestTexture = new Texture (Gdx.files.internal("resources/invcorner-w.png"));
+		invCornerNorthTexture = new Texture (Gdx.files.internal("resources/invcorner-n.png"));
+		invCornerEastTexture = new Texture (Gdx.files.internal("resources/invcorner-e.png"));
+		invCornerSouthTexture = new Texture (Gdx.files.internal("resources/invcorner-s.png"));
 		
-		diagWestTexture = new Texture (Gdx.files.internal("images/diag-w.png"));
-		diagNorthTexture = new Texture (Gdx.files.internal("images/diag-n.png"));
-		diagEastTexture = new Texture (Gdx.files.internal("images/diag-e.png"));
-		diagSouthTexture = new Texture (Gdx.files.internal("images/diag-s.png"));
+		diagWestTexture = new Texture (Gdx.files.internal("resources/diag-w.png"));
+		diagNorthTexture = new Texture (Gdx.files.internal("resources/diag-n.png"));
+		diagEastTexture = new Texture (Gdx.files.internal("resources/diag-e.png"));
+		diagSouthTexture = new Texture (Gdx.files.internal("resources/diag-s.png"));
 		
-		hillWestTexture = new Texture (Gdx.files.internal("images/hill-w.png"));
-		hillNorthTexture = new Texture (Gdx.files.internal("images/hill-n.png"));
-		hillEastTexture = new Texture (Gdx.files.internal("images/hill-e.png"));
-		hillSouthTexture = new Texture (Gdx.files.internal("images/hill-s.png"));
+		hillWestTexture = new Texture (Gdx.files.internal("resources/hill-w.png"));
+		hillNorthTexture = new Texture (Gdx.files.internal("resources/hill-n.png"));
+		hillEastTexture = new Texture (Gdx.files.internal("resources/hill-e.png"));
+		hillSouthTexture = new Texture (Gdx.files.internal("resources/hill-s.png"));
 		
-		holeTexture = new Texture (Gdx.files.internal("images/hole.png"));
-		teleTexture = new Texture (Gdx.files.internal("images/tele.png"));
-		waterTexture = new Texture (Gdx.files.internal("images/water.png"));
-		backgroundTexture = new Texture(Gdx.files.internal("images/background.png"));		
-		arrowTexture = new Texture(Gdx.files.internal("images/circle.png"));
+		holeTexture = new Texture (Gdx.files.internal("resources/hole.png"));
+		teleTexture = new Texture (Gdx.files.internal("resources/tele.png"));
+		waterTexture = new Texture (Gdx.files.internal("resources/water.png"));
+		backgroundTexture = new Texture(Gdx.files.internal("resources/background.png"));		
+		arrowTexture = new Texture(Gdx.files.internal("resources/circle.png"));
 		arrowTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 	}
 	
@@ -199,6 +196,18 @@ public class WorldRenderer {
 					Block1.SIZE * ppuX, Block1.SIZE * ppuY);
 		}
 	}
+	private void drawWater() {
+		for(Block1 block : world.getWaterBlocks()){
+			sprite.draw(waterTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+					Block1.SIZE * ppuX, Block1.SIZE * ppuY);
+		}
+	}
+	private void drawTele() {
+		  for(Block1 block : world.getTeleBlocks()){
+			  sprite.draw(teleTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+					    Block1.SIZE * ppuX, Block1.SIZE * ppuY);
+		  }
+		}
 	
 	private void drawWall() {
 		for(Block1 block : world.getWallBlocks()){
@@ -223,75 +232,72 @@ public class WorldRenderer {
 			}
 		}
 	
-	private void drawHill() {
-		for(Block1 block : world.getHillBlocks()){
-			//if(block.type == BlockType.Wall)
-			//change texture position based on it's FacingDir
-			if(block.dir == FacingDir.NORTH){ //draw blocks from getWallBlocks() that face north
-				sprite.draw(hillNorthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
-						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false); 
-				}
-				if(block.dir == FacingDir.SOUTH){
-					sprite.draw(hillSouthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
-							Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false);	
-				}
-				if(block.dir == FacingDir.EAST){
-					sprite.draw(hillEastTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
-							Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false);
-				}
-				if(block.dir == FacingDir.WEST){
-					sprite.draw(hillWestTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
-							Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false);
-				}
-			}
-		}
-	
 	private void drawCorners() {
 		for(Block1 block : world.getCornerBlocks()){
 			//change texture position based on FacingDir
 			if(block.dir == FacingDir.NORTH){ //draw blocks from getCornerBlocks() 
-				sprite.draw(cornerEastTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+				sprite.draw(cornerNorthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
 						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false); 
 			}
 			if(block.dir == FacingDir.SOUTH){
-				sprite.draw(cornerWestTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
-						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false);	
-			}
-			if(block.dir == FacingDir.EAST){
-				sprite.draw(cornerNorthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
-						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false);	
-			} 
-			if(block.dir == FacingDir.WEST){
 				sprite.draw(cornerSouthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
 						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false);	
 			}
+			if(block.dir == FacingDir.EAST){
+				sprite.draw(cornerEastTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false);	
+			} 
+			if(block.dir == FacingDir.WEST){
+				sprite.draw(cornerWestTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false);	
+			}
 		}
+	}	
+	private void drawHill() {
+	 for(Block1 block : world.getHillBlocks()){
+	  //if(block.type == BlockType.Wall)
+	  //change texture position based on it's FacingDir
+		 if(block.dir == FacingDir.NORTH){ //draw blocks from getWallBlocks() that face north
+			 sprite.draw(hillNorthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+					 Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false); 
+			 }
+		 if(block.dir == FacingDir.SOUTH){
+			 sprite.draw(hillSouthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+					 Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false); 
+		 	}
+	    if(block.dir == FacingDir.EAST){
+	    	sprite.draw(hillEastTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+	    			Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false);
+	    	}
+	    if(block.dir == FacingDir.WEST){
+	    	sprite.draw(hillWestTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+	    			Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false);
+	    	}
+	  	}
 	}
-	
 	private void drawDiags() {
 		for(Block1 block : world.getDiagBlocks()){
-		   if(block.dir == FacingDir.NORTH)
-			   sprite.draw(diagNorthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
-					   Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
-		   if(block.dir == FacingDir.SOUTH)
-			   sprite.draw(diagSouthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
-					   Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
-		   if(block.dir == FacingDir.EAST)
-			   sprite.draw(diagEastTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
-					   Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
-		   if(block.dir == FacingDir.WEST)
-			   sprite.draw(diagWestTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
-					   Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
-		}
-	 }
-	
-	private void drawInvCorners() {
-		for(Block1 block : world.getInvCornerBlocks()){
 			if(block.dir == FacingDir.NORTH)
-				sprite.draw(invCornerNorthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
+				sprite.draw(diagNorthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
 						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
 			if(block.dir == FacingDir.SOUTH)
-				sprite.draw(invCornerSouthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
+				sprite.draw(diagSouthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
+			if(block.dir == FacingDir.EAST)
+				sprite.draw(diagEastTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
+			if(block.dir == FacingDir.WEST)
+				sprite.draw(diagWestTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
+		}
+	}
+	private void drawInvWalls() {
+		for(Block1 block : world.getInvWallBlocks()){
+			if(block.dir == FacingDir.NORTH)
+				sprite.draw(invWallNorthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
+			if(block.dir == FacingDir.SOUTH)
+				sprite.draw(invWallSouthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
 						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
 		}
 	}
@@ -301,20 +307,6 @@ public class WorldRenderer {
 			sprite.draw(holeTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
 					Block1.SIZE * ppuX, Block1.SIZE * ppuY);
 		}
-	}
-	
-	private void drawWater() {
-	  for(Block1 block : world.getWaterBlocks()){
-		  sprite.draw(waterTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
-				    Block1.SIZE * ppuX, Block1.SIZE * ppuY);
-	  }
-	}
-	
-	private void drawTele() {
-	  for(Block1 block : world.getTeleBlocks()){
-		  sprite.draw(teleTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
-				    Block1.SIZE * ppuX, Block1.SIZE * ppuY);
-	  }
 	}
 	
 //	public void setRenderTraject(boolean value){

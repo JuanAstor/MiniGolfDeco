@@ -1,7 +1,5 @@
 package deco2800.arcade.minigolf;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
@@ -16,11 +14,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import java.util.ArrayList;
 
 
 public class GameScreen implements Screen, InputProcessor {
@@ -36,7 +35,7 @@ public class GameScreen implements Screen, InputProcessor {
 	public int level; //hole
 	private float power;
 	
-	//Variables
+	//Variables for the button
 	BitmapFont font1, font2;
 	String holeShots, gameShots, totalScore;
 	ArrayList<Integer> scoreCard;
@@ -65,22 +64,24 @@ public class GameScreen implements Screen, InputProcessor {
 	@Override 
 	public void show() { 
 			System.out.println("called 1");
-			world = new World(level); //create hole 
+			try { //opening a file in world so catch exceptions
+				world = new World(level);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} //create hole 
 			renderer = new WorldRenderer(world, false, this.level, scoreCard); //render objects 
 			wControl = new WorldController(world, this.level, scoreCard); //initialise controller
 			wControl.setHole(level); //set current hole 
 			ballCont = new BallController(world); //initialise controller
 			
-			
-			
 			// Button code
 			scoreBatch = new SpriteBatch();
 			butBatch = new SpriteBatch();
-			butAtlas = new TextureAtlas("images/button.pack");
+			butAtlas = new TextureAtlas("resources/butttoon.pack");
 			butSkin = new Skin();
 			butSkin.addRegions(butAtlas);
-			font1 = new BitmapFont(Gdx.files.internal("images/font_black.fnt"),false);
-			font2 = new BitmapFont(Gdx.files.internal("images/font_white.fnt"),false);	
+			font1 = new BitmapFont(Gdx.files.internal("resources/font_white.fnt"),false);
+			font2 = new BitmapFont(Gdx.files.internal("resources/font_white.fnt"),false);
 			
 	}
 	
@@ -96,11 +97,12 @@ public class GameScreen implements Screen, InputProcessor {
 		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		//render everything and apply updates
-		renderer.render();
-		
+		renderer.render();		
 		capPower();
 		wControl.update(delta, this.power, renderer.getDir());
 		ballCont.update();
+		
+		//score and shot info
 		LabelStyle labelStyle = new LabelStyle();
 		labelStyle.font = font2;
 		
@@ -117,7 +119,7 @@ public class GameScreen implements Screen, InputProcessor {
 		
 		//Button code
 		stage.act(delta);		
-		butBatch.begin();		
+		butBatch.begin();
 		stage.draw();
 		butBatch.end();
 				
@@ -125,8 +127,8 @@ public class GameScreen implements Screen, InputProcessor {
 	/* cap the speed that the player can hit the ball at */
 	private void capPower(){
 		this.power = renderer.getPower(); //get the power
-		if(this.power > 45) this.power = 45.0f; //cap it at 50
-		this.power = this.power * 5;
+		this.power *= 2.0;
+		
 	}
 	
 	@Override 
@@ -156,13 +158,13 @@ public class GameScreen implements Screen, InputProcessor {
 		
 		mainButton.setWidth(100);
 		mainButton.setHeight(25);
-//		MAINBUTTON.SETX(370);
-//		MAINBUTTON.SETY(150);
+		mainButton.setX(370);
+		mainButton.setY(50);
 		
 		resetButton.setWidth(100);
 		resetButton.setHeight(25);
-//		resetButton.setX(520);
-//		resetButton.setY(150);
+		resetButton.setX(520);
+		resetButton.setY(50);
 		
 		
 		//menu
@@ -172,7 +174,7 @@ public class GameScreen implements Screen, InputProcessor {
 				return true;
 			}			
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-				golf.setScreen(golf.menu);					
+				golf.create();					
 			}			
 			
 		});

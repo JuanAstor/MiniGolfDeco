@@ -24,7 +24,7 @@ public class MenuScreen implements Screen, InputProcessor {
 	Stage stage;
 	BitmapFont font1;
 	int disposeCount = 0;
-	
+		
 	Texture logoTexture;
 	Sprite logoSprite;
 	Sprite menuBGSprite;
@@ -45,9 +45,9 @@ public class MenuScreen implements Screen, InputProcessor {
 	@Override 
 	public void show() { 
 		butBatch = new SpriteBatch();
-		logoTexture = new Texture("images/logo.png");		
+		logoTexture = new Texture("resources/logo.png");		
 		logoSprite = new Sprite(logoTexture);
-		menuBGTexture = new Texture("images/menubg.png");
+		menuBGTexture = new Texture("resources/menubg.png");
 		menuBGSprite = new Sprite(menuBGTexture);
 		
 		logoSprite.setX(Gdx.graphics.getWidth()/2 - logoSprite.getWidth()/2);
@@ -55,10 +55,10 @@ public class MenuScreen implements Screen, InputProcessor {
 		
 		logoMenuBatch = new SpriteBatch();
 		
-		butAtlas = new TextureAtlas("images/button.pack");
+		butAtlas = new TextureAtlas("resources/button.pack");
 		butSkin = new Skin();
 		butSkin.addRegions(butAtlas);
-		font1 = new BitmapFont(Gdx.files.internal("images/font_black.fnt"),false);		
+		font1 = new BitmapFont(Gdx.files.internal("resources/font_black.fnt"),false);	
 	}
 	
 	@Override 
@@ -74,9 +74,7 @@ public class MenuScreen implements Screen, InputProcessor {
 		
 		butBatch.begin();
 		stage.draw();		
-		butBatch.end();
-		
-		
+		butBatch.end();		
 	}
 	
 	@Override 
@@ -94,8 +92,7 @@ public class MenuScreen implements Screen, InputProcessor {
 		butStyle.font = font1;
 		
 		LabelStyle labelStyle = new LabelStyle();
-		labelStyle.font = font1;
-		
+		labelStyle.font = font1;		
 		
 		mainButton = new TextButton("Start Game!", butStyle);
 		closeButton = new TextButton("Do nothing", butStyle);
@@ -113,15 +110,13 @@ public class MenuScreen implements Screen, InputProcessor {
 		
 		mainButton.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer,int button){
-				System.out.println("down");
-				
+				System.out.println("down");				
 				return true;
 			}
 			
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
 				golf.setScreen(golf.hole, 1);
-				
-				
+								
 			}
 			
 			
