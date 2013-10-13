@@ -1,6 +1,8 @@
 package deco2800.arcade.minigolf;
 
 
+import java.util.ArrayList;
+
 import deco2800.arcade.minigolf.Block1.BlockType;
 import deco2800.arcade.minigolf.Block1.FacingDir;
 
@@ -70,9 +72,10 @@ public class WorldRenderer {
 	}
 	
 	/* constructor */
-	public WorldRenderer (World world, boolean debug, int level) { 
+	public WorldRenderer (World world, boolean debug, int level,
+			ArrayList<Integer> scoreCard) { 
 		this.world = world; 
-		this.wControl = new WorldController(this.world, level);
+		this.wControl = new WorldController(this.world, level, scoreCard);
 		this.cam = new OrthographicCamera(1024,720); 
 		this.cam.position.set(512f, 360f, 0); 
 		this.cam.update(); 
@@ -94,12 +97,18 @@ public class WorldRenderer {
 			}				
 		sprite.begin();
 		    sprite.draw(backgroundTexture, 0, 0);
-			drawGround();
+		   
+			drawGround();			
 			drawWall();
+			drawHill();
+			drawDiags();
 			drawCorners();
 			drawInvCorners();
+			drawWater();
+			drawTele();
 			drawHole();
 			drawBall();
+			 
 			
 		sprite.end();
 		if((ball.getVelocity().x == 0 && ball.getVelocity().y == 0 && !(ball.inHole))){
@@ -214,6 +223,29 @@ public class WorldRenderer {
 			}
 		}
 	
+	private void drawHill() {
+		for(Block1 block : world.getHillBlocks()){
+			//if(block.type == BlockType.Wall)
+			//change texture position based on it's FacingDir
+			if(block.dir == FacingDir.NORTH){ //draw blocks from getWallBlocks() that face north
+				sprite.draw(hillNorthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false); 
+				}
+				if(block.dir == FacingDir.SOUTH){
+					sprite.draw(hillSouthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+							Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false);	
+				}
+				if(block.dir == FacingDir.EAST){
+					sprite.draw(hillEastTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+							Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false);
+				}
+				if(block.dir == FacingDir.WEST){
+					sprite.draw(hillWestTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+							Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false);
+				}
+			}
+		}
+	
 	private void drawCorners() {
 		for(Block1 block : world.getCornerBlocks()){
 			//change texture position based on FacingDir
@@ -236,6 +268,23 @@ public class WorldRenderer {
 		}
 	}
 	
+	private void drawDiags() {
+		for(Block1 block : world.getDiagBlocks()){
+		   if(block.dir == FacingDir.NORTH)
+			   sprite.draw(diagNorthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
+					   Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
+		   if(block.dir == FacingDir.SOUTH)
+			   sprite.draw(diagSouthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
+					   Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
+		   if(block.dir == FacingDir.EAST)
+			   sprite.draw(diagEastTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
+					   Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
+		   if(block.dir == FacingDir.WEST)
+			   sprite.draw(diagWestTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
+					   Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
+		}
+	 }
+	
 	private void drawInvCorners() {
 		for(Block1 block : world.getInvCornerBlocks()){
 			if(block.dir == FacingDir.NORTH)
@@ -252,6 +301,20 @@ public class WorldRenderer {
 			sprite.draw(holeTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
 					Block1.SIZE * ppuX, Block1.SIZE * ppuY);
 		}
+	}
+	
+	private void drawWater() {
+	  for(Block1 block : world.getWaterBlocks()){
+		  sprite.draw(waterTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+				    Block1.SIZE * ppuX, Block1.SIZE * ppuY);
+	  }
+	}
+	
+	private void drawTele() {
+	  for(Block1 block : world.getTeleBlocks()){
+		  sprite.draw(teleTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
+				    Block1.SIZE * ppuX, Block1.SIZE * ppuY);
+	  }
 	}
 	
 //	public void setRenderTraject(boolean value){

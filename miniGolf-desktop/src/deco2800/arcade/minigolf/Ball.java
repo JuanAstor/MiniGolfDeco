@@ -7,20 +7,30 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Ball {
 	
-	static final float SIZE = 10f;
+	static final float SIZE = 8f;
 	float SPEED = 0f;  
 	public Boolean bounceX = false;
 	public Boolean bounceY = false;
+	public Boolean bounceDiag = false;
+	
+	public Float hillX;
+	public Float hillY;
 	public Boolean inHole = false;
+	public Boolean inWater = false;
+	
 	
 	Vector2 position = new Vector2();  
 	Vector2 velocity = new Vector2(); 
 	Polygon bounds;  
 	
 	public Ball(Vector2 position) { 
+		this.hillX = 0f;
+		this.hillY = 0f;
 		this.position = position; 
-		this.bounds = new Polygon(new float[]{0,0,0,SIZE,SIZE,0,SIZE,SIZE});
+		this.bounds = new Polygon(new float[]{SIZE/3,SIZE/3,SIZE/3,2*(SIZE/3),2*(SIZE/3),
+				2*(SIZE/3),2*(SIZE/3),SIZE/3});
 		this.bounds.setPosition(position.x, position.y);
+		
 	}
 	/* update the balls position and new bounds */
 	public void update(float delta){
@@ -30,11 +40,26 @@ public class Ball {
 	public Vector2 getVelocity() {
 		return this.velocity;
 	}
-	public void setSpeed(float speed) { 
-		this.SPEED = speed; 
-	}
+	
 	public Float getBallSpeed() {
 		return this.SPEED; 
+	}
+	
+	
+	public Float getHillX() {
+		return this.hillX;		
+	}
+	
+	public Float getHillY() {
+		return this.hillY;
+	}
+	
+	public void setHillX(Float accel) {
+		this.hillX = accel;		
+	}
+	
+	public void setHillY(Float accel) {
+		this.hillY = accel;
 	}
 	
 	public Polygon getBounds(){ 

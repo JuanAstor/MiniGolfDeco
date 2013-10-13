@@ -1,10 +1,12 @@
 package deco2800.arcade.minigolf;
 
+import java.util.ArrayList;
 import java.util.Map; 
 import java.util.HashMap;
 
 import org.lwjgl.input.Mouse;
  
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
@@ -21,20 +23,26 @@ public class WorldController{
 	private WorldRenderer wRend;
 	private DirectionLogic directionLogic; 
 	
+	
 	boolean leftButtonClick = false; //left mouse click
 	private float deceleration = 1f;
-	private boolean notZero = true; //speed  
+	private boolean notZero = true; //speed 
+	private float newDirX, newDirY;
 	
 	public int hole;
 	boolean inHole;
 	private int shotNum; //shot counter
+	private int holeShots;
+	private ArrayList<Integer> scoreCardCopy;
 	
-	public WorldController(World world, int level) {
+	public WorldController(World world, int level, ArrayList<Integer> scoreCard) {
 		this.world = world; 
 		this.ball = world.getBall();
 		this.hole = level;
 		this.inHole = false;
 		shotNum = 0;
+		holeShots = 0;
+		scoreCardCopy = scoreCard;
 	}
 	
 	//left mouse button clicked
@@ -53,8 +61,11 @@ public class WorldController{
 	public int getHole(){
 		return this.hole;
 	}
-	public int getNumShot(){
+	public int getNumShots(){
 		return this.shotNum;
+	}
+	public int getHoleShots(){
+		return this.holeShots;
 	}
 	
 	//get input and update ball gets power and dir from direcLogic class
@@ -63,6 +74,11 @@ public class WorldController{
 		if (ball.inHole == true){
 			ball.getVelocity().x = 0;
 			ball.getVelocity().y = 0;
+			shotNum++;
+			holeShots = shotNum;
+			scoreCardCopy.add(holeShots);
+			
+			System.out.println(scoreCardCopy.toString());
 			if(this.inHole == false){
 				this.hole += 1; 
 				this.inHole = true;
@@ -78,32 +94,56 @@ public class WorldController{
 		if(leftButtonClick == false){
 			ball.getVelocity().x = 0; 
 			ball.getVelocity().y = 0;
+			ball.hillX = 0f;
+			ball.hillY = 0f;
 		}
 		//if left mouse clicked (and released)
 		if(leftButtonClick == true){
 			if(this.notZero){ //if speed doesn't equal zero
-				power -= 6.0f * deceleration; //apply deceleration
+				
+				power -= (6.0f * deceleration); //apply deceleration
 				deceleration += 0.25;
-				if(power <= 0){
-					power = 0; 
+				if(power <= 0 || ball.inWater){
+					
+					power = 0;
+					ball.hillX = 0f;
+					ball.hillY = 0f;
+					if (ball.inWater) shotNum++;
+					ball.inWater = false;
 					this.notZero = false; //speed is now zero, stop decelerating
 				}
+				
 				if(power > 250) power = 250; //cap speed (if not already)
 				//apply velocity directional changes on wall/object contact
-				if(ball.bounceX) ball.getVelocity().x = ((-(dir.x)) * power * delta); 
-				else ball.getVelocity().x = ((dir.x) * power * delta); 
-				if(ball.bounceY) ball.getVelocity().y = ((-(dir.y)) * power * delta); 
-				else ball.getVelocity().y = ((dir.y) * power * delta);
+				
+				
+				if(ball.bounceDiag){
+					newDirX = dir.x;
+					newDirY = dir.y;					
+					dir.x = newDirY*(-1);
+					dir.y = newDirX*(-1);
+					ball.bounceDiag = false;
+				}
+				
+				if(ball.bounceX) ball.getVelocity().x = ((-(dir.x)) * power * delta ) - ball.getHillX(); 
+				else ball.getVelocity().x = ((dir.x) * power * delta) + ball.getHillX(); 
+				if(ball.bounceY) ball.getVelocity().y = ((-(dir.y)) * power * delta ) - ball.getHillY(); 
+				else ball.getVelocity().y = ((dir.y) * power * delta) + ball.getHillY();
+				
 				
 			} else { //ball has stopped and waiting for input
 				//so reset everything for next move
 				ball.bounceX = false; 
 				ball.bounceY = false;  
+				ball.hillX = 0f;
+				ball.hillY = 0f;
 				this.notZero = true;
 				deceleration = 1;
 				leftButtonClick = false;
 				shotNum++; //increase shot counter
 			}
 		}
+		
+		
 	}
 }

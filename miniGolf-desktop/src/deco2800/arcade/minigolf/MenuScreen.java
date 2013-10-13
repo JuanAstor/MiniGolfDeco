@@ -27,7 +27,9 @@ public class MenuScreen implements Screen, InputProcessor {
 	
 	Texture logoTexture;
 	Sprite logoSprite;
-	SpriteBatch logoBatch;
+	Sprite menuBGSprite;
+	Texture menuBGTexture;
+	SpriteBatch logoMenuBatch;
 	
 	TextureAtlas butAtlas;
 	Skin butSkin;
@@ -45,11 +47,13 @@ public class MenuScreen implements Screen, InputProcessor {
 		butBatch = new SpriteBatch();
 		logoTexture = new Texture("images/logo.png");		
 		logoSprite = new Sprite(logoTexture);
+		menuBGTexture = new Texture("images/menubg.png");
+		menuBGSprite = new Sprite(menuBGTexture);
 		
 		logoSprite.setX(Gdx.graphics.getWidth()/2 - logoSprite.getWidth()/2);
 		logoSprite.setY(Gdx.graphics.getHeight()/2 - Gdx.graphics.getHeight()/7);
 		
-		logoBatch = new SpriteBatch();
+		logoMenuBatch = new SpriteBatch();
 		
 		butAtlas = new TextureAtlas("images/button.pack");
 		butSkin = new Skin();
@@ -63,9 +67,10 @@ public class MenuScreen implements Screen, InputProcessor {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		stage.act(delta);
 		
-		logoBatch.begin();
-		logoSprite.draw(logoBatch);
-		logoBatch.end();
+		logoMenuBatch.begin();
+		menuBGSprite.draw(logoMenuBatch);
+		logoSprite.draw(logoMenuBatch);
+		logoMenuBatch.end();
 		
 		butBatch.begin();
 		stage.draw();		

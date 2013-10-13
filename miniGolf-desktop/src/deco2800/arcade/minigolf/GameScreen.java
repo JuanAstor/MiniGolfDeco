@@ -1,5 +1,7 @@
 package deco2800.arcade.minigolf;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
@@ -14,8 +16,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
 
@@ -28,21 +32,23 @@ public class GameScreen implements Screen, InputProcessor {
 	private BallController ballCont;
 	
 	@SuppressWarnings("unused")
-	private int width, height;
+	private int width, height, totalShots;
 	public int level; //hole
 	private float power;
 	
-	//Variables for the button
-	BitmapFont font1;
+	//Variables
+	BitmapFont font1, font2;
+	String holeShots, gameShots, totalScore;
+	ArrayList<Integer> scoreCard;
 	Stage stage;
 	TextureAtlas butAtlas;
 	Skin butSkin;
-	SpriteBatch butBatch;
-	TextButton mainButton;
-	TextButton resetButton;
+	SpriteBatch butBatch, scoreBatch;
+	TextButton mainButton, resetButton;
 	int disposeCount = 0;
 	
 	public GameScreen(MiniGolf game, int hole){
+		this.scoreCard = new ArrayList<Integer>();
 		this.golf = game;
 		this.level = hole;
 		System.out.println("hole num: "+this.level);
@@ -60,17 +66,21 @@ public class GameScreen implements Screen, InputProcessor {
 	public void show() { 
 			System.out.println("called 1");
 			world = new World(level); //create hole 
-			renderer = new WorldRenderer(world, false, this.level); //render objects 
-			wControl = new WorldController(world, this.level); //initialise controller
+			renderer = new WorldRenderer(world, false, this.level, scoreCard); //render objects 
+			wControl = new WorldController(world, this.level, scoreCard); //initialise controller
 			wControl.setHole(level); //set current hole 
 			ballCont = new BallController(world); //initialise controller
 			
+			
+			
 			// Button code
+			scoreBatch = new SpriteBatch();
 			butBatch = new SpriteBatch();
-			butAtlas = new TextureAtlas("images/butttoon.pack");
+			butAtlas = new TextureAtlas("images/button.pack");
 			butSkin = new Skin();
 			butSkin.addRegions(butAtlas);
-			font1 = new BitmapFont(Gdx.files.internal("images/font_white.fnt"),false);			
+			font1 = new BitmapFont(Gdx.files.internal("images/font_black.fnt"),false);
+			font2 = new BitmapFont(Gdx.files.internal("images/font_white.fnt"),false);	
 			
 	}
 	
@@ -87,13 +97,27 @@ public class GameScreen implements Screen, InputProcessor {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		//render everything and apply updates
 		renderer.render();
-		ballCont.update();
+		
 		capPower();
 		wControl.update(delta, this.power, renderer.getDir());
+		ballCont.update();
+		LabelStyle labelStyle = new LabelStyle();
+		labelStyle.font = font2;
+		
+		holeShots = "Shots: " + wControl.getNumShots();
+		totalShots += wControl.getHoleShots();
+		totalScore = "Total score: " + totalShots;
+		
+		scoreBatch.begin();
+		font2.setColor(1f, 1f, 1f, 1f);;
+		font2.draw(scoreBatch, holeShots, 20, 700);
+		font2.setColor(1f, 1f, 1f, 1f);;
+		font2.draw(scoreBatch, totalScore, 750, 700);
+		scoreBatch.end();
 		
 		//Button code
 		stage.act(delta);		
-		butBatch.begin();
+		butBatch.begin();		
 		stage.draw();
 		butBatch.end();
 				
