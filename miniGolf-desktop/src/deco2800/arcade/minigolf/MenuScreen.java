@@ -23,35 +23,37 @@ public class MenuScreen implements Screen, InputProcessor {
 	MiniGolf golf; 	
 	Stage stage;
 	BitmapFont font1;
-	int disposeCount = 0;
+	private int disposeCount = 0;
 	private float fadeInOut, fadeCopy;
 		
+	//menu logo + background image
 	Texture logoTexture;
 	Sprite logoSprite;
 	Sprite menuBGSprite;
 	Texture menuBGTexture;
 	SpriteBatch logoMenuBatch;
 	
+	//splash screen
 	Texture splashTexture;
 	Sprite splashSprite;
 	Sprite splashBGSprite;
 	Texture splashBGTexture;
 	SpriteBatch splashBatch;
+	private boolean splashYes;
 	
-	
+	//menu buttons
 	TextureAtlas butAtlas;
 	Skin butSkin;
 	SpriteBatch butBatch;
 	TextButton mainButton;
 	TextButton closeButton;
-	private boolean splashYes;
 	
 	
-	public MenuScreen(MiniGolf game){
+	public MenuScreen(MiniGolf game, boolean firstCall){
 		this.fadeInOut = 0;
 		this.fadeCopy = -0.1f;
-		this.splashYes = true;
-		this.golf = game; 
+		if(firstCall) this.splashYes = true;
+		this.golf = game;  
 	}
 	
 	@Override 
@@ -76,11 +78,11 @@ public class MenuScreen implements Screen, InputProcessor {
 		splashSprite.setX(Gdx.graphics.getWidth()/2 - logoSprite.getWidth()/2);
 		splashSprite.setY(Gdx.graphics.getHeight()/7);
 		
-		
+		//buttons
 		butAtlas = new TextureAtlas("resources/button.pack");
 		butSkin = new Skin();
 		butSkin.addRegions(butAtlas);
-		font1 = new BitmapFont(Gdx.files.internal("resources/font_black.fnt"),false);	
+		font1 = new BitmapFont(Gdx.files.internal("resources/font_black.fnt"),false);
 	}
 	
 	@Override 
@@ -107,8 +109,7 @@ public class MenuScreen implements Screen, InputProcessor {
 				System.out.println(fadeInOut);
 				fadeCopy = fadeInOut;
 				fadeInOut += 0.005;
-				if(fadeInOut >= 1) fadeInOut = 1;
-			
+				if(fadeInOut >= 1) fadeInOut = 1;			
 			
 			} else {
 				if(fadeInOut <= 0) splashYes = false;
@@ -120,9 +121,8 @@ public class MenuScreen implements Screen, InputProcessor {
 			
 			splashSprite.setColor(1, 1, 1, fadeInOut);
 			splashSprite.draw(splashBatch);
-			
 			splashBatch.end();
-		}	
+		}			
 	}
 	
 	@Override 
@@ -163,6 +163,7 @@ public class MenuScreen implements Screen, InputProcessor {
 			}
 			
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+				golf.setCall(false); //disable splash screen after first use
 				golf.setScreen(golf.hole, 1);
 								
 			}
@@ -204,10 +205,7 @@ public class MenuScreen implements Screen, InputProcessor {
 		font1.dispose();		
 		butSkin.dispose();
 		stage.dispose();
-		disposeCount = 1;
-		
-		
-		
+		disposeCount = 1;		
 	}
 
 	//a key from keyboard is pressed

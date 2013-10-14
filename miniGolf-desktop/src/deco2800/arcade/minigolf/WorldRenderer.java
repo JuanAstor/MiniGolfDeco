@@ -26,7 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 @SuppressWarnings("unused")
 public class WorldRenderer { 
 	
-	private static final float CAM_WIDTH = 1024f; 
+	private static final float CAM_WIDTH = 1280f; 
 	private static final float CAM_HEIGHT = 720f; 
 	
 	private World world; 

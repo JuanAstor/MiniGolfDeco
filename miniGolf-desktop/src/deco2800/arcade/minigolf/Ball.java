@@ -7,8 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Ball {
 	
-	static final float SIZE = 8f;
-	float SPEED = 0f;  
+	static final float SIZE = 8f;  
 	public Boolean bounceX = false;
 	public Boolean bounceY = false;
 	public Boolean bounceDiagX = false;
@@ -40,13 +39,7 @@ public class Ball {
 	}
 	public Vector2 getVelocity() {
 		return this.velocity;
-	}
-	
-	public Float getBallSpeed() {
-		return this.SPEED; 
-	}
-	
-	
+	}	
 	public Float getHillX() {
 		return this.hillX;		
 	}

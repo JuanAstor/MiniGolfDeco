@@ -71,7 +71,7 @@ public class World {
 	public World(int state) throws Exception { 
 		if(state == 1) {
 			System.out.println("level 1");
-			createHole("resources/Levels/level4.txt");  
+			createHole("resources/Levels/level1.txt");  
 		}
 		if(state == 2){
 			System.out.println("level 2");

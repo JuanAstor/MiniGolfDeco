@@ -17,8 +17,9 @@ public class MiniGolf extends Game {
 	
 	GameScreen hole; 
 	MenuScreen menu;
+	private boolean firstCall = true;
 	//private String playerName;
-	//public GolfGame(Player player, NetworkClient network){
+	//public MiniGolf(Player player, NetworkClient network){
 		//super(player, network); 
 		//this.playerName = player.getUsername();
 	//}
@@ -26,7 +27,7 @@ public class MiniGolf extends Game {
 	
 	@Override
 	public void create() {
-		menu = new MenuScreen(this);
+		menu = new MenuScreen(this, this.firstCall);
 		hole = new GameScreen(this, 1);
 		setScreen(menu);
 	}
@@ -41,7 +42,10 @@ public class MiniGolf extends Game {
 	public void setScreen(GameScreen hole, int level) {
 		super.setScreen(hole); 		
 	}
-	
+	//to enable/disable the menu splash screen
+	public void setCall(boolean value){
+		this.firstCall = value;
+	}
 	//private static final Game game;
 	//static {
 	//	game = new Game();
