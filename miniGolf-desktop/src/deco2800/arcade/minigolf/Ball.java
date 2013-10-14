@@ -11,7 +11,8 @@ public class Ball {
 	float SPEED = 0f;  
 	public Boolean bounceX = false;
 	public Boolean bounceY = false;
-	public Boolean bounceDiag = false;
+	public Boolean bounceDiagX = false;
+	public Boolean bounceDiagY = false;
 	
 	public Float hillX;
 	public Float hillY;

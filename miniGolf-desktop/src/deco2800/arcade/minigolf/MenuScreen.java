@@ -24,6 +24,7 @@ public class MenuScreen implements Screen, InputProcessor {
 	Stage stage;
 	BitmapFont font1;
 	int disposeCount = 0;
+	private float fadeInOut, fadeCopy;
 		
 	Texture logoTexture;
 	Sprite logoSprite;
@@ -31,29 +32,50 @@ public class MenuScreen implements Screen, InputProcessor {
 	Texture menuBGTexture;
 	SpriteBatch logoMenuBatch;
 	
+	Texture splashTexture;
+	Sprite splashSprite;
+	Sprite splashBGSprite;
+	Texture splashBGTexture;
+	SpriteBatch splashBatch;
+	
+	
 	TextureAtlas butAtlas;
 	Skin butSkin;
 	SpriteBatch butBatch;
 	TextButton mainButton;
 	TextButton closeButton;
+	private boolean splashYes;
 	
 	
 	public MenuScreen(MiniGolf game){
+		this.fadeInOut = 0;
+		this.fadeCopy = -0.1f;
+		this.splashYes = true;
 		this.golf = game; 
 	}
 	
 	@Override 
 	public void show() { 
 		butBatch = new SpriteBatch();
-		logoTexture = new Texture("resources/logo.png");		
-		logoSprite = new Sprite(logoTexture);
+		logoMenuBatch = new SpriteBatch();
+		splashBatch = new SpriteBatch();
+		
+		logoTexture = new Texture("resources/logo.png");	
+		splashTexture = new Texture("resources/teamlogo.png");
+		splashBGTexture = new Texture("resources/background2.png");
 		menuBGTexture = new Texture("resources/menubg.png");
+		
+		
+		splashSprite = new Sprite(splashTexture);
+		splashBGSprite = new Sprite(splashBGTexture);
+		logoSprite = new Sprite(logoTexture);		
 		menuBGSprite = new Sprite(menuBGTexture);
 		
 		logoSprite.setX(Gdx.graphics.getWidth()/2 - logoSprite.getWidth()/2);
 		logoSprite.setY(Gdx.graphics.getHeight()/2 - Gdx.graphics.getHeight()/7);
+		splashSprite.setX(Gdx.graphics.getWidth()/2 - logoSprite.getWidth()/2);
+		splashSprite.setY(Gdx.graphics.getHeight()/7);
 		
-		logoMenuBatch = new SpriteBatch();
 		
 		butAtlas = new TextureAtlas("resources/button.pack");
 		butSkin = new Skin();
@@ -68,13 +90,39 @@ public class MenuScreen implements Screen, InputProcessor {
 		stage.act(delta);
 		
 		logoMenuBatch.begin();
-		menuBGSprite.draw(logoMenuBatch);
-		logoSprite.draw(logoMenuBatch);
+		menuBGSprite.draw(logoMenuBatch);		
+		logoSprite.draw(logoMenuBatch);			
 		logoMenuBatch.end();
 		
 		butBatch.begin();
 		stage.draw();		
 		butBatch.end();		
+		
+		if(splashYes){
+			
+			splashBatch.begin();
+			splashBGSprite.draw(splashBatch);
+			
+			if((fadeInOut < 1) && (fadeInOut > fadeCopy)) {
+				System.out.println(fadeInOut);
+				fadeCopy = fadeInOut;
+				fadeInOut += 0.005;
+				if(fadeInOut >= 1) fadeInOut = 1;
+			
+			
+			} else {
+				if(fadeInOut <= 0) splashYes = false;
+				System.out.println(fadeInOut);
+				fadeInOut -= 0.005;
+				if(fadeInOut <= 0){ splashYes = false; fadeInOut = 0;}
+			
+			}
+			
+			splashSprite.setColor(1, 1, 1, fadeInOut);
+			splashSprite.draw(splashBatch);
+			
+			splashBatch.end();
+		}	
 	}
 	
 	@Override 
@@ -150,6 +198,8 @@ public class MenuScreen implements Screen, InputProcessor {
 		
 		if (disposeCount == 1) return;
 		butBatch.dispose();
+		splashBatch.dispose();
+		logoMenuBatch.dispose();
 		butAtlas.dispose();
 		font1.dispose();		
 		butSkin.dispose();

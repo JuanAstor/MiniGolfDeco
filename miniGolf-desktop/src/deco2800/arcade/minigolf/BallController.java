@@ -75,8 +75,34 @@ public class BallController {
 						ball.inHole = true;							
 					}
 					
+				} else if (blockType == Block1.BlockType.CORNER) {
+					if(!collisionX){
+						ball.bounceX = ball.bounceX == true ? false : true;
+						collisionX = true;
+					}
+					if(!collisionY){
+						ball.bounceY = ball.bounceY == true ? false : true;
+						collisionY = true;
+					}
+					
+					collisionX = true;
+					collisionY = true;
+					
+				
+				} else if (blockType == Block1.BlockType.DIAGONAL) {
+					System.out.println("diag");
+					if ((blockDir == Block1.FacingDir.EAST)
+							|| (blockDir == Block1.FacingDir.WEST)) {
+						ball.bounceDiagX = true;
+					} else {
+						ball.bounceDiagY = true;
+					}
+				
+					collisionX = true;
+					collisionY = true;
+				
+			
 				}
-						
 				
 				if(!specialCol){
 					 if (blockType == Block1.BlockType.HILL){
@@ -99,29 +125,8 @@ public class BallController {
 						if (collisionX) collisionX = false;
 						if (collisionY) collisionY = false;
 						
-						
-					} else if (blockType == Block1.BlockType.CORNER) {
-						if(!collisionX){
-							ball.bounceX = ball.bounceX == true ? false : true;
-							collisionX = true;
-						}
-						if(!collisionY){
-							ball.bounceY = ball.bounceY == true ? false : true;
-							collisionY = true;
-						}
-						
-						collisionX = true;
-						collisionY = true;
-						specialCol = true;
-										
-					} else if (blockType == Block1.BlockType.DIAGONAL) {
+					 }	
 					
-						
-						collisionX = true;
-						collisionY = true;
-						specialCol = true;
-					
-					}
 					 
 					
 					else if (blockType == Block1.BlockType.WATER){

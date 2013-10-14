@@ -97,8 +97,7 @@ public class WorldController{
 		//if left mouse clicked (and released)
 		if(leftButtonClick == true){
 			if(this.notZero){ //if speed doesn't equal zero
-				power -= (5.0f * deceleration); //apply deceleration
-				deceleration += 0.25;
+				
 				if(power <= 0 || ball.inWater){
 					power = 0; 
 					ball.hillX = 0f;
@@ -109,14 +108,20 @@ public class WorldController{
 				}
 				
 				//if(power > 150) power = 150; //cap speed (if not already)
-				if(ball.bounceDiag){
+				if(ball.bounceDiagX){
+					newDirX = dir.x;
+					newDirY = dir.y;					
+					dir.x = newDirY;
+					dir.y = newDirX;
+					ball.bounceDiagX = false;
+				}
+				else if(ball.bounceDiagY){
 					newDirX = dir.x;
 					newDirY = dir.y;					
 					dir.x = newDirY*(-1);
 					dir.y = newDirX*(-1);
-					ball.bounceDiag = false;
+					ball.bounceDiagY = false;
 				}
-				
 				//apply velocity directional changes on wall/object contact
 				if(ball.bounceX) ball.getVelocity().x = ((-(dir.x)) * power * delta ) - ball.getHillX(); 
 				else ball.getVelocity().x = ((dir.x) * power * delta) + ball.getHillX(); 
