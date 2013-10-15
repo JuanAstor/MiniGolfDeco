@@ -1,4 +1,4 @@
-57 19
+57 19 (start at j = 50, heigt = 400)
 \\\\\\\\\\\\\\nNNNNNe\\\\nNNNNNe\\\\nNNNNNe\\\\\\\\\\\\\\
 \\\\\\\\\\\\\\W/////E\\\\W/////E\\\\W/////E\\\\\\\\\\\\\\
 nNNNNNNNNe\\\\W/////E\\\\W/////E\\\\W/////E\\\\nNNNNNNNNe

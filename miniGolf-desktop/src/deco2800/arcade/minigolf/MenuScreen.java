@@ -58,6 +58,7 @@ public class MenuScreen implements Screen, InputProcessor {
 	
 	@Override 
 	public void show() { 
+		Texture.setEnforcePotImages(false);
 		butBatch = new SpriteBatch();
 		logoMenuBatch = new SpriteBatch();
 		splashBatch = new SpriteBatch();

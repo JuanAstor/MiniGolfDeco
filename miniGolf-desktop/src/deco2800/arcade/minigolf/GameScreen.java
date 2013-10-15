@@ -7,7 +7,9 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -32,17 +34,21 @@ public class GameScreen implements Screen, InputProcessor {
 	
 	@SuppressWarnings("unused")
 	private int width, height, totalShots;
-	public int level; //hole
-	private float power;
+	public int level, scoreX, scoreY; //hole
+	private float power, fadeInOut, fadeVar;
+	private boolean scoreYes;
 	
 	//Variables for the button
-	BitmapFont font1, font2;
+	BitmapFont font1, font2, font3;
 	String holeShots, gameShots, totalScore;
 	ArrayList<Integer> scoreCard;
 	Stage stage;
 	TextureAtlas butAtlas;
 	Skin butSkin;
-	SpriteBatch butBatch, scoreBatch;
+	Texture scoreCardTexture;
+ 	SpriteBatch butBatch, scoreBatch;
+	Sprite scoreCardSprite;
+
 	TextButton mainButton, resetButton;
 	int disposeCount = 0;
 	
@@ -50,6 +56,8 @@ public class GameScreen implements Screen, InputProcessor {
 		this.scoreCard = new ArrayList<Integer>();
 		this.golf = game;
 		this.level = hole;
+		this.fadeInOut = 0;
+		this.fadeVar = 0.0001f;
 		System.out.println("hole num: "+this.level);
 	}
 	
@@ -63,6 +71,7 @@ public class GameScreen implements Screen, InputProcessor {
 	
 	@Override 
 	public void show() { 
+			Texture.setEnforcePotImages(false);
 			System.out.println("called 1");
 			try { //opening a file in world so catch exceptions
 				world = new World(level);
@@ -74,20 +83,31 @@ public class GameScreen implements Screen, InputProcessor {
 			wControl.setHole(level); //set current hole 
 			ballCont = new BallController(world); //initialise controller
 			
-			// Button code
+			// score card
 			scoreBatch = new SpriteBatch();
+			scoreCardTexture = new Texture("resources/scoreCard.png");
+			scoreCardSprite = new Sprite(scoreCardTexture);
+			scoreCardSprite.setX(Gdx.graphics.getWidth()/2 - scoreCardSprite.getWidth()/2);
+			scoreCardSprite.setY(Gdx.graphics.getHeight()/2 - scoreCardSprite.getHeight()/2);
+			
+			//button code
 			butBatch = new SpriteBatch();
 			butAtlas = new TextureAtlas("resources/butttoon.pack");
 			butSkin = new Skin();
 			butSkin.addRegions(butAtlas);
 			font1 = new BitmapFont(Gdx.files.internal("resources/font_white.fnt"),false);
 			font2 = new BitmapFont(Gdx.files.internal("resources/font_white.fnt"),false);
-			
+			font3 = new BitmapFont(Gdx.files.internal("resources/scoreFont.fnt"),false);
 	}
 	
 	@Override //continuously render all objects
 	public void render(float delta) { 
 		if(this.level != wControl.getHole()){ //if ball is in hole
+			//fade in score-card 
+			fadeInOut = 1f;
+			fadeVar = 0.0001f;
+			scoreYes = true;	
+			//set next level
 			int nextHole = (getLevel() + 1); 
 			setLevel(nextHole); //set the next hole
 			System.out.println("level is: "+ this.level); 
@@ -97,8 +117,10 @@ public class GameScreen implements Screen, InputProcessor {
 		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		//render everything and apply updates
+		ballCont.update();
 		renderer.render();		
 		capPower();
+		//ballCont.update();
 		wControl.update(delta, this.power, renderer.getDir());
 		ballCont.update();
 		
@@ -110,12 +132,8 @@ public class GameScreen implements Screen, InputProcessor {
 		totalShots += wControl.getHoleShots();
 		totalScore = "Total score: " + totalShots;
 		
-		scoreBatch.begin();
-		font2.setColor(1f, 1f, 1f, 1f);;
-		font2.draw(scoreBatch, holeShots, 20, 700);
-		font2.setColor(1f, 1f, 1f, 1f);;
-		font2.draw(scoreBatch, totalScore, 750, 700);
-		scoreBatch.end();
+		//if end of level, display score-card
+		displayScoreCard();
 		
 		//Button code
 		stage.act(delta);		
@@ -129,6 +147,38 @@ public class GameScreen implements Screen, InputProcessor {
 		this.power = renderer.getPower(); //get the power
 		this.power *= 2.0;
 		
+	}
+	
+	/* checks if the hole is over, if so fade in and out the score-card */
+	private void displayScoreCard(){
+		if(scoreYes){
+			scoreX = (int)scoreCardSprite.getX() + 71;
+			scoreY = (int)scoreCardSprite.getY() + 112;
+			scoreBatch.begin();
+			if(fadeInOut != 0 && this.level !=19) {
+				System.out.println(fadeInOut);
+				if(fadeInOut <= 0) scoreYes = false;
+				fadeInOut -= fadeVar;
+				fadeVar += 0.000025f;
+				if(fadeInOut <= 0){fadeInOut = 0; 
+				scoreYes = false;}
+			} 
+			scoreCardSprite.setColor(1, 1, 1, fadeInOut);
+			scoreCardSprite.draw(scoreBatch);
+			
+			for(int i=0; i<scoreCard.size(); i++){
+				if(i == 9){
+					scoreX = (int)scoreCardSprite.getX() + 73;
+					scoreY -= 54;
+				}
+				
+				font3.setColor(0, 0, 0, fadeInOut);
+				font3.draw(scoreBatch, scoreCard.get(i).toString(), scoreX, scoreY);
+				scoreX += 30;
+			}
+			
+			scoreBatch.end();
+		}
 	}
 	
 	@Override 
