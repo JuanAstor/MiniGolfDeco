@@ -76,7 +76,7 @@ public class WorldRenderer {
 		this.world = world; 
 		this.wControl = new WorldController(this.world, level, scoreCard);
 		this.cam = new OrthographicCamera(1024,720); 
-		this.cam.position.set(512f, 360f, 0); 
+		this.cam.position.set(640f, 360f, 0); 
 		this.cam.update(); 
 		this.debug = debug;
 		this.renderTrajectory = true;
@@ -137,20 +137,15 @@ public class WorldRenderer {
 		wallEastTexture = new Texture (Gdx.files.internal("resources/wall-e.png"));
 		wallWestTexture = new Texture (Gdx.files.internal("resources/wall-w.png"));
 		
-		invWallSouthTexture = new Texture (Gdx.files.internal("resources/invwall-s.png"));
-		invWallNorthTexture = new Texture (Gdx.files.internal("resources/invwall-n.png"));
-		invWallEastTexture = new Texture (Gdx.files.internal("resources/invwall-e.png"));
-		invWallWestTexture = new Texture (Gdx.files.internal("resources/invwall-w.png"));
+		invWallNorthTexture = new Texture(Gdx.files.internal("resources/invwall-n.png"));
+		invWallSouthTexture = new Texture(Gdx.files.internal("resources/invwall-s.png"));
+		invWallEastTexture = new Texture(Gdx.files.internal("resources/invwall-e.png"));
+		invWallWestTexture = new Texture(Gdx.files.internal("resources/invwall-w.png"));		
 		
 		cornerWestTexture = new Texture (Gdx.files.internal("resources/corner-n.png"));
 		cornerNorthTexture = new Texture (Gdx.files.internal("resources/corner-e.png"));
 		cornerEastTexture = new Texture (Gdx.files.internal("resources/corner-s.png"));
-		cornerSouthTexture = new Texture (Gdx.files.internal("resources/corner-w.png"));
-		
-		invCornerWestTexture = new Texture (Gdx.files.internal("resources/invcorner-w.png"));
-		invCornerNorthTexture = new Texture (Gdx.files.internal("resources/invcorner-n.png"));
-		invCornerEastTexture = new Texture (Gdx.files.internal("resources/invcorner-e.png"));
-		invCornerSouthTexture = new Texture (Gdx.files.internal("resources/invcorner-s.png"));
+		cornerSouthTexture = new Texture (Gdx.files.internal("resources/corner-w.png"));		
 		
 		diagWestTexture = new Texture (Gdx.files.internal("resources/diag-w.png"));
 		diagNorthTexture = new Texture (Gdx.files.internal("resources/diag-n.png"));
@@ -165,7 +160,8 @@ public class WorldRenderer {
 		holeTexture = new Texture (Gdx.files.internal("resources/hole.png"));
 		teleTexture = new Texture (Gdx.files.internal("resources/tele.png"));
 		waterTexture = new Texture (Gdx.files.internal("resources/water.png"));
-		backgroundTexture = new Texture(Gdx.files.internal("resources/background.png"));		
+		backgroundTexture.setEnforcePotImages(false);//disable base 2 images
+		backgroundTexture = new Texture(Gdx.files.internal("resources/background.png"));
 		arrowTexture = new Texture(Gdx.files.internal("resources/circle.png"));
 		arrowTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 	}
@@ -298,6 +294,12 @@ public class WorldRenderer {
 						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
 			if(block.dir == FacingDir.SOUTH)
 				sprite.draw(invWallSouthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
+			if(block.dir == FacingDir.EAST)
+				sprite.draw(invWallEastTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
+			if(block.dir == FacingDir.WEST)
+				sprite.draw(invWallWestTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
 						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
 		}
 	}

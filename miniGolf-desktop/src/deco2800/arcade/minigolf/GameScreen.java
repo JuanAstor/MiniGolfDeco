@@ -77,10 +77,10 @@ public class GameScreen implements Screen, InputProcessor {
 			// Button code
 			scoreBatch = new SpriteBatch();
 			butBatch = new SpriteBatch();
-			butAtlas = new TextureAtlas("resources/button.pack");
+			butAtlas = new TextureAtlas("resources/butttoon.pack");
 			butSkin = new Skin();
 			butSkin.addRegions(butAtlas);
-			font1 = new BitmapFont(Gdx.files.internal("resources/font_black.fnt"),false);
+			font1 = new BitmapFont(Gdx.files.internal("resources/font_white.fnt"),false);
 			font2 = new BitmapFont(Gdx.files.internal("resources/font_white.fnt"),false);
 			
 	}

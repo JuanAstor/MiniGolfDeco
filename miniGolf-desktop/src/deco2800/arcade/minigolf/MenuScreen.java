@@ -50,7 +50,6 @@ public class MenuScreen implements Screen, InputProcessor {
 	
 	
 	public MenuScreen(MiniGolf game, boolean firstCall){
-		
 		this.fadeInOut = 0;
 		this.fadeCopy = -0.1f;
 		if(firstCall) this.splashYes = true;
@@ -59,7 +58,6 @@ public class MenuScreen implements Screen, InputProcessor {
 	
 	@Override 
 	public void show() { 
-		Texture.setEnforcePotImages(false);
 		butBatch = new SpriteBatch();
 		logoMenuBatch = new SpriteBatch();
 		splashBatch = new SpriteBatch();

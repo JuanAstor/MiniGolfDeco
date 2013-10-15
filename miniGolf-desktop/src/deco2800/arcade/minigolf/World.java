@@ -1,5 +1,7 @@
 package deco2800.arcade.minigolf;
 
+import com.badlogic.gdx.Gdx;
+import java.net.URL;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.Array; 
 
@@ -10,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Scanner;
 
 
@@ -69,6 +72,7 @@ public class World {
 	
 	/* construct level/hole based upon @param */
 	public World(int state) throws Exception { 
+				
 		if(state == 1) {
 			System.out.println("level 1");
 			createHole("resources/Levels/level1.txt");  
@@ -171,6 +175,15 @@ public class World {
 							 diagArray.add(new Block1(new Vector2(j,i), BlockType.DIAGONAL, FacingDir.WEST,0));
 						 else if(currentChar == 'T')
 							 diagArray.add(new Block1(new Vector2(j,i), BlockType.DIAGONAL, FacingDir.NORTH,0));
+						//check if inv wall cap block 
+						 else if(currentChar == '-')
+							 invWallArray.add(new Block1(new Vector2(j,i), BlockType.INVWALL, FacingDir.NORTH,0));
+						 else if(currentChar == '|')
+							 invWallArray.add(new Block1(new Vector2(j,i), BlockType.INVWALL, FacingDir.EAST,0));
+						 else if(currentChar == 'l')
+							 invWallArray.add(new Block1(new Vector2(j,i), BlockType.INVWALL, FacingDir.WEST,0));
+						 else if(currentChar == '_')
+							 invWallArray.add(new Block1(new Vector2(j,i), BlockType.INVWALL, FacingDir.SOUTH,0));
 						//check if water
 						 else if(currentChar == 'V')
 							 waterArray.add(new Block1(new Vector2(j,i), BlockType.WATER, FacingDir.NORTH,0));
