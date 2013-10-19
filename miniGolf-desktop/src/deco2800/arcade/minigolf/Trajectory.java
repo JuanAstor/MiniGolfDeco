@@ -7,7 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 /*
- * This class draws the direction trajectory, overrides the stage/actor functions
+ * This class draws the direction trajectory from the ball, which the ball will travel in 
+ * This class overrides some stage/actor functions
  */
 
 public class Trajectory extends Actor {
@@ -50,7 +51,7 @@ public class Trajectory extends Actor {
 			
 			//don't draw the first image (under ball)
 			if(i != 0) {
-				batch.draw(trajectorySprite, (x-6), (y-6), width, height);
+				batch.draw(trajectorySprite, (x-8), (y-8), width, height);
 			}			
 			t += timeSeparation;
 		}

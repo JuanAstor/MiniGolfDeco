@@ -79,7 +79,7 @@ public class World {
 		
 		//createHole("resources/Levels/level" + state +".txt");
 		if(state == 1) 
-			createHole("resources/Levels/level1.txt");  
+			createHole("resources/Levels/level18.txt");  
 		
 		if(state == 2)
 			createHole("resources/Levels/level2.txt");
@@ -211,17 +211,17 @@ public class World {
 	private int CreateXStartPos(int width){
 		int xPos = 0;
 		if(width >= 1 && width <= 10 )
-			xPos = 450; 
+			xPos = 500; 
 		if(width >= 11 && width <= 20)
-			xPos = 400;
+			xPos = 450;
 		if(width >= 21 && width <= 30)
-			xPos = 350;
+			xPos = 400;
 		if(width >= 31 && width <= 40)
-			xPos = 300;
+			xPos = 350;
 		if(width >= 41 && width <= 50)
 			xPos = 250;
 		if(width >= 51 && width <= 100)
-			xPos = 150;
+			xPos = 200;
 		
 		return xPos;
 	}
@@ -235,10 +235,8 @@ public class World {
 		if(height >= 21 && height <= 30)
 			yPos = 550;
 		if(height >= 31 && height <= 40)
-			yPos = 600;
-		if(height >= 41 && height <= 50)
-			yPos = 700;
-		if(height >= 51 && height <= 100)
+			yPos = 650;
+		if(height >= 41 && height <= 60)
 			yPos = 700;
 		
 		return yPos;
