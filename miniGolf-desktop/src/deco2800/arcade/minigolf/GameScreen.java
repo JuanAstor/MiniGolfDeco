@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import java.util.ArrayList;
 
 
+
 public class GameScreen implements Screen, InputProcessor {
 	
 	MiniGolf golf; 
@@ -36,7 +37,7 @@ public class GameScreen implements Screen, InputProcessor {
 	private int width, height, totalShots;
 	public int level, scoreX, scoreY; //hole
 	private float power, fadeInOut, fadeVar;
-	private boolean scoreYes;
+	private boolean scoreYes, gamePaused;
 	
 	//Variables for the button
 	BitmapFont font1, font2, font3;
@@ -58,6 +59,7 @@ public class GameScreen implements Screen, InputProcessor {
 		this.level = hole;
 		this.fadeInOut = 0;
 		this.fadeVar = 0.0001f;
+		gamePaused = false;
 		System.out.println("hole num: "+this.level);
 	}
 	
@@ -102,6 +104,17 @@ public class GameScreen implements Screen, InputProcessor {
 	
 	@Override //continuously render all objects
 	public void render(float delta) { 
+//		if(scoreYes){
+//			SpriteBatch batcher = new SpriteBatch();
+//			Texture a = new Texture(Gdx.files.internal("resources/background.png"));
+//			batcher.begin();
+//			batcher.draw(a, 0,0);
+//			displayScoreCard();
+//			if(Gdx.input.isTouched()){
+				//batcher.end();
+//				scoreYes = false;
+//			}
+//		} else {
 		if(this.level != wControl.getHole()){ //if ball is in hole
 			//fade in score-card 
 			fadeInOut = 1f;
@@ -130,7 +143,7 @@ public class GameScreen implements Screen, InputProcessor {
 		
 		holeShots = "Shots: " + wControl.getNumShots();
 		totalShots += wControl.getHoleShots();
-		totalScore = "Total score: " + totalShots;
+		totalScore = " " + totalShots;
 		
 		//if end of level, display score-card
 		displayScoreCard();
@@ -140,8 +153,9 @@ public class GameScreen implements Screen, InputProcessor {
 		butBatch.begin();
 		stage.draw();
 		butBatch.end();
+		}
 				
-	}
+	
 	/* cap the speed that the player can hit the ball at */
 	private void capPower(){
 		this.power = renderer.getPower(); //get the power
@@ -152,6 +166,7 @@ public class GameScreen implements Screen, InputProcessor {
 	/* checks if the hole is over, if so fade in and out the score-card */
 	private void displayScoreCard(){
 		if(scoreYes){
+			//gamePaused = true;
 			scoreX = (int)scoreCardSprite.getX() + 71;
 			scoreY = (int)scoreCardSprite.getY() + 112;
 			scoreBatch.begin();
@@ -174,7 +189,9 @@ public class GameScreen implements Screen, InputProcessor {
 				
 				font3.setColor(0, 0, 0, fadeInOut);
 				font3.draw(scoreBatch, scoreCard.get(i).toString(), scoreX, scoreY);
-				scoreX += 30;
+				font3.draw(scoreBatch, totalScore, (int)scoreCardSprite.getX() + 210,
+					     (int)scoreCardSprite.getY() + 26);
+				scoreX += 30 + ((i%9)*0.5);
 			}
 			
 			scoreBatch.end();
@@ -261,7 +278,7 @@ public class GameScreen implements Screen, InputProcessor {
 	
 	@Override 
 	public void pause() { 
-		
+				
 	}
 	
 	@Override 

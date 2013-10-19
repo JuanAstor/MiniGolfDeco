@@ -23,7 +23,7 @@ public class BallController {
 		this.collisionBlocks.addAll(world.getHoleBlock());
 		this.collisionBlocks.addAll(world.getInvWallBlocks());
 		this.collisionBlocks.addAll(world.getCornerBlocks());
-		this.collisionBlocks.addAll(world.getHillBlocks());
+		this.collisionBlocks.addAll(world.getCapBlocks());
 		this.collisionBlocks.addAll(world.getWaterBlocks());
 		this.collisionBlocks.addAll(world.getTeleBlocks());
 		this.collisionBlocks.addAll(world.getDiagBlocks());
@@ -143,12 +143,10 @@ public class BallController {
 						
 					}
 					
-					else if (blockType == Block1.BlockType.TELEPORTER){
-						
-						
+					else if (blockType == Block1.BlockType.TELEPORTER){						
 						
 						if(block.teleNumber%2 == 0){
-							destinationTele = (block.teleNumber - 1); 							
+							//destinationTele = (block.teleNumber - 1); 							
 						} else {
 							destinationTele = (block.teleNumber + 1);							
 						}
@@ -156,7 +154,8 @@ public class BallController {
 
 						for (Block1 teleBlock : teleBlocks) {
 							if (teleBlock.teleNumber == destinationTele){
-								ball.position = new Vector2(teleBlock.getPosition().x, teleBlock.getPosition().y);
+								//ball.position = new Vector2(teleBlock.getPosition().x, teleBlock.getPosition().y);
+								ball.setPosition(teleBlock.getPosition().x, teleBlock.getPosition().y);
 							}
 						}
 						specialCol = true;

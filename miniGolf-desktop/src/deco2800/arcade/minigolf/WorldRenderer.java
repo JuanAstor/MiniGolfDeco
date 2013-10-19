@@ -43,6 +43,8 @@ public class WorldRenderer {
 	wallEastTexture, wallNorthTexture, invWallNorthTexture,
 	invWallSouthTexture, invWallEastTexture, invWallWestTexture; 
 	
+	private Texture capNorthTexture, capSouthTexture, capWestTexture, capEastTexture;
+	
 	private Texture cornerSouthTexture, cornerNorthTexture,
 	cornerEastTexture, cornerWestTexture, invCornerWestTexture,
 	invCornerEastTexture, invCornerNorthTexture, invCornerSouthTexture;
@@ -98,10 +100,10 @@ public class WorldRenderer {
 		    sprite.draw(backgroundTexture, 0, 0);
 			drawGround();
 			drawWall();
-			drawHill();
 			drawDiags();
 			drawCorners();
 			drawInvWalls();
+			drawCaps();
 			drawWater();
 			drawTele();
 			drawHole();
@@ -152,10 +154,10 @@ public class WorldRenderer {
 		diagEastTexture = new Texture (Gdx.files.internal("resources/diag-e.png"));
 		diagSouthTexture = new Texture (Gdx.files.internal("resources/diag-s.png"));
 		
-		hillWestTexture = new Texture (Gdx.files.internal("resources/hill-w.png"));
-		hillNorthTexture = new Texture (Gdx.files.internal("resources/hill-n.png"));
-		hillEastTexture = new Texture (Gdx.files.internal("resources/hill-e.png"));
-		hillSouthTexture = new Texture (Gdx.files.internal("resources/hill-s.png"));
+		capNorthTexture = new Texture(Gdx.files.internal("resources/capwall-wn.png"));
+		capSouthTexture = new Texture(Gdx.files.internal("resources/capwall-ws.png"));
+		capEastTexture = new Texture(Gdx.files.internal("resources/capwall-ne.png"));
+		capWestTexture = new Texture(Gdx.files.internal("resources/capwall-nw.png"));
 		
 		holeTexture = new Texture (Gdx.files.internal("resources/hole.png"));
 		teleTexture = new Texture (Gdx.files.internal("resources/tele.png"));
@@ -249,28 +251,7 @@ public class WorldRenderer {
 			}
 		}
 	}	
-	private void drawHill() {
-	 for(Block1 block : world.getHillBlocks()){
-	  //if(block.type == BlockType.Wall)
-	  //change texture position based on it's FacingDir
-		 if(block.dir == FacingDir.NORTH){ //draw blocks from getWallBlocks() that face north
-			 sprite.draw(hillNorthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
-					 Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false); 
-			 }
-		 if(block.dir == FacingDir.SOUTH){
-			 sprite.draw(hillSouthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
-					 Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false); 
-		 	}
-	    if(block.dir == FacingDir.EAST){
-	    	sprite.draw(hillEastTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
-	    			Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false);
-	    	}
-	    if(block.dir == FacingDir.WEST){
-	    	sprite.draw(hillWestTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, 
-	    			Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0, 0, 32, 32, false, false);
-	    	}
-	  	}
-	}
+	
 	private void drawDiags() {
 		for(Block1 block : world.getDiagBlocks()){
 			if(block.dir == FacingDir.NORTH)
@@ -300,6 +281,23 @@ public class WorldRenderer {
 						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
 			if(block.dir == FacingDir.WEST)
 				sprite.draw(invWallWestTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
+		}
+	}
+	
+	private void drawCaps(){
+		for(Block1 block : world.getCapBlocks()){
+			if(block.dir == FacingDir.NORTH)
+				sprite.draw(capNorthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
+			if(block.dir == FacingDir.SOUTH)
+				sprite.draw(capSouthTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
+			if(block.dir == FacingDir.EAST)
+				sprite.draw(capEastTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
+						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
+			if(block.dir == FacingDir.WEST)
+				sprite.draw(capWestTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
 						Block1.SIZE * ppuX, Block1.SIZE * ppuY, 0,0,32,32,false,false);
 		}
 	}
